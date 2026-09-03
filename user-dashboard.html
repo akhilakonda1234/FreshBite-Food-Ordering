@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>FreshBite - User Dashboard</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f8f9fa;
+            color: #222;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 75px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            color: #ff633d;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover {
+            color: #ff633d;
+        }
+
+        .logout-btn {
+            background: #ff633d;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* MAIN */
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 40px auto;
+        }
+
+        .welcome {
+            background: linear-gradient(
+                135deg,
+                #ff633d,
+                #ff8a65
+            );
+
+            color: white;
+            padding: 35px;
+            border-radius: 20px;
+            margin-bottom: 35px;
+        }
+
+        .welcome h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .welcome p {
+            font-size: 17px;
+        }
+
+        /* USER INFO */
+
+        .user-info {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.06);
+        }
+
+        .user-info h2 {
+            margin-bottom: 20px;
+        }
+
+        .info-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+
+        .info-label {
+            font-weight: bold;
+            width: 100px;
+        }
+
+        /* CARDS */
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(230px, 1fr));
+
+            gap: 25px;
+        }
+
+        .dashboard-card {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+            transition: 0.2s;
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-icon {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .dashboard-card h3 {
+            margin-bottom: 10px;
+        }
+
+        .dashboard-card p {
+            color: #666;
+            margin-bottom: 20px;
+            min-height: 40px;
+        }
+
+        .card-btn {
+            display: inline-block;
+            background: #ff633d;
+            color: white;
+            text-decoration: none;
+            padding: 11px 20px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        .card-btn:hover {
+            background: #f4512d;
+        }
+
+        /* FOOTER */
+
+        footer {
+            margin-top: 60px;
+            padding: 25px;
+            background: white;
+            text-align: center;
+            color: #777;
+        }
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                padding: 0 4%;
+            }
+
+            .nav-links {
+                gap: 10px;
+            }
+
+            .nav-links a {
+                display: none;
+            }
+
+            .container {
+                width: 94%;
+            }
+
+            .welcome h1 {
+                font-size: 25px;
+            }
+
+            .info-row {
+                flex-direction: column;
+                gap: 3px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        🍕 FreshBite
+    </div>
+
+    <div class="nav-links">
+
+        <a href="menu.html">
+            Menu
+        </a>
+
+        <a href="cart.html">
+            Cart 🛒
+        </a>
+
+        <button
+            class="logout-btn"
+            onclick="logout()"
+        >
+            Logout
+        </button>
+
+    </div>
+
+</nav>
+
+
+<!-- MAIN -->
+
+<main class="container">
+
+    <!-- WELCOME -->
+
+    <section class="welcome">
+
+        <h1>
+            Welcome, <span id="user-name">User</span>! 👋
+        </h1>
+
+        <p>
+            Welcome to your FreshBite dashboard.
+            Order your favourite food and track your orders.
+        </p>
+
+    </section>
+
+
+    <!-- USER INFORMATION -->
+
+    <section class="user-info">
+
+        <h2>
+            👤 My Profile
+        </h2>
+
+        <div class="info-row">
+
+            <span class="info-label">
+                Name:
+            </span>
+
+            <span id="profile-name">
+                -
+            </span>
+
+        </div>
+
+
+        <div class="info-row">
+
+            <span class="info-label">
+                Email:
+            </span>
+
+            <span id="profile-email">
+                -
+            </span>
+
+        </div>
+
+
+        <div class="info-row">
+
+            <span class="info-label">
+                Phone:
+            </span>
+
+            <span id="profile-phone">
+                -
+            </span>
+
+        </div>
+
+
+        <div class="info-row">
+
+            <span class="info-label">
+                Address:
+            </span>
+
+            <span id="profile-address">
+                -
+            </span>
+
+        </div>
+
+    </section>
+
+
+    <!-- DASHBOARD OPTIONS -->
+
+    <section class="dashboard-grid">
+
+
+        <!-- MENU -->
+
+        <div class="dashboard-card">
+
+            <div class="card-icon">
+                🍕
+            </div>
+
+            <h3>
+                Browse Food
+            </h3>
+
+            <p>
+                Explore our delicious food menu.
+            </p>
+
+            <a
+                href="menu.html"
+                class="card-btn"
+            >
+                View Menu
+            </a>
+
+        </div>
+
+
+        <!-- CART -->
+
+        <div class="dashboard-card">
+
+            <div class="card-icon">
+                🛒
+            </div>
+
+            <h3>
+                My Cart
+            </h3>
+
+            <p>
+                View your selected food items.
+            </p>
+
+            <a
+                href="cart.html"
+                class="card-btn"
+            >
+                View Cart
+            </a>
+
+        </div>
+
+
+        <!-- ORDERS -->
+
+        <div class="dashboard-card">
+
+            <div class="card-icon">
+                📦
+            </div>
+
+            <h3>
+                My Orders
+            </h3>
+
+            <p>
+                Track your previous and current orders.
+            </p>
+
+            <a
+                href="orders.html"
+                class="card-btn"
+            >
+                View Orders
+            </a>
+
+        </div>
+
+
+        <!-- CHECKOUT -->
+
+        <div class="dashboard-card">
+
+            <div class="card-icon">
+                💳
+            </div>
+
+            <h3>
+                Checkout
+            </h3>
+
+            <p>
+                Complete your food order.
+            </p>
+
+            <a
+                href="checkout.html"
+                class="card-btn"
+            >
+                Checkout
+            </a>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+    <p>
+        © 2026 FreshBite. All rights reserved.
+    </p>
+
+</footer>
+
+
+<script>
+
+    /*
+    ==========================================
+    CHECK LOGIN
+    ==========================================
+    */
+
+    const token =
+        localStorage.getItem("freshbite_token");
+
+    const userData =
+        localStorage.getItem("freshbite_user");
+
+
+    if (!token || !userData) {
+
+        window.location.href = "login.html";
+
+    }
+
+
+    let user;
+
+    try {
+
+        user = JSON.parse(userData);
+
+    } catch (error) {
+
+        localStorage.removeItem("freshbite_token");
+        localStorage.removeItem("freshbite_user");
+
+        window.location.href = "login.html";
+
+    }
+
+
+    /*
+    ==========================================
+    ADMIN SHOULD NOT ACCESS USER DASHBOARD
+    ==========================================
+    */
+
+    if (user && user.role === "admin") {
+
+        window.location.href =
+            "admin-dashboard.html";
+
+    }
+
+
+    /*
+    ==========================================
+    DISPLAY USER INFORMATION
+    ==========================================
+    */
+
+    if (user) {
+
+        document.getElementById("user-name")
+            .textContent =
+            user.name || "User";
+
+        document.getElementById("profile-name")
+            .textContent =
+            user.name || "-";
+
+        document.getElementById("profile-email")
+            .textContent =
+            user.email || "-";
+
+        document.getElementById("profile-phone")
+            .textContent =
+            user.phone || "-";
+
+        document.getElementById("profile-address")
+            .textContent =
+            user.address || "-";
+
+    }
+
+
+    /*
+    ==========================================
+    LOGOUT
+    ==========================================
+    */
+
+    function logout() {
+
+        localStorage.removeItem(
+            "freshbite_token"
+        );
+
+        localStorage.removeItem(
+            "freshbite_user"
+        );
+
+        window.location.href =
+            "login.html";
+    }
+
+</script>
+
+</body>
+
+</html>

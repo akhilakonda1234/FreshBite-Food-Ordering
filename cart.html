@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>FreshBite - Cart</title>
+
+    <style>
+
+        /* =====================================================
+           RESET
+        ===================================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #f8f9fa;
+
+            color: #222;
+
+            min-height: 100vh;
+        }
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar {
+            width: 100%;
+
+            background: #ffffff;
+
+            border-bottom: 1px solid #eeeeee;
+
+            position: sticky;
+
+            top: 0;
+
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+
+            margin: auto;
+
+            padding: 18px 25px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+        }
+
+        .logo {
+            text-decoration: none;
+
+            font-size: 28px;
+
+            font-weight: 800;
+
+            color: #ff5722;
+        }
+
+        .nav-links {
+            display: flex;
+
+            align-items: center;
+
+            gap: 28px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+
+            color: #333;
+
+            font-size: 16px;
+
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: #ff5722;
+        }
+
+        .cart-link {
+            position: relative;
+        }
+
+        #cart-count {
+            position: absolute;
+
+            top: -12px;
+
+            right: -18px;
+
+            min-width: 21px;
+
+            height: 21px;
+
+            padding: 2px 6px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #ff5722;
+
+            color: white;
+
+            border-radius: 50%;
+
+            font-size: 12px;
+
+            font-weight: bold;
+        }
+
+        #menu-btn {
+            display: none;
+
+            border: none;
+
+            background: transparent;
+
+            font-size: 28px;
+
+            cursor: pointer;
+        }
+
+        /* =====================================================
+           PAGE
+        ===================================================== */
+
+        .page {
+            max-width: 1200px;
+
+            margin: 0 auto;
+
+            padding: 45px 25px 70px;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 38px;
+
+            margin-bottom: 8px;
+
+            color: #222;
+        }
+
+        .page-header p {
+            color: #777;
+
+            font-size: 16px;
+        }
+
+        /* =====================================================
+           CART LAYOUT
+        ===================================================== */
+
+        .cart-layout {
+            display: grid;
+
+            grid-template-columns:
+                minmax(0, 1fr)
+                390px;
+
+            gap: 30px;
+
+            align-items: start;
+        }
+
+        /* =====================================================
+           CART CARD
+        ===================================================== */
+
+        .cart-card {
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 25px;
+
+            border: 1px solid #eeeeee;
+
+            box-shadow:
+                0 5px 25px
+                rgba(0, 0, 0, 0.05);
+        }
+
+        .cart-header {
+            display: flex;
+
+            align-items: center;
+
+            justify-content: space-between;
+
+            margin-bottom: 22px;
+
+            padding-bottom: 18px;
+
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .cart-header h2 {
+            font-size: 23px;
+
+            color: #222;
+        }
+
+        #items-count {
+            color: #777;
+
+            font-size: 14px;
+        }
+
+        #clear-cart {
+            border: none;
+
+            background: transparent;
+
+            color: #e53935;
+
+            font-size: 14px;
+
+            cursor: pointer;
+
+            font-weight: 600;
+        }
+
+        #clear-cart:hover {
+            text-decoration: underline;
+        }
+
+        /* =====================================================
+           CART ITEMS
+        ===================================================== */
+
+        #cart-items {
+            width: 100%;
+        }
+
+        .cart-item {
+            width: 100%;
+
+            display: grid;
+
+            grid-template-columns:
+                110px
+                minmax(0, 1fr)
+                auto;
+
+            gap: 18px;
+
+            align-items: center;
+
+            padding: 18px 0;
+
+            border-bottom: 1px solid #eeeeee;
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        /* =====================================================
+           IMPORTANT IMAGE FIX
+        ===================================================== */
+
+        .cart-item-image {
+            width: 110px;
+
+            height: 110px;
+
+            flex-shrink: 0;
+
+            overflow: hidden;
+
+            border-radius: 14px;
+
+            background: #f1f1f1;
+        }
+
+        .cart-item-image img {
+            width: 110px !important;
+
+            height: 110px !important;
+
+            max-width: 110px !important;
+
+            max-height: 110px !important;
+
+            min-width: 110px !important;
+
+            min-height: 110px !important;
+
+            display: block;
+
+            object-fit: cover;
+
+            border-radius: 14px;
+        }
+
+        /* =====================================================
+           ITEM DETAILS
+        ===================================================== */
+
+        .cart-item-details {
+            min-width: 0;
+        }
+
+        .cart-item-details h3 {
+            font-size: 18px;
+
+            margin-bottom: 7px;
+
+            color: #222;
+
+            white-space: nowrap;
+
+            overflow: hidden;
+
+            text-overflow: ellipsis;
+        }
+
+        .cart-item-details p {
+            color: #666;
+
+            font-size: 15px;
+
+            margin-bottom: 13px;
+        }
+
+        /* =====================================================
+           QUANTITY
+        ===================================================== */
+
+        .quantity-controls {
+            display: inline-flex;
+
+            align-items: center;
+
+            border: 1px solid #dddddd;
+
+            border-radius: 8px;
+
+            overflow: hidden;
+        }
+
+        .quantity-controls button {
+            width: 34px;
+
+            height: 34px;
+
+            border: none;
+
+            background: #f5f5f5;
+
+            cursor: pointer;
+
+            font-size: 19px;
+
+            color: #333;
+        }
+
+        .quantity-controls button:hover {
+            background: #eeeeee;
+        }
+
+        .quantity-controls span {
+            width: 38px;
+
+            text-align: center;
+
+            font-size: 15px;
+
+            font-weight: 600;
+        }
+
+        /* =====================================================
+           RIGHT SIDE OF ITEM
+        ===================================================== */
+
+        .cart-item-right {
+            min-width: 120px;
+
+            display: flex;
+
+            flex-direction: column;
+
+            align-items: flex-end;
+
+            gap: 12px;
+        }
+
+        .cart-item-right strong {
+            font-size: 18px;
+
+            color: #222;
+
+            white-space: nowrap;
+        }
+
+        .remove-btn {
+            border: none;
+
+            background: transparent;
+
+            color: #e53935;
+
+            cursor: pointer;
+
+            font-size: 13px;
+
+            white-space: nowrap;
+        }
+
+        .remove-btn:hover {
+            text-decoration: underline;
+        }
+
+        /* =====================================================
+           EMPTY CART
+        ===================================================== */
+
+        .empty-cart {
+            text-align: center;
+
+            padding: 60px 20px;
+        }
+
+        .empty-cart-icon {
+            font-size: 65px;
+
+            margin-bottom: 18px;
+        }
+
+        .empty-cart h2 {
+            font-size: 25px;
+
+            margin-bottom: 10px;
+        }
+
+        .empty-cart p {
+            color: #777;
+
+            margin-bottom: 20px;
+        }
+
+        .browse-btn {
+            display: inline-block;
+
+            padding: 12px 25px;
+
+            background: #ff5722;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+
+            font-weight: 600;
+        }
+
+        .browse-btn:hover {
+            background: #e64a19;
+        }
+
+        /* =====================================================
+           ORDER SUMMARY
+        ===================================================== */
+
+        .summary-card {
+            background: white;
+
+            border-radius: 18px;
+
+            padding: 30px;
+
+            border: 1px solid #eeeeee;
+
+            box-shadow:
+                0 5px 25px
+                rgba(0, 0, 0, 0.05);
+
+            position: sticky;
+
+            top: 100px;
+        }
+
+        .summary-card h2 {
+            font-size: 24px;
+
+            margin-bottom: 28px;
+        }
+
+        .summary-row {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+
+            font-size: 16px;
+
+            color: #555;
+        }
+
+        .summary-row strong {
+            color: #222;
+        }
+
+        .discount-row strong {
+            color: #008f4c;
+        }
+
+        .summary-divider {
+            border: none;
+
+            border-top: 1px solid #eeeeee;
+
+            margin: 25px 0;
+        }
+
+        .total-row {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 30px;
+        }
+
+        .total-row span {
+            font-size: 21px;
+
+            font-weight: 700;
+
+            color: #222;
+        }
+
+        #total {
+            font-size: 30px;
+
+            font-weight: 800;
+
+            color: #ff5722;
+        }
+
+        /* =====================================================
+           CHECKOUT BUTTON
+        ===================================================== */
+
+        .checkout-btn {
+            width: 100%;
+
+            border: none;
+
+            border-radius: 12px;
+
+            padding: 17px;
+
+            background: #ff5722;
+
+            color: white;
+
+            font-size: 17px;
+
+            font-weight: 700;
+
+            cursor: pointer;
+        }
+
+        .checkout-btn:hover {
+            background: #e64a19;
+        }
+
+        .continue-shopping {
+            display: block;
+
+            text-align: center;
+
+            margin-top: 22px;
+
+            color: #ff5722;
+
+            text-decoration: none;
+
+            font-weight: 600;
+        }
+
+        .continue-shopping:hover {
+            text-decoration: underline;
+        }
+
+        /* =====================================================
+           DELIVERY MESSAGE
+        ===================================================== */
+
+        .delivery-message {
+            margin-top: 28px;
+
+            padding: 17px;
+
+            background: #effaf4;
+
+            color: #008f4c;
+
+            border-radius: 12px;
+
+            text-align: center;
+
+            font-size: 14px;
+        }
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+            background: #222;
+
+            color: white;
+
+            text-align: center;
+
+            padding: 25px;
+
+            margin-top: 40px;
+        }
+
+        footer p {
+            font-size: 14px;
+
+            color: #ccc;
+        }
+
+        /* =====================================================
+           MOBILE
+        ===================================================== */
+
+        @media (max-width: 900px) {
+
+            .cart-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-card {
+                position: static;
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            .nav-container {
+                padding: 15px 18px;
+            }
+
+            #menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+
+                position: absolute;
+
+                top: 70px;
+
+                left: 0;
+
+                width: 100%;
+
+                background: white;
+
+                padding: 20px;
+
+                flex-direction: column;
+
+                border-bottom: 1px solid #eeeeee;
+            }
+
+            .nav-links.mobile-active {
+                display: flex;
+            }
+
+            .page {
+                padding: 30px 15px 50px;
+            }
+
+            .page-header h1 {
+                font-size: 30px;
+            }
+
+            .cart-card {
+                padding: 18px;
+            }
+
+            .cart-item {
+                grid-template-columns:
+                    80px
+                    minmax(0, 1fr);
+
+                gap: 13px;
+            }
+
+            .cart-item-image {
+                width: 80px;
+
+                height: 80px;
+            }
+
+            .cart-item-image img {
+                width: 80px !important;
+
+                height: 80px !important;
+
+                max-width: 80px !important;
+
+                max-height: 80px !important;
+
+                min-width: 80px !important;
+
+                min-height: 80px !important;
+            }
+
+            .cart-item-right {
+                grid-column: 2;
+
+                flex-direction: row;
+
+                align-items: center;
+
+                justify-content: space-between;
+
+                width: 100%;
+            }
+
+            .summary-card {
+                padding: 22px;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- =====================================================
+         NAVBAR
+    ====================================================== -->
+
+    <nav class="navbar">
+
+        <div class="nav-container">
+
+            <a
+                href="index.html"
+                class="logo"
+            >
+                🍴 FreshBite
+            </a>
+
+            <button
+                id="menu-btn"
+                type="button"
+            >
+                ☰
+            </button>
+
+            <div class="nav-links">
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="menu.html">
+                    Menu
+                </a>
+
+                <a href="#">
+                    Restaurants
+                </a>
+
+                <a href="#">
+                    About
+                </a>
+
+                <a href="#">
+                    Contact
+                </a>
+
+                <a href="#">
+                    Login
+                </a>
+
+                <a
+                    href="cart.html"
+                    class="cart-link"
+                >
+                    🛒 Cart
+
+                    <span id="cart-count">
+                        0
+                    </span>
+                </a>
+
+            </div>
+
+        </div>
+
+    </nav>
+
+
+    <!-- =====================================================
+         MAIN
+    ====================================================== -->
+
+    <main class="page">
+
+        <div class="page-header">
+
+            <h1>
+                Your Cart
+            </h1>
+
+            <p>
+                Review your delicious selections before checkout.
+            </p>
+
+        </div>
+
+
+        <div class="cart-layout">
+
+            <!-- =================================================
+                 LEFT CART
+            ================================================== -->
+
+            <section class="cart-card">
+
+                <div class="cart-header">
+
+                    <div>
+
+                        <h2>
+                            Cart Items
+                        </h2>
+
+                        <span id="items-count">
+                            0 items
+                        </span>
+
+                    </div>
+
+                    <button
+                        type="button"
+                        id="clear-cart"
+                    >
+                        Clear Cart
+                    </button>
+
+                </div>
+
+
+                <div id="cart-items">
+
+                    <!-- JavaScript inserts cart items here -->
+
+                </div>
+
+            </section>
+
+
+            <!-- =================================================
+                 RIGHT SUMMARY
+            ================================================== -->
+
+            <aside class="summary-card">
+
+                <h2>
+                    Order Summary
+                </h2>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong id="subtotal">
+                        ₹0.00
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row">
+
+                    <span>
+                        Delivery Fee
+                    </span>
+
+                    <strong id="delivery">
+                        ₹0.00
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-row discount-row">
+
+                    <span>
+                        Discount
+                    </span>
+
+                    <strong id="discount">
+                        -₹0.00
+                    </strong>
+
+                </div>
+
+
+                <hr class="summary-divider">
+
+
+                <div class="total-row">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong id="total">
+                        ₹0.00
+                    </strong>
+
+                </div>
+
+
+                <button
+                    type="button"
+                    id="proceed-to-checkout"
+                    class="checkout-btn"
+                    onclick="proceedToCheckout()"
+                >
+                    Proceed to Checkout
+                </button>
+
+
+                <a
+                    href="menu.html"
+                    class="continue-shopping"
+                >
+                    ← Continue Shopping
+                </a>
+
+
+                <div class="delivery-message">
+
+                    🚚 Free delivery on orders above ₹500
+
+                </div>
+
+            </aside>
+
+        </div>
+
+    </main>
+
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer>
+
+        <p>
+            © 2026 FreshBite. All rights reserved.
+        </p>
+
+    </footer>
+
+
+    <!-- =====================================================
+         CART JAVASCRIPT
+    ====================================================== -->
+
+    <script src="js/cart.js"></script>
+
+</body>
+
+</html>

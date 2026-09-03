@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>FreshBite - Menu</title>
+
+    <!-- Font Awesome -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- Main CSS -->
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+</head>
+
+<body>
+
+    <!-- ==================================================
+         NAVIGATION BAR
+    =================================================== -->
+
+    <header class="navbar">
+
+        <!-- LOGO -->
+        <div class="logo">
+
+            <div class="logo-icon">
+                🍕
+            </div>
+
+            <div>
+                <div class="logo-text">
+                    FreshBite
+                </div>
+
+                <span class="logo-subtitle">
+                    FRESH • FAST • DELICIOUS
+                </span>
+            </div>
+
+        </div>
+
+
+        <!-- CUSTOMER NAVIGATION LINKS -->
+
+        <nav class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="menu.html">
+                Menu
+            </a>
+
+            <a href="index.html#restaurants">
+                Restaurants
+            </a>
+
+            <a href="index.html#about">
+                About
+            </a>
+
+            <a href="index.html#contact">
+                Contact
+            </a>
+
+            <!-- MY ORDERS -->
+            <a href="my-orders.html">
+                📦 My Orders
+            </a>
+
+            <!-- NOTIFICATIONS -->
+            <a href="notification.html">
+                🔔 Notifications
+            </a>
+
+            <!-- LOGIN -->
+            <a href="login.html">
+                Login
+            </a>
+
+            <!-- CART -->
+            <a
+                href="cart.html"
+                class="cart-btn"
+            >
+                🛒 Cart
+
+                <span id="cart-count">
+                    0
+                </span>
+            </a>
+
+        </nav>
+
+
+        <!-- MOBILE MENU BUTTON -->
+
+        <button
+            class="menu-btn"
+            id="menu-btn"
+        >
+            ☰
+        </button>
+
+    </header>
+
+
+    <!-- ==================================================
+         MENU HERO
+    =================================================== -->
+
+    <section class="hero menu-hero">
+
+        <div class="hero-content">
+
+            <div class="hero-badge">
+                🍽️ Fresh & Delicious
+            </div>
+
+            <h1>
+                Explore Our
+                <span>Menu</span>
+            </h1>
+
+            <p>
+                Choose from delicious pizzas, burgers,
+                Indian meals, desserts and much more.
+            </p>
+
+        </div>
+
+        <div class="hero-image">
+
+            <img
+                src="https://images.unsplash.com/photo-1513104890138-7c749659a591"
+                alt="FreshBite food"
+            >
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         CATEGORY FILTER
+    =================================================== -->
+
+    <section class="food-section">
+
+        <div class="section-header">
+
+            <div>
+
+                <h2 class="section-title">
+                    Our
+                    <span id="category-title">
+                        Menu
+                    </span>
+                </h2>
+
+                <p id="category-description">
+                    Explore delicious food from FreshBite.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- CATEGORY BUTTONS -->
+
+        <div class="menu-filters">
+
+            <button
+                class="filter-btn active"
+                data-category="all"
+            >
+                🍽️ All
+            </button>
+
+            <button
+                class="filter-btn"
+                data-category="pizza"
+            >
+                🍕 Pizza
+            </button>
+
+            <button
+                class="filter-btn"
+                data-category="burger"
+            >
+                🍔 Burgers
+            </button>
+
+            <button
+                class="filter-btn"
+                data-category="indian"
+            >
+                🍛 Indian
+            </button>
+
+            <button
+                class="filter-btn"
+                data-category="dessert"
+            >
+                🍰 Desserts
+            </button>
+
+        </div>
+
+
+        <!-- ==================================================
+             FOOD ITEMS
+        =================================================== -->
+
+        <div
+            class="food-grid"
+            id="food-container"
+        >
+            <!-- JavaScript will add food cards here -->
+        </div>
+
+    </section>
+
+
+    <!-- ==================================================
+         SPECIAL OFFER
+    =================================================== -->
+
+    <section class="offers">
+
+        <div>
+
+            <h2>
+                🎁 Special Offer!
+            </h2>
+
+            <p>
+                Get delicious food delivered to your
+                doorstep with amazing offers.
+            </p>
+
+        </div>
+
+        <a
+            href="cart.html"
+            class="offer-btn"
+        >
+            View Cart
+        </a>
+
+    </section>
+
+
+    <!-- ==================================================
+         FOOTER
+    =================================================== -->
+
+    <footer>
+
+        <div class="footer-grid">
+
+            <!-- BRAND -->
+
+            <div class="footer-brand">
+
+                <h2>
+                    🍕 FreshBite
+                </h2>
+
+                <p>
+                    Fresh food delivered straight to
+                    your doorstep. Delicious, fast and
+                    convenient.
+                </p>
+
+            </div>
+
+
+            <!-- QUICK LINKS -->
+
+            <div class="footer-column">
+
+                <h3>
+                    Quick Links
+                </h3>
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="menu.html">
+                    Menu
+                </a>
+
+                <a href="cart.html">
+                    Cart
+                </a>
+
+                <a href="my-orders.html">
+                    My Orders
+                </a>
+
+                <a href="notification.html">
+                    🔔 Notifications
+                </a>
+
+                <a href="login.html">
+                    Login
+                </a>
+
+            </div>
+
+
+            <!-- CATEGORIES -->
+
+            <div class="footer-column">
+
+                <h3>
+                    Categories
+                </h3>
+
+                <a href="menu.html?category=pizza">
+                    Pizza
+                </a>
+
+                <a href="menu.html?category=burger">
+                    Burgers
+                </a>
+
+                <a href="menu.html?category=indian">
+                    Indian
+                </a>
+
+                <a href="menu.html?category=dessert">
+                    Desserts
+                </a>
+
+            </div>
+
+
+            <!-- SUPPORT -->
+
+            <div class="footer-column">
+
+                <h3>
+                    Support
+                </h3>
+
+                <a href="index.html#contact">
+                    Contact Us
+                </a>
+
+                <a href="#">
+                    Help Center
+                </a>
+
+                <a href="#">
+                    Privacy Policy
+                </a>
+
+                <a href="#">
+                    Terms & Conditions
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 FreshBite.
+                All Rights Reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- ==================================================
+         JAVASCRIPT
+    =================================================== -->
+
+    <script src="js/menu.js"></script>
+
+</body>
+
+</html>
