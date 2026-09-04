@@ -694,6 +694,27 @@ footer {
 
     .nav-links {
         display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 70px;
+        right: 5%;
+        background: white;
+        width: 220px;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+    }
+
+    /* MOBILE MENU FIX */
+    .nav-links.mobile-active {
+        display: flex;
+    }
+
+    .nav-links a {
+        width: 100%;
+        padding: 10px 0;
+        display: block;
     }
 
     .menu-btn {
@@ -789,6 +810,7 @@ footer {
         padding: 25px;
     }
 }
+
 /* =========================================
    MENU PAGE
    ========================================= */
@@ -801,7 +823,6 @@ footer {
     width: 400px;
     height: 400px;
 }
-
 
 /* =========================================
    MENU FILTER BUTTONS
@@ -816,7 +837,6 @@ footer {
     margin: 20px 0 40px;
 }
 
-
 .filter-btn {
     background: white;
     color: #4a3025;
@@ -829,13 +849,11 @@ footer {
     transition: all 0.3s ease;
 }
 
-
 .filter-btn:hover {
     border-color: #ff6b35;
     color: #ff6b35;
     transform: translateY(-2px);
 }
-
 
 .filter-btn.active {
     background: linear-gradient(
@@ -853,8 +871,6 @@ footer {
         rgba(255, 107, 53, 0.25);
 }
 
-
-
 /* =========================================
    MENU FOOD GRID
    ========================================= */
@@ -862,8 +878,6 @@ footer {
 #food-container {
     min-height: 300px;
 }
-
-
 
 /* =========================================
    FOOD CARD IMAGE
@@ -876,8 +890,6 @@ footer {
     object-fit: cover;
 }
 
-
-
 /* =========================================
    FOOD DESCRIPTION
    ========================================= */
@@ -885,8 +897,6 @@ footer {
 .food-description {
     min-height: 45px;
 }
-
-
 
 /* =========================================
    MOBILE MENU
@@ -898,28 +908,24 @@ footer {
         min-height: auto;
     }
 
-
     .menu-hero .hero-image img {
         width: 280px;
         height: 280px;
     }
 
-
     .menu-filters {
         gap: 10px;
     }
-
 
     .filter-btn {
         padding: 10px 17px;
         font-size: 14px;
     }
-
 }
+
 /* =====================================================
    CART PAGE
    ===================================================== */
-
 
 /* CART HEADER */
 
@@ -933,24 +939,19 @@ footer {
         );
 }
 
-
 .cart-header h1 {
     font-size: 45px;
     margin-bottom: 10px;
 }
 
-
 .cart-header h1 span {
     color: #ff6b35;
 }
-
 
 .cart-header p {
     color: #777;
     font-size: 17px;
 }
-
-
 
 /* CART SECTION */
 
@@ -963,8 +964,6 @@ footer {
     align-items: start;
 }
 
-
-
 /* CART CONTAINER */
 
 .cart-container {
@@ -972,8 +971,6 @@ footer {
     flex-direction: column;
     gap: 20px;
 }
-
-
 
 /* CART ITEM */
 
@@ -989,7 +986,6 @@ footer {
         rgba(0, 0, 0, 0.08);
 }
 
-
 .cart-item img {
     width: 120px;
     height: 100px;
@@ -997,24 +993,19 @@ footer {
     border-radius: 14px;
 }
 
-
 .cart-item-info {
     flex: 1;
 }
-
 
 .cart-item-info h3 {
     margin-bottom: 8px;
     font-size: 20px;
 }
 
-
 .cart-item-info p {
     color: #777;
     margin-bottom: 12px;
 }
-
-
 
 /* QUANTITY */
 
@@ -1023,7 +1014,6 @@ footer {
     align-items: center;
     gap: 12px;
 }
-
 
 .quantity-control button {
     width: 34px;
@@ -1037,19 +1027,15 @@ footer {
     cursor: pointer;
 }
 
-
 .quantity-control button:hover {
     background: #ff6b35;
     color: white;
 }
 
-
 .quantity-control span {
     font-size: 17px;
     font-weight: bold;
 }
-
-
 
 /* CART RIGHT */
 
@@ -1060,12 +1046,10 @@ footer {
     gap: 15px;
 }
 
-
 .cart-item-right strong {
     font-size: 20px;
     color: #ff6b35;
 }
-
 
 .remove-btn {
     border: none;
@@ -1075,12 +1059,9 @@ footer {
     font-size: 14px;
 }
 
-
 .remove-btn:hover {
     text-decoration: underline;
 }
-
-
 
 /* ORDER SUMMARY */
 
@@ -1095,11 +1076,9 @@ footer {
     top: 100px;
 }
 
-
 .order-summary h2 {
     margin-bottom: 25px;
 }
-
 
 .summary-row {
     display: flex;
@@ -1108,13 +1087,11 @@ footer {
     color: #555;
 }
 
-
 .order-summary hr {
     border: none;
     border-top: 1px solid #eee;
     margin: 20px 0;
 }
-
 
 .summary-total {
     display: flex;
@@ -1124,12 +1101,9 @@ footer {
     margin-bottom: 25px;
 }
 
-
 .summary-total span:last-child {
     color: #ff6b35;
 }
-
-
 
 /* CHECKOUT BUTTON */
 
@@ -1151,15 +1125,12 @@ footer {
     transition: 0.3s;
 }
 
-
 .checkout-btn:hover {
     transform: translateY(-2px);
     box-shadow:
         0 8px 20px
         rgba(255, 107, 53, 0.3);
 }
-
-
 
 /* CONTINUE SHOPPING */
 
@@ -1172,8 +1143,6 @@ footer {
     font-weight: bold;
 }
 
-
-
 /* EMPTY CART */
 
 .empty-cart {
@@ -1185,23 +1154,18 @@ footer {
     gap: 15px;
 }
 
-
 .empty-cart-icon {
     font-size: 70px;
 }
-
 
 .empty-cart h2 {
     font-size: 30px;
 }
 
-
 .empty-cart p {
     color: #777;
     margin-bottom: 15px;
 }
-
-
 
 /* MOBILE */
 
@@ -1211,16 +1175,13 @@ footer {
         grid-template-columns: 1fr;
     }
 
-
     .order-summary {
         position: static;
     }
 
-
     .cart-item {
         flex-wrap: wrap;
     }
-
 
     .cart-item-right {
         width: 100%;
@@ -1228,9 +1189,7 @@ footer {
         justify-content: space-between;
         align-items: center;
     }
-
 }
-
 
 @media (max-width: 550px) {
 
@@ -1238,27 +1197,23 @@ footer {
         font-size: 34px;
     }
 
-
     .cart-section {
         width: 92%;
     }
-
 
     .cart-item img {
         width: 90px;
         height: 80px;
     }
 
-
     .cart-item-info h3 {
         font-size: 17px;
     }
-
 }
+
 /* =====================================================
    CHECKOUT PAGE
    ===================================================== */
-
 
 .checkout-header {
     padding: 65px 8% 40px;
@@ -1271,63 +1226,46 @@ footer {
         );
 }
 
-
 .checkout-header h1 {
     font-size: 42px;
     margin-bottom: 12px;
 }
 
-
 .checkout-header h1 span {
     color: #ff6b35;
 }
-
 
 .checkout-header p {
     color: #777;
     font-size: 17px;
 }
 
-
-
 /* CHECKOUT LAYOUT */
 
 .checkout-section {
     width: 84%;
     margin: 45px auto 70px;
-
     display: grid;
-
     grid-template-columns:
         1fr 380px;
-
     gap: 35px;
-
     align-items: start;
 }
-
-
 
 /* FORM CARD */
 
 .checkout-form-card {
     background: white;
-
     padding: 32px;
-
     border-radius: 20px;
-
     box-shadow:
         0 10px 30px
         rgba(0, 0, 0, 0.08);
 }
 
-
 .checkout-form-card h2 {
     margin-bottom: 25px;
 }
-
-
 
 /* FORM GROUP */
 
@@ -1335,68 +1273,46 @@ footer {
     margin-bottom: 20px;
 }
 
-
 .form-group label {
     display: block;
-
     margin-bottom: 8px;
-
     font-weight: 600;
-
     color: #4a3025;
 }
-
 
 .form-group input,
 .form-group textarea {
     width: 100%;
-
     box-sizing: border-box;
-
     padding: 14px 16px;
-
     border: 1.5px solid #e6d8d0;
-
     border-radius: 10px;
-
     font-size: 15px;
-
     outline: none;
-
     font-family: inherit;
-
     transition: 0.3s;
 }
-
 
 .form-group textarea {
     resize: vertical;
 }
 
-
 .form-group input:focus,
 .form-group textarea:focus {
     border-color: #ff6b35;
-
     box-shadow:
         0 0 0 3px
         rgba(255, 107, 53, 0.1);
 }
 
-
-
 /* FORM ROW */
 
 .form-row {
     display: grid;
-
     grid-template-columns:
         1fr 1fr;
-
     gap: 18px;
 }
-
-
 
 /* PAYMENT */
 
@@ -1404,223 +1320,149 @@ footer {
     margin-top: 35px;
 }
 
-
 .payment-options {
     display: flex;
-
     flex-direction: column;
-
     gap: 12px;
-
     margin-bottom: 25px;
 }
 
-
 .payment-option {
     display: flex;
-
     align-items: flex-start;
-
     gap: 14px;
-
     padding: 17px;
-
     border: 1.5px solid #eaded7;
-
     border-radius: 13px;
-
     cursor: pointer;
-
     transition: 0.3s;
 }
 
-
 .payment-option:hover {
     border-color: #ff6b35;
-
     background: #fff8f4;
 }
 
-
 .payment-option input {
     margin-top: 5px;
-
     accent-color: #ff6b35;
 }
-
 
 .payment-option strong {
     color: #4a3025;
 }
 
-
 .payment-option p {
     margin-top: 5px;
-
     color: #777;
-
     font-size: 13px;
 }
-
-
 
 /* PLACE ORDER */
 
 .place-order-btn {
     width: 100%;
-
     border: none;
-
     padding: 16px;
-
     border-radius: 12px;
-
     background:
         linear-gradient(
             135deg,
             #ff6b35,
             #ff914d
         );
-
     color: white;
-
     font-size: 17px;
-
     font-weight: bold;
-
     cursor: pointer;
-
     transition: 0.3s;
 }
 
-
 .place-order-btn:hover {
     transform: translateY(-2px);
-
     box-shadow:
         0 10px 25px
         rgba(255, 107, 53, 0.3);
 }
 
-
-
 /* CHECKOUT SUMMARY */
 
 .checkout-summary {
     background: white;
-
     padding: 28px;
-
     border-radius: 20px;
-
     box-shadow:
         0 10px 30px
         rgba(0, 0, 0, 0.08);
-
     position: sticky;
-
     top: 100px;
 }
-
 
 .checkout-summary h2 {
     margin-bottom: 22px;
 }
 
-
-
 /* CHECKOUT ITEMS */
 
 .checkout-items {
     display: flex;
-
     flex-direction: column;
-
     gap: 15px;
 }
 
-
 .checkout-item {
     display: flex;
-
     align-items: center;
-
     gap: 12px;
 }
 
-
 .checkout-item img {
     width: 65px;
-
     height: 60px;
-
     object-fit: cover;
-
     border-radius: 10px;
 }
-
 
 .checkout-item-info {
     flex: 1;
 }
 
-
 .checkout-item-info h3 {
     font-size: 15px;
-
     margin-bottom: 5px;
 }
 
-
 .checkout-item-info p {
     font-size: 13px;
-
     color: #777;
 }
-
 
 .checkout-item > strong {
     color: #ff6b35;
 }
 
-
-
 /* BACK TO CART */
 
 .back-cart {
     display: block;
-
     text-align: center;
-
     margin-top: 20px;
-
     color: #ff6b35;
-
     text-decoration: none;
-
     font-weight: bold;
 }
-
-
 
 /* =====================================================
    ORDER SUCCESS PAGE
    ===================================================== */
 
-
 .success-page {
     min-height: 700px;
-
     padding: 70px 20px;
-
     display: flex;
-
     flex-direction: column;
-
     align-items: center;
-
     text-align: center;
-
     background:
         linear-gradient(
             135deg,
@@ -1629,263 +1471,173 @@ footer {
         );
 }
 
-
-
 /* SUCCESS ICON */
 
 .success-icon {
     width: 90px;
-
     height: 90px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     border-radius: 50%;
-
     background:
         linear-gradient(
             135deg,
             #39b54a,
             #70d46f
         );
-
     color: white;
-
     font-size: 48px;
-
     font-weight: bold;
-
     box-shadow:
         0 12px 30px
         rgba(57, 181, 74, 0.25);
-
     margin-bottom: 25px;
 }
 
-
 .success-page h1 {
     font-size: 42px;
-
     margin-bottom: 12px;
 }
-
 
 .success-page h1 span {
     color: #ff6b35;
 }
 
-
 .success-message {
     max-width: 600px;
-
     color: #777;
-
     font-size: 17px;
-
     margin-bottom: 35px;
 }
-
-
 
 /* ORDER DETAILS */
 
 .order-details-card {
     width: min(700px, 90%);
-
     display: grid;
-
     grid-template-columns:
         1fr 1fr;
-
     gap: 18px;
-
     background: white;
-
     padding: 25px;
-
     border-radius: 18px;
-
     box-shadow:
         0 10px 30px
         rgba(0, 0, 0, 0.08);
-
     margin-bottom: 35px;
 }
 
-
 .order-detail {
     display: flex;
-
     flex-direction: column;
-
     gap: 7px;
-
     padding: 15px;
-
     border-radius: 10px;
-
     background: #fff8f4;
 }
 
-
 .order-detail span {
     color: #888;
-
     font-size: 13px;
 }
 
-
 .order-detail strong {
     color: #4a3025;
-
     font-size: 16px;
 }
 
-
 .order-detail .order-total {
     color: #ff6b35;
-
     font-size: 20px;
 }
-
-
 
 /* DELIVERY STATUS */
 
 .delivery-status {
     width: min(800px, 90%);
-
     background: white;
-
     padding: 30px;
-
     border-radius: 18px;
-
     box-shadow:
         0 10px 30px
         rgba(0, 0, 0, 0.08);
-
     margin-bottom: 25px;
 }
 
-
 .status-step {
     display: flex;
-
     align-items: center;
-
     text-align: left;
-
     gap: 15px;
-
     opacity: 0.5;
 }
-
 
 .status-step.active {
     opacity: 1;
 }
 
-
 .status-icon {
     width: 48px;
-
     height: 48px;
-
     min-width: 48px;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
     border-radius: 50%;
-
     background: #fff0e9;
-
     color: #ff6b35;
-
     font-size: 22px;
 }
 
-
 .status-step.active .status-icon {
     background: #ff6b35;
-
     color: white;
 }
-
 
 .status-step strong {
     color: #4a3025;
 }
 
-
 .status-step p {
     margin-top: 4px;
-
     color: #888;
-
     font-size: 13px;
 }
 
-
 .status-line {
     height: 25px;
-
     width: 2px;
-
     background: #eaded7;
-
     margin-left: 23px;
 }
-
-
 
 /* DELIVERY ESTIMATE */
 
 .delivery-estimate {
     padding: 15px 25px;
-
     background: #fff0e9;
-
     border-radius: 30px;
-
     color: #4a3025;
-
     margin-bottom: 30px;
 }
-
 
 .delivery-estimate strong {
     color: #ff6b35;
 }
 
-
-
 /* SUCCESS BUTTONS */
 
 .success-buttons {
     display: flex;
-
     gap: 15px;
-
     flex-wrap: wrap;
-
     justify-content: center;
 }
-
 
 .success-buttons a {
     text-decoration: none;
 }
-
-
 
 /* =====================================================
    RESPONSIVE CHECKOUT
@@ -1895,17 +1647,13 @@ footer {
 
     .checkout-section {
         grid-template-columns: 1fr;
-
         width: 92%;
     }
-
 
     .checkout-summary {
         position: static;
     }
-
 }
-
 
 @media (max-width: 600px) {
 
@@ -1913,33 +1661,28 @@ footer {
         font-size: 32px;
     }
 
-
     .checkout-form-card {
         padding: 22px;
     }
-
 
     .form-row {
         grid-template-columns: 1fr;
         gap: 0;
     }
 
-
     .order-details-card {
         grid-template-columns: 1fr;
     }
-
 
     .success-page h1 {
         font-size: 30px;
     }
 
-
     .delivery-status {
         padding: 20px;
     }
-
 }
+
 /* ============================================================
    FRESHBITE TOAST MESSAGE
    ============================================================ */
@@ -1972,6 +1715,7 @@ footer {
     visibility: visible;
     transform: translateY(0);
 }
+
 /* ============================================================
    ABOUT SECTION
    ============================================================ */
@@ -2129,5 +1873,4 @@ footer {
     .about-image > img {
         height: 350px;
     }
-
 }
