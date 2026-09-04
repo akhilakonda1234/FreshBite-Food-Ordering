@@ -129,7 +129,7 @@ function updateCartCount() {
 // ===============================
 
 const menuToggle =
-    document.getElementById("menu-toggle");
+    document.getElementById("menu-btn");
 
 
 const navLinks =
