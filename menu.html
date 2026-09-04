@@ -40,6 +40,7 @@
             </div>
 
             <div>
+
                 <div class="logo-text">
                     FreshBite
                 </div>
@@ -47,6 +48,7 @@
                 <span class="logo-subtitle">
                     FRESH • FAST • DELICIOUS
                 </span>
+
             </div>
 
         </div>
@@ -76,22 +78,20 @@
                 Contact
             </a>
 
-            <!-- MY ORDERS -->
             <a href="my-orders.html">
                 📦 My Orders
             </a>
 
-            <!-- NOTIFICATIONS -->
             <a href="notification.html">
                 🔔 Notifications
             </a>
 
-            <!-- LOGIN -->
             <a href="login.html">
                 Login
             </a>
 
             <!-- CART -->
+
             <a
                 href="cart.html"
                 class="cart-btn"
@@ -111,11 +111,14 @@
         <button
             class="menu-btn"
             id="menu-btn"
+            type="button"
+            aria-label="Open navigation menu"
         >
             ☰
         </button>
 
     </header>
+
 
 
     <!-- ==================================================
@@ -136,17 +139,19 @@
             </h1>
 
             <p>
-                Choose from delicious pizzas, burgers,
-                Indian meals, desserts and much more.
+                Discover 40+ delicious choices across
+                pizzas, burgers, Indian meals, Chinese,
+                Italian dishes, snacks, desserts and drinks.
             </p>
 
         </div>
 
+
         <div class="hero-image">
 
             <img
-                src="https://images.unsplash.com/photo-1513104890138-7c749659a591"
-                alt="FreshBite food"
+                src="https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=700&q=80"
+                alt="FreshBite delicious food"
             >
 
         </div>
@@ -154,8 +159,9 @@
     </section>
 
 
+
     <!-- ==================================================
-         CATEGORY FILTER
+         FOOD MENU SECTION
     =================================================== -->
 
     <section class="food-section">
@@ -165,14 +171,22 @@
             <div>
 
                 <h2 class="section-title">
+
                     Our
+
                     <span id="category-title">
                         Menu
                     </span>
+
                 </h2>
 
+
                 <p id="category-description">
-                    Explore delicious food from FreshBite.
+
+                    Explore delicious food from
+                    different cuisines and choose
+                    something that matches your taste.
+
                 </p>
 
             </div>
@@ -180,46 +194,113 @@
         </div>
 
 
-        <!-- CATEGORY BUTTONS -->
+
+        <!-- ==================================================
+             CATEGORY FILTER BUTTONS
+        =================================================== -->
 
         <div class="menu-filters">
+
+            <!-- ALL -->
 
             <button
                 class="filter-btn active"
                 data-category="all"
+                type="button"
             >
                 🍽️ All
             </button>
 
+
+            <!-- PIZZA -->
+
             <button
                 class="filter-btn"
                 data-category="pizza"
+                type="button"
             >
                 🍕 Pizza
             </button>
 
+
+            <!-- BURGERS -->
+
             <button
                 class="filter-btn"
                 data-category="burger"
+                type="button"
             >
                 🍔 Burgers
             </button>
 
+
+            <!-- INDIAN -->
+
             <button
                 class="filter-btn"
                 data-category="indian"
+                type="button"
             >
                 🍛 Indian
             </button>
 
+
+            <!-- CHINESE -->
+
+            <button
+                class="filter-btn"
+                data-category="chinese"
+                type="button"
+            >
+                🍜 Chinese
+            </button>
+
+
+            <!-- ITALIAN -->
+
+            <button
+                class="filter-btn"
+                data-category="italian"
+                type="button"
+            >
+                🍝 Italian
+            </button>
+
+
+            <!-- SNACKS -->
+
+            <button
+                class="filter-btn"
+                data-category="snacks"
+                type="button"
+            >
+                🍟 Snacks
+            </button>
+
+
+            <!-- DESSERTS -->
+
             <button
                 class="filter-btn"
                 data-category="dessert"
+                type="button"
             >
                 🍰 Desserts
             </button>
 
+
+            <!-- DRINKS -->
+
+            <button
+                class="filter-btn"
+                data-category="drinks"
+                type="button"
+            >
+                🥤 Drinks
+            </button>
+
         </div>
+
 
 
         <!-- ==================================================
@@ -230,10 +311,16 @@
             class="food-grid"
             id="food-container"
         >
-            <!-- JavaScript will add food cards here -->
+
+            <!--
+                JavaScript automatically loads
+                all FreshBite food items here.
+            -->
+
         </div>
 
     </section>
+
 
 
     <!-- ==================================================
@@ -245,15 +332,17 @@
         <div>
 
             <h2>
-                🎁 Special Offer!
+                🎁 Special Offers!
             </h2>
 
             <p>
-                Get delicious food delivered to your
-                doorstep with amazing offers.
+                Enjoy amazing discounts, Buy 1 Get 1
+                deals and exciting offers on your
+                favourite FreshBite meals.
             </p>
 
         </div>
+
 
         <a
             href="cart.html"
@@ -265,6 +354,7 @@
     </section>
 
 
+
     <!-- ==================================================
          FOOTER
     =================================================== -->
@@ -273,7 +363,10 @@
 
         <div class="footer-grid">
 
-            <!-- BRAND -->
+
+            <!-- ==================================================
+                 BRAND
+            =================================================== -->
 
             <div class="footer-brand">
 
@@ -284,13 +377,16 @@
                 <p>
                     Fresh food delivered straight to
                     your doorstep. Delicious, fast and
-                    convenient.
+                    convenient for every taste.
                 </p>
 
             </div>
 
 
-            <!-- QUICK LINKS -->
+
+            <!-- ==================================================
+                 QUICK LINKS
+            =================================================== -->
 
             <div class="footer-column">
 
@@ -325,7 +421,10 @@
             </div>
 
 
-            <!-- CATEGORIES -->
+
+            <!-- ==================================================
+                 CATEGORIES
+            =================================================== -->
 
             <div class="footer-column">
 
@@ -334,25 +433,44 @@
                 </h3>
 
                 <a href="menu.html?category=pizza">
-                    Pizza
+                    🍕 Pizza
                 </a>
 
                 <a href="menu.html?category=burger">
-                    Burgers
+                    🍔 Burgers
                 </a>
 
                 <a href="menu.html?category=indian">
-                    Indian
+                    🍛 Indian
+                </a>
+
+                <a href="menu.html?category=chinese">
+                    🍜 Chinese
+                </a>
+
+                <a href="menu.html?category=italian">
+                    🍝 Italian
+                </a>
+
+                <a href="menu.html?category=snacks">
+                    🍟 Snacks
                 </a>
 
                 <a href="menu.html?category=dessert">
-                    Desserts
+                    🍰 Desserts
+                </a>
+
+                <a href="menu.html?category=drinks">
+                    🥤 Drinks
                 </a>
 
             </div>
 
 
-            <!-- SUPPORT -->
+
+            <!-- ==================================================
+                 SUPPORT
+            =================================================== -->
 
             <div class="footer-column">
 
@@ -381,6 +499,11 @@
         </div>
 
 
+
+        <!-- ==================================================
+             FOOTER BOTTOM
+        =================================================== -->
+
         <div class="footer-bottom">
 
             <p>
@@ -391,6 +514,7 @@
         </div>
 
     </footer>
+
 
 
     <!-- ==================================================

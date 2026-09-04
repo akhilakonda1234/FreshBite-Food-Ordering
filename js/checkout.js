@@ -1,29 +1,60 @@
+// ============================================================
+// FRESHBITE CHECKOUT - FRONTEND ONLY
+// Cart + Offers + Order Placement + PINCODE CITY LOOKUP
+// ============================================================
+
 const CART_KEY = "cart";
 const ORDERS_KEY = "freshbite_orders";
 
 
-// ===============================
+// ============================================================
 // GET CART
-// ===============================
+// ============================================================
 
 function getCart() {
 
     try {
 
-        return JSON.parse(
-            localStorage.getItem(CART_KEY) || "[]"
-        );
+        const cart =
+            JSON.parse(
+                localStorage.getItem(CART_KEY) || "[]"
+            );
+
+        return Array.isArray(cart)
+            ? cart
+            : [];
 
     } catch (error) {
 
         return [];
+
     }
+
 }
 
 
-// ===============================
-// GET CURRENT USER
-// ===============================
+// ============================================================
+// SAVE CART
+// ============================================================
+
+function saveCart(cart) {
+
+    localStorage.setItem(
+        CART_KEY,
+        JSON.stringify(cart)
+    );
+
+    localStorage.setItem(
+        "freshbite_cart",
+        JSON.stringify(cart)
+    );
+
+}
+
+
+// ============================================================
+// GET LOGGED-IN USER
+// ============================================================
 
 function getCurrentUser() {
 
@@ -36,417 +67,188 @@ function getCurrentUser() {
     } catch (error) {
 
         return null;
+
     }
+
 }
 
 
-// ===============================
-// GET ORDERS
-// ===============================
+// ============================================================
+// OFFER CALCULATION
+// ============================================================
 
-function getOrders() {
+function calculateOffer(item) {
 
-    try {
+    const quantity =
+        Number(item.quantity || 0);
 
-        return JSON.parse(
-            localStorage.getItem(ORDERS_KEY) || "[]"
-        );
+    const price =
+        Number(item.price || 0);
 
-    } catch (error) {
+    const offer =
+        String(item.offer || "")
+            .toUpperCase();
 
-        return [];
+    let payableQuantity = quantity;
+    let freeQuantity = 0;
+    let discount = 0;
+
+    // BUY 1 GET 1
+    if (offer.includes("BUY 1 GET 1")) {
+
+        payableQuantity =
+            Math.ceil(quantity / 2);
+
+        freeQuantity =
+            quantity - payableQuantity;
+
+        discount =
+            freeQuantity * price;
+
     }
+
+    // BUY 2 GET 1
+    else if (offer.includes("BUY 2 GET 1")) {
+
+        const freeGroups =
+            Math.floor(quantity / 3);
+
+        freeQuantity =
+            freeGroups;
+
+        payableQuantity =
+            quantity - freeQuantity;
+
+        discount =
+            freeQuantity * price;
+
+    }
+
+    // 20% OFF
+    else if (offer.includes("20% OFF")) {
+
+        discount =
+            quantity * price * 0.20;
+
+    }
+
+    // 15% OFF
+    else if (offer.includes("15% OFF")) {
+
+        discount =
+            quantity * price * 0.15;
+
+    }
+
+    // FLAT ₹50 OFF
+    else if (
+        offer.includes("FLAT ₹50 OFF") ||
+        offer.includes("FLAT 50 OFF")
+    ) {
+
+        discount =
+            Math.min(50, quantity * price);
+
+    }
+
+    return {
+
+        quantity,
+        payableQuantity,
+        freeQuantity,
+        discount
+
+    };
+
 }
 
 
-// ===============================
-// SAVE ORDERS
-// ===============================
-
-function saveOrders(orders) {
-
-    localStorage.setItem(
-        ORDERS_KEY,
-        JSON.stringify(orders)
-    );
-}
-
-
-// ===============================
-// CALCULATE TOTALS
-// ===============================
+// ============================================================
+// GET ORDER TOTALS
+// ============================================================
 
 function calculateTotals(cart) {
 
     let subtotal = 0;
-
-    cart.forEach(item => {
-
-        subtotal +=
-            Number(item.price || 0) *
-            Number(item.quantity || 1);
-
-    });
-
-
-    const delivery =
-        subtotal === 0
-            ? 0
-            : subtotal >= 500
-                ? 0
-                : 40;
-
-
-    const discount =
-        subtotal >= 1000
-            ? subtotal * 0.10
-            : 0;
-
-
-    const total =
-        subtotal +
-        delivery -
-        discount;
-
-
-    return {
-        subtotal,
-        delivery,
-        discount,
-        total
-    };
-}
-
-
-// ===============================
-// FOOD IMAGE MAP
-// ===============================
-
-const imageMap = {
-
-    "Margherita Pizza":
-        "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=300&q=80",
-
-    "Farmhouse Pizza":
-        "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=300&q=80",
-
-    "Paneer Tikka Pizza":
-        "https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=300&q=80",
-
-    "Classic Chicken Burger":
-        "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=300&q=80",
-
-    "Cheese Burger":
-        "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=300&q=80",
-
-    "Paneer Butter Masala":
-        "https://images.unsplash.com/photo-1631452180519-c014fe946bc7?auto=format&fit=crop&w=300&q=80",
-
-    "Veg Biryani":
-        "https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=300&q=80",
-
-    "Chocolate Brownie":
-        "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=300&q=80",
-
-    "Chocolate Cake":
-        "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=300&q=80",
-
-    "Fresh Lime Soda":
-        "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=300&q=80",
-
-    "Veg Noodles":
-        "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=300&q=80"
-
-};
-
-
-// ===============================
-// GET FOOD IMAGE
-// ===============================
-
-function getFoodImage(item) {
-
-    return (
-        item.image ||
-        item.img ||
-        item.imageUrl ||
-        item.photo ||
-        imageMap[item.name] ||
-        "https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=300&q=80"
-    );
-}
-
-
-// ===============================
-// DISPLAY CHECKOUT SUMMARY
-// ===============================
-
-function displayCheckoutSummary() {
-
-    const cart = getCart();
-
-    const orderSummary =
-        document.getElementById("order-summary");
-
-
-    if (!orderSummary) {
-        return;
-    }
-
-
-    if (cart.length === 0) {
-
-        orderSummary.innerHTML = `
-
-            <div style="
-                text-align:center;
-                padding:40px 10px;
-                color:#777;
-            ">
-
-                <div style="font-size:45px;">
-                    🛒
-                </div>
-
-                <p>
-                    Your cart is empty.
-                </p>
-
-                <a
-                    href="menu.html"
-                    style="
-                        display:inline-block;
-                        background:#ff6b35;
-                        color:white;
-                        padding:10px 18px;
-                        border-radius:7px;
-                        text-decoration:none;
-                        font-weight:bold;
-                    "
-                >
-                    Go to Menu
-                </a>
-
-            </div>
-
-        `;
-
-        return;
-    }
-
-
-    orderSummary.innerHTML = "";
-
+    let discount = 0;
 
     cart.forEach(item => {
 
         const quantity =
-            Number(item.quantity || 1);
+            Number(item.quantity || 0);
 
-        const itemTotal =
-            Number(item.price || 0) *
-            quantity;
+        const price =
+            Number(item.price || 0);
 
-        const image =
-            getFoodImage(item);
+        subtotal +=
+            quantity * price;
 
+        const offer =
+            calculateOffer(item);
 
-        const itemElement =
-            document.createElement("div");
-
-        itemElement.className =
-            "order-item";
-
-
-        itemElement.innerHTML = `
-
-            <img
-                src="${image}"
-                alt="${item.name || "Food Item"}"
-                class="order-item-image"
-                onerror="
-                    this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=300&q=80';
-                "
-            >
-
-            <div class="order-item-details">
-
-                <div class="order-item-name">
-                    ${item.name || "Food Item"}
-                </div>
-
-                <div class="order-item-quantity">
-                    ₹${Number(item.price || 0)} × ${quantity}
-                </div>
-
-            </div>
-
-            <div class="order-item-price">
-                ₹${itemTotal.toFixed(2)}
-            </div>
-
-        `;
-
-
-        orderSummary.appendChild(
-            itemElement
-        );
+        discount +=
+            offer.discount;
 
     });
 
 
-    // ===============================
-    // UPDATE PRICE
-    // ===============================
-
-    const totals =
-        calculateTotals(cart);
-
-
-    const subtotal =
-        document.getElementById("subtotal");
-
+    // Delivery
     const delivery =
-        document.getElementById("delivery");
+        subtotal >= 500
+            ? 0
+            : 40;
 
-    const discount =
-        document.getElementById("discount");
+
+    // Extra 10% discount for large orders
+    let extraDiscount = 0;
+
+    if (subtotal >= 1000) {
+
+        extraDiscount =
+            (subtotal - discount) * 0.10;
+
+    }
+
+
+    discount +=
+        extraDiscount;
+
 
     const total =
-        document.getElementById("total");
-
-
-    if (subtotal) {
-
-        subtotal.textContent =
-            `₹${totals.subtotal.toFixed(2)}`;
-    }
-
-
-    if (delivery) {
-
-        delivery.innerHTML =
-            totals.delivery === 0
-
-                ? `<span style="
-                    color:#28a745;
-                    font-weight:bold;
-                  ">
-                    FREE
-                  </span>`
-
-                : `₹${totals.delivery.toFixed(2)}`;
-    }
-
-
-    if (discount) {
-
-        discount.textContent =
-            `₹${totals.discount.toFixed(2)}`;
-    }
-
-
-    if (total) {
-
-        total.textContent =
-            `₹${totals.total.toFixed(2)}`;
-    }
-}
-
-
-// ===============================
-// SHOW CHECKOUT MESSAGE
-// ===============================
-
-function showCheckoutMessage(
-    message,
-    type = "error"
-) {
-
-    const messageElement =
-        document.getElementById(
-            "checkout-message"
+        Math.max(
+            0,
+            subtotal - discount + delivery
         );
 
 
-    if (!messageElement) {
-        return;
-    }
+    return {
 
+        subtotal,
+        delivery,
+        discount,
+        total
 
-    messageElement.textContent =
-        message;
+    };
 
-
-    messageElement.style.color =
-        type === "success"
-            ? "#28a745"
-            : "#dc3545";
 }
 
 
-// ===============================
-// AUTO FILL USER
-// ===============================
+// ============================================================
+// RENDER ORDER SUMMARY
+// ============================================================
 
-function autoFillUser() {
+function renderOrderSummary() {
 
-    const user =
-        getCurrentUser();
+    const summary =
+        document.getElementById(
+            "order-summary"
+        );
 
 
-    if (!user) {
+    if (!summary) {
         return;
     }
 
-
-    const name =
-        document.getElementById("name");
-
-    const email =
-        document.getElementById("email");
-
-    const phone =
-        document.getElementById("phone");
-
-    const address =
-        document.getElementById("address");
-
-    const city =
-        document.getElementById("city");
-
-
-    if (name && user.name) {
-        name.value = user.name;
-    }
-
-
-    if (email && user.email) {
-        email.value = user.email;
-    }
-
-
-    if (phone && user.phone) {
-        phone.value = user.phone;
-    }
-
-
-    if (address && user.address) {
-        address.value = user.address;
-    }
-
-
-    if (city && user.city) {
-        city.value = user.city;
-    }
-}
-
-
-// ===============================
-// PLACE ORDER
-// ===============================
-
-function placeOrder() {
 
     const cart =
         getCart();
@@ -454,104 +256,590 @@ function placeOrder() {
 
     if (cart.length === 0) {
 
-        showCheckoutMessage(
-            "Your cart is empty."
-        );
+        summary.innerHTML = `
+
+            <div style="
+                text-align:center;
+                padding:30px 10px;
+                color:#777;
+            ">
+
+                <h3 style="
+                    margin-bottom:8px;
+                    color:#333;
+                ">
+                    Your cart is empty
+                </h3>
+
+                <p>
+                    Please add some delicious food before checkout.
+                </p>
+
+                <a
+                    href="menu.html"
+                    style="
+                        display:inline-block;
+                        margin-top:12px;
+                        padding:10px 18px;
+                        background:#ff6b35;
+                        color:white;
+                        text-decoration:none;
+                        border-radius:7px;
+                        font-weight:bold;
+                    "
+                >
+                    Browse Menu
+                </a>
+
+            </div>
+
+        `;
+
+        updatePriceSummary([]);
 
         return;
+
     }
 
+
+    summary.innerHTML =
+        cart.map(item => {
+
+            const offer =
+                calculateOffer(item);
+
+            const itemTotal =
+                Number(item.price || 0) *
+                offer.payableQuantity;
+
+
+            return `
+
+                <div class="order-item">
+
+                    <img
+                        src="${item.image || ""}"
+                        alt="${item.name || "Food"}"
+                        class="order-item-image"
+                        onerror="
+                            this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=500&q=80';
+                        "
+                    >
+
+
+                    <div class="order-item-details">
+
+                        <div class="order-item-name">
+                            ${item.name}
+                        </div>
+
+
+                        <div class="order-item-quantity">
+
+                            Quantity:
+                            ${offer.quantity}
+
+                            ${
+                                offer.freeQuantity > 0
+                                    ? `
+                                        <br>
+                                        <span style="
+                                            color:#198754;
+                                            font-weight:bold;
+                                        ">
+                                            🎁 ${offer.freeQuantity} FREE
+                                        </span>
+                                      `
+                                    : ""
+                            }
+
+                            ${
+                                item.offer
+                                    ? `
+                                        <br>
+                                        <span style="
+                                            color:#ff6b35;
+                                            font-weight:bold;
+                                        ">
+                                            ${item.offer}
+                                        </span>
+                                      `
+                                    : ""
+                            }
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="order-item-price">
+
+                        ₹${itemTotal.toFixed(0)}
+
+                        ${
+                            offer.discount > 0
+                                ? `
+                                    <div style="
+                                        font-size:11px;
+                                        color:#198754;
+                                        font-weight:normal;
+                                        margin-top:3px;
+                                    ">
+                                        Saved ₹${offer.discount.toFixed(0)}
+                                    </div>
+                                  `
+                                : ""
+                        }
+
+                    </div>
+
+                </div>
+
+            `;
+
+        }).join("");
+
+
+    updatePriceSummary(cart);
+
+}
+
+
+// ============================================================
+// UPDATE PRICE SUMMARY
+// ============================================================
+
+function updatePriceSummary(cart) {
+
+    const totals =
+        calculateTotals(cart);
+
+
+    const subtotal =
+        document.getElementById(
+            "subtotal"
+        );
+
+    const delivery =
+        document.getElementById(
+            "delivery"
+        );
+
+    const discount =
+        document.getElementById(
+            "discount"
+        );
+
+    const total =
+        document.getElementById(
+            "total"
+        );
+
+
+    if (subtotal) {
+
+        subtotal.textContent =
+            `₹${totals.subtotal.toFixed(0)}`;
+
+    }
+
+
+    if (delivery) {
+
+        delivery.textContent =
+            totals.delivery === 0
+                ? "FREE"
+                : `₹${totals.delivery}`;
+
+    }
+
+
+    if (discount) {
+
+        discount.textContent =
+            `-₹${totals.discount.toFixed(0)}`;
+
+    }
+
+
+    if (total) {
+
+        total.textContent =
+            `₹${totals.total.toFixed(0)}`;
+
+    }
+
+}
+
+
+// ============================================================
+// AUTO-FILL USER DETAILS
+// ============================================================
+
+function autofillUserDetails() {
 
     const user =
         getCurrentUser();
 
 
     if (!user) {
-
-        showCheckoutMessage(
-            "Please login before placing your order."
-        );
-
-
-        setTimeout(() => {
-
-            window.location.href =
-                "login.html";
-
-        }, 1200);
-
-
         return;
     }
 
 
-    // ===============================
-    // CUSTOMER DETAILS
-    // ===============================
+    const name =
+        document.getElementById(
+            "name"
+        );
 
-    const nameElement =
-        document.getElementById("name");
+    const email =
+        document.getElementById(
+            "email"
+        );
 
-    const emailElement =
-        document.getElementById("email");
+    const phone =
+        document.getElementById(
+            "phone"
+        );
 
-    const phoneElement =
-        document.getElementById("phone");
+    const address =
+        document.getElementById(
+            "address"
+        );
 
-    const addressElement =
-        document.getElementById("address");
+    const city =
+        document.getElementById(
+            "city"
+        );
 
-    const cityElement =
-        document.getElementById("city");
+    const pincode =
+        document.getElementById(
+            "pincode"
+        );
 
-    const pincodeElement =
-        document.getElementById("pincode");
+
+    if (
+        name &&
+        user.name
+    ) {
+
+        name.value =
+            user.name;
+
+    }
+
+
+    if (
+        email &&
+        user.email
+    ) {
+
+        email.value =
+            user.email;
+
+    }
+
+
+    if (
+        phone &&
+        user.phone
+    ) {
+
+        phone.value =
+            user.phone;
+
+    }
+
+
+    if (
+        address &&
+        user.address
+    ) {
+
+        address.value =
+            user.address;
+
+    }
+
+
+    if (
+        city &&
+        user.city
+    ) {
+
+        city.value =
+            user.city;
+
+    }
+
+
+    if (
+        pincode &&
+        user.pincode
+    ) {
+
+        pincode.value =
+            user.pincode;
+
+    }
+
+}
+
+
+// ============================================================
+// PINCODE LOOKUP
+// ============================================================
+
+function setupPincodeLookup() {
+
+    const pincodeInput =
+        document.getElementById(
+            "pincode"
+        );
+
+    const cityInput =
+        document.getElementById(
+            "city"
+        );
+
+
+    if (
+        !pincodeInput ||
+        !cityInput
+    ) {
+
+        return;
+
+    }
+
+
+    // Small status message
+    let pinStatus =
+        document.getElementById(
+            "pin-status"
+        );
+
+
+    if (!pinStatus) {
+
+        pinStatus =
+            document.createElement(
+                "small"
+            );
+
+        pinStatus.id =
+            "pin-status";
+
+        pinStatus.style.display =
+            "block";
+
+        pinStatus.style.marginTop =
+            "5px";
+
+        pinStatus.style.fontSize =
+            "11px";
+
+        pincodeInput.parentElement.appendChild(
+            pinStatus
+        );
+
+    }
+
+
+    pincodeInput.addEventListener(
+        "input",
+        function () {
+
+            // Allow only numbers
+            this.value =
+                this.value.replace(
+                    /\D/g,
+                    ""
+                );
+
+
+            // Clear previous message
+            pinStatus.textContent =
+                "";
+
+            pinStatus.style.color =
+                "#777";
+
+
+            // Clear city until valid PIN
+            if (
+                this.value.length !== 6
+            ) {
+
+                return;
+
+            }
+
+
+            pinStatus.textContent =
+                "Checking pincode...";
+
+            pinStatus.style.color =
+                "#777";
+
+
+            fetch(
+                `https://api.postalpincode.in/pincode/${this.value}`
+            )
+
+                .then(
+                    response =>
+                        response.json()
+                )
+
+                .then(
+                    data => {
+
+                        if (
+                            !data ||
+                            !data[0] ||
+                            data[0].Status !== "Success" ||
+                            !data[0].PostOffice ||
+                            data[0].PostOffice.length === 0
+                        ) {
+
+                            cityInput.value =
+                                "";
+
+                            pinStatus.textContent =
+                                "❌ Invalid pincode.";
+
+                            pinStatus.style.color =
+                                "#dc3545";
+
+                            return;
+
+                        }
+
+
+                        const location =
+                            data[0].PostOffice[0];
+
+
+                        cityInput.value =
+                            location.District ||
+                            location.Block ||
+                            location.Name ||
+                            "";
+
+
+                        pinStatus.textContent =
+                            "✓ City found automatically.";
+
+                        pinStatus.style.color =
+                            "#198754";
+
+                    }
+                )
+
+                .catch(
+                    error => {
+
+                        console.error(
+                            "Pincode lookup error:",
+                            error
+                        );
+
+
+                        pinStatus.textContent =
+                            "Unable to check pincode. Please enter city manually.";
+
+                        pinStatus.style.color =
+                            "#dc3545";
+
+                    }
+                );
+
+        }
+    );
+
+}
+
+
+// ============================================================
+// SAVE ORDER
+// ============================================================
+
+function placeOrder() {
+
+    const message =
+        document.getElementById(
+            "checkout-message"
+        );
+
+
+    const cart =
+        getCart();
+
+
+    // Empty cart
+    if (cart.length === 0) {
+
+        if (message) {
+
+            message.textContent =
+                "Your cart is empty.";
+
+            message.style.color =
+                "#dc3545";
+
+        }
+
+        return;
+
+    }
 
 
     const name =
-        nameElement
-            ? nameElement.value.trim()
-            : "";
+        document.getElementById(
+            "name"
+        ).value.trim();
+
 
     const email =
-        emailElement
-            ? emailElement.value.trim()
-            : "";
+        document.getElementById(
+            "email"
+        ).value.trim();
+
 
     const phone =
-        phoneElement
-            ? phoneElement.value.trim()
-            : "";
+        document.getElementById(
+            "phone"
+        ).value.trim();
+
 
     const address =
-        addressElement
-            ? addressElement.value.trim()
-            : "";
+        document.getElementById(
+            "address"
+        ).value.trim();
+
 
     const city =
-        cityElement
-            ? cityElement.value.trim()
-            : "";
+        document.getElementById(
+            "city"
+        ).value.trim();
+
 
     const pincode =
-        pincodeElement
-            ? pincodeElement.value.trim()
-            : "";
+        document.getElementById(
+            "pincode"
+        ).value.trim();
 
 
-    // ===============================
-    // PAYMENT
-    // ===============================
-
-    const paymentElement =
+    const payment =
         document.querySelector(
             'input[name="payment"]:checked'
         );
 
 
-    // ===============================
+    // ========================================================
     // VALIDATION
-    // ===============================
+    // ========================================================
 
     if (
         !name ||
@@ -562,158 +850,129 @@ function placeOrder() {
         !pincode
     ) {
 
-        showCheckoutMessage(
-            "Please fill all customer details."
-        );
+        if (message) {
+
+            message.textContent =
+                "Please fill in all delivery details.";
+
+            message.style.color =
+                "#dc3545";
+
+        }
 
         return;
+
     }
 
 
-    if (!paymentElement) {
+    if (
+        !/^\d{6}$/.test(
+            pincode
+        )
+    ) {
 
-        showCheckoutMessage(
-            "Please select a payment method."
-        );
+        if (message) {
+
+            message.textContent =
+                "Please enter a valid 6-digit pincode.";
+
+            message.style.color =
+                "#dc3545";
+
+        }
 
         return;
+
     }
 
 
-    // ===============================
-    // TOTALS
-    // ===============================
+    if (!payment) {
+
+        if (message) {
+
+            message.textContent =
+                "Please select a payment method.";
+
+            message.style.color =
+                "#dc3545";
+
+        }
+
+        return;
+
+    }
+
+
+    // ========================================================
+    // CALCULATE TOTAL
+    // ========================================================
 
     const totals =
         calculateTotals(cart);
 
 
-    // ===============================
-    // CREATE ORDER ID
-    // ===============================
+    // ========================================================
+    // CREATE ORDER
+    // ========================================================
+
+    let orders = [];
+
+    try {
+
+        orders =
+            JSON.parse(
+                localStorage.getItem(
+                    ORDERS_KEY
+                ) || "[]"
+            );
+
+    } catch (error) {
+
+        orders = [];
+
+    }
+
+
+    if (!Array.isArray(orders)) {
+
+        orders = [];
+
+    }
+
 
     const orderId =
         "FB" +
-        Date.now()
-            .toString()
-            .slice(-8);
+        Date.now();
 
-
-    // ===============================
-    // CREATE ORDER
-    // ===============================
 
     const order = {
 
-        /*
-         * Main order identifiers
-         */
+        orderId,
 
-        id:
-            orderId,
+        date:
+            new Date().toLocaleString(),
 
-        orderId:
-            orderId,
+        customer: {
 
-
-        /*
-         * CUSTOMER IDENTIFICATION
-         *
-         * We save BOTH ID and email.
-         * This allows My Orders to find
-         * the order reliably.
-         */
-
-        userId:
-            user.id ||
-            user.userId ||
-            user.uid ||
-            "",
-
-        customerId:
-            user.id ||
-            user.userId ||
-            user.uid ||
-            "",
-
-        userEmail:
-            email,
-
-        customerEmail:
-            email,
-
-        email:
-            email,
-
-
-        /*
-         * CUSTOMER DETAILS
-         */
-
-        customerName:
             name,
 
-        name:
-            name,
+            email,
 
-        phone:
             phone,
 
-        address:
             address,
 
-        deliveryAddress:
-            address,
-
-        city:
             city,
 
-        pincode:
-            pincode,
+            pincode
 
-
-        /*
-         * PAYMENT
-         */
+        },
 
         paymentMethod:
-            paymentElement.value,
-
-
-        /*
-         * ORDER ITEMS
-         */
+            payment.value,
 
         items:
-            cart.map(item => {
-
-                return {
-
-                    id:
-                        item.id,
-
-                    name:
-                        item.name,
-
-                    price:
-                        Number(item.price || 0),
-
-                    quantity:
-                        Number(
-                            item.quantity || 1
-                        ),
-
-                    image:
-                        getFoodImage(item)
-
-                };
-
-            }),
-
-
-        /*
-         * PRICE DETAILS
-         */
+            cart,
 
         subtotal:
             totals.subtotal,
@@ -727,154 +986,165 @@ function placeOrder() {
         total:
             totals.total,
 
-
-        /*
-         * STATUS
-         */
-
         status:
-            "Order Placed",
-
-
-        /*
-         * DATE
-         */
-
-        createdAt:
-            new Date().toISOString(),
-
-        orderDate:
-            new Date().toISOString(),
-
-
-        /*
-         * ADMIN MESSAGE
-         */
-
-        adminMessage:
-            "",
-
-        lastUpdated:
-            null
+            "Order Placed"
 
     };
 
 
-    // ===============================
-    // SAVE ORDER
-    // ===============================
-
-    const orders =
-        getOrders();
-
-
-    orders.push(order);
-
-
-    saveOrders(orders);
-
-
-    // ===============================
-    // CLEAR CART
-    // ===============================
-
-    localStorage.removeItem(
-        "cart"
-    );
-
-    localStorage.removeItem(
-        "freshbite_cart"
+    orders.push(
+        order
     );
 
 
-    // ===============================
-    // SAVE LAST ORDER
-    // ===============================
+    localStorage.setItem(
+        ORDERS_KEY,
+        JSON.stringify(orders)
+    );
 
+
+    // Also save latest order
     localStorage.setItem(
         "freshbite_last_order",
         JSON.stringify(order)
     );
 
 
-    // ===============================
-    // REDIRECT
-    // ===============================
+    // ========================================================
+    // CLEAR CART
+    // ========================================================
 
-    window.location.href =
-        "order-success.html?orderId=" +
-        encodeURIComponent(orderId);
+    saveCart([]);
+
+
+    // ========================================================
+    // SHOW SUCCESS MESSAGE
+    // ========================================================
+
+    if (message) {
+
+        message.textContent =
+            "✓ Order placed successfully!";
+
+        message.style.color =
+            "#198754";
+
+    }
+
+
+    // ========================================================
+    // REDIRECT
+    // ========================================================
+
+    setTimeout(
+        function () {
+
+            window.location.href =
+                `order-success.html?orderId=${encodeURIComponent(orderId)}`;
+
+        },
+        500
+    );
+
 }
 
 
-// ===============================
-// PAGE LOAD
-// ===============================
+// ============================================================
+// PLACE ORDER BUTTON
+// ============================================================
+
+function setupPlaceOrderButton() {
+
+    const button =
+        document.getElementById(
+            "place-order-btn"
+        );
+
+
+    if (!button) {
+        return;
+    }
+
+
+    button.addEventListener(
+        "click",
+        function () {
+
+            placeOrder();
+
+        }
+    );
+
+}
+
+
+// ============================================================
+// MOBILE NAVIGATION
+// ============================================================
+
+function setupMobileMenu() {
+
+    const menuButton =
+        document.getElementById(
+            "menu-btn"
+        );
+
+
+    const navigation =
+        document.querySelector(
+            ".nav-links"
+        );
+
+
+    if (
+        menuButton &&
+        navigation
+    ) {
+
+        menuButton.addEventListener(
+            "click",
+            function () {
+
+                navigation.classList.toggle(
+                    "mobile-active"
+                );
+
+            }
+        );
+
+    }
+
+}
+
+
+// ============================================================
+// INITIALIZE CHECKOUT
+// ============================================================
 
 document.addEventListener(
     "DOMContentLoaded",
     function () {
 
-        displayCheckoutSummary();
+        renderOrderSummary();
 
-        autoFillUser();
+        autofillUserDetails();
 
+        setupPincodeLookup();
 
-        const form =
-            document.getElementById(
-                "checkout-form"
-            );
+        setupPlaceOrderButton();
 
-
-        const button =
-            document.getElementById(
-                "place-order-btn"
-            );
-
-
-        if (form) {
-
-            form.addEventListener(
-                "submit",
-                function (event) {
-
-                    event.preventDefault();
-
-                    placeOrder();
-
-                }
-            );
-
-        }
-
-
-        if (button) {
-
-            button.addEventListener(
-                "click",
-                function (event) {
-
-                    /*
-                     * Prevent double submission
-                     * when button is inside form.
-                     */
-
-                    event.preventDefault();
-
-                    placeOrder();
-
-                }
-            );
-
-        }
+        setupMobileMenu();
 
     }
 );
 
 
-// ===============================
-// GLOBAL FUNCTION
-// ===============================
+// ============================================================
+// GLOBAL FUNCTIONS
+// ============================================================
 
 window.placeOrder =
     placeOrder;
+
+window.renderOrderSummary =
+    renderOrderSummary;

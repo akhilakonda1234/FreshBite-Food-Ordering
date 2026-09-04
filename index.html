@@ -2,64 +2,1901 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>FreshBite - Online Food Ordering</title>
 
-    <!-- Font Awesome Icons -->
     <link
         rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     >
 
-    <!-- Main CSS -->
-    <link
-        rel="stylesheet"
-        href="css/style.css"
-    >
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+
+        /* =====================================================
+           HOME PAGE EXTRA STYLES
+        ===================================================== */
+
+        .location-section {
+            padding: 75px 6%;
+            background: #fff8f3;
+        }
+
+        .location-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+        }
+
+        .location-title {
+            margin: 0;
+        }
+
+        .location-title span {
+            color: #ff5a1f;
+        }
+
+        .location-subtitle {
+            margin-top: 8px;
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .location-btn {
+            border: none;
+            background: linear-gradient(135deg, #ff5a1f, #ff8a00);
+            color: white;
+            padding: 15px 24px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 8px 20px rgba(255,90,31,.22);
+            transition: .3s;
+            white-space: nowrap;
+        }
+
+        .location-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .location-btn:disabled {
+            opacity: .7;
+            cursor: wait;
+            transform: none;
+        }
+
+        .location-status {
+            margin: 15px 0 25px;
+            padding: 14px 18px;
+            border-radius: 10px;
+            background: white;
+            color: #555;
+            display: none;
+            border: 1px solid #eee;
+        }
+
+        /* =====================================================
+           RESTAURANT GRID
+        ===================================================== */
+
+        .nearby-restaurants {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+            width: 100%;
+        }
+
+        .nearby-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,.08);
+            transition: .3s;
+            border: 1px solid #f0f0f0;
+            min-width: 0;
+        }
+
+        .nearby-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(0,0,0,.14);
+        }
+
+        .nearby-image {
+            width: 100%;
+            height: 280px;
+            display: block;
+            object-fit: cover;
+            background: #eee;
+        }
+
+        .nearby-info {
+            padding: 20px;
+        }
+
+        .nearby-info h3 {
+            margin: 0 0 9px;
+            font-size: 21px;
+            color: #222;
+        }
+
+        .nearby-cuisine {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 13px;
+            line-height: 1.5;
+        }
+
+        .nearby-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin-bottom: 14px;
+        }
+
+        .nearby-tag {
+            background: #fff3eb;
+            color: #e84d13;
+            padding: 6px 9px;
+            border-radius: 7px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .restaurant-address {
+            font-size: 13px;
+            color: #777;
+            line-height: 1.5;
+            margin: 10px 0 14px;
+        }
+
+        .restaurant-phone {
+            font-size: 12px;
+            color: #555;
+            margin: 8px 0;
+        }
+
+        .restaurant-website {
+            font-size: 12px;
+            margin: 8px 0 14px;
+        }
+
+        .restaurant-website a {
+            color: #ff5a1f;
+            text-decoration: none;
+        }
+
+        .restaurant-website a:hover {
+            text-decoration: underline;
+        }
+
+        .restaurant-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .directions-btn {
+            display: inline-block;
+            text-decoration: none;
+            background: #111827;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: .2s;
+        }
+
+        .directions-btn:hover {
+            background: #ff5a1f;
+        }
+
+        .map-btn {
+            display: inline-block;
+            text-decoration: none;
+            background: #f3f4f6;
+            color: #111827;
+            padding: 10px 15px;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: .2s;
+        }
+
+        .map-btn:hover {
+            background: #e5e7eb;
+        }
+
+        .restaurant-source {
+            font-size: 11px;
+            color: #999;
+            margin-top: 12px;
+        }
+
+        .no-location {
+            text-align: center;
+            padding: 40px 20px;
+            background: white;
+            border-radius: 16px;
+            color: #666;
+            grid-column: 1 / -1;
+        }
+
+        .no-location-icon {
+            font-size: 45px;
+            margin-bottom: 12px;
+        }
+
+        /* =====================================================
+           RESTAURANT DOTS
+        ===================================================== */
+
+        .restaurant-dots {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 9px;
+            margin: 5px 0 0;
+        }
+
+        .restaurant-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #d7d7d7;
+            display: block;
+        }
+
+        .restaurant-dot.active {
+            background: #ff5a1f;
+        }
+
+        /* =====================================================
+           FOOD DETAILS
+        ===================================================== */
+
+        .food-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            margin: 10px 0;
+        }
+
+        .food-detail-tag {
+            font-size: 11px;
+            padding: 5px 8px;
+            border-radius: 6px;
+            background: #f5f5f5;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .veg-tag {
+            background: #e9f8ee;
+            color: #16833d;
+        }
+
+        .nonveg-tag {
+            background: #fff0ed;
+            color: #d93624;
+        }
+
+        .offer-tag {
+            background: #fff3cd;
+            color: #9a6700;
+        }
+
+        .old-price {
+            text-decoration: line-through;
+            color: #999;
+            font-size: 13px;
+            margin-left: 5px;
+        }
+
+        .food-ingredients {
+            font-size: 12px;
+            color: #777;
+            line-height: 1.5;
+            margin: 7px 0;
+        }
+
+        .offer-access {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+        }
+
+        .offer-access span {
+            font-size: 11px;
+            padding: 5px 8px;
+            border-radius: 6px;
+            background: #fff3cd;
+            color: #9a6700;
+            font-weight: 700;
+        }
+
+        /* =====================================================
+           LOCATION
+        ===================================================== */
+
+        .location-note {
+            margin-top: 12px;
+            font-size: 12px;
+            color: #777;
+            line-height: 1.6;
+        }
+
+        .location-accuracy {
+            display: none;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #777;
+        }
+
+        /* =====================================================
+           OFFERS
+        ===================================================== */
+
+        .offer-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+        }
+
+        .offer-chip {
+            background: rgba(255,255,255,.18);
+            border: 1px solid rgba(255,255,255,.35);
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        /* =====================================================
+           SEARCH ANIMATION
+        ===================================================== */
+
+        .searching-dots {
+            display: inline-flex;
+            gap: 4px;
+            margin-left: 5px;
+        }
+
+        .searching-dots span {
+            width: 5px;
+            height: 5px;
+            background: currentColor;
+            border-radius: 50%;
+            animation: dotPulse 1.2s infinite;
+        }
+
+        .searching-dots span:nth-child(2) {
+            animation-delay: .2s;
+        }
+
+        .searching-dots span:nth-child(3) {
+            animation-delay: .4s;
+        }
+
+        @keyframes dotPulse {
+            0%,60%,100% {
+                opacity: .3;
+                transform: translateY(0);
+            }
+
+            30% {
+                opacity: 1;
+                transform: translateY(-3px);
+            }
+        }
+
+        /* =====================================================
+           FOOD GRID
+        ===================================================== */
+
+        .food-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .food-card {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .food-card > img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .food-info {
+            flex: 1;
+        }
+
+        .food-description {
+            line-height: 1.5;
+        }
+
+        /* =====================================================
+           RESTAURANT MENU ITEMS
+        ===================================================== */
+
+        .nearby-menu {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid #eeeeee;
+        }
+
+        .nearby-menu h4 {
+            margin: 0 0 13px;
+            font-size: 17px;
+            color: #222;
+        }
+
+        .nearby-food-item {
+            display: flex;
+            gap: 12px;
+            padding: 10px;
+            margin-bottom: 10px;
+            background: #fff8f3;
+            border-radius: 12px;
+            border: 1px solid #f1e7df;
+        }
+
+        .nearby-food-item img {
+            width: 75px;
+            height: 75px;
+            flex-shrink: 0;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .nearby-food-details {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .nearby-food-details h5 {
+            margin: 0 0 5px;
+            font-size: 14px;
+            color: #222;
+        }
+
+        .nearby-food-price {
+            font-size: 14px;
+            font-weight: 800;
+            color: #ff5a1f;
+            margin-bottom: 5px;
+        }
+
+        .nearby-food-offer {
+            display: inline-block;
+            background: #fff3cd;
+            color: #9a6700;
+            padding: 4px 7px;
+            border-radius: 5px;
+            font-size: 10px;
+            font-weight: 700;
+            margin-bottom: 7px;
+        }
+
+        .nearby-add-btn {
+            display: block;
+            width: 100%;
+            border: none;
+            background: #ff5a1f;
+            color: white;
+            padding: 8px 10px;
+            border-radius: 7px;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .nearby-add-btn:hover {
+            background: #e94b12;
+            transform: translateY(-1px);
+        }
+
+        .restaurant-menu-note {
+            font-size: 10px;
+            color: #999;
+            line-height: 1.5;
+            margin-top: 10px;
+        }
+
+        /* =====================================================
+           ADD TO CART CLICK FEEDBACK
+        ===================================================== */
+.cart-clicked {
+    animation: addToCartFlash 0.5s ease;
+}
+
+@keyframes addToCartFlash {
+    0% {
+        background-color: #000 !important;
+        color: #fff !important;
+        transform: scale(1);
+    }
+
+    40% {
+        background-color: #000 !important;
+        color: #fff !important;
+        transform: scale(0.92);
+    }
+
+    100% {
+        background-color: initial;
+        color: initial;
+        transform: scale(1);
+    }
+}
+        /* =====================================================
+           MOBILE + TABLET
+        ===================================================== */
+
+        @media (max-width: 1100px) {
+
+            .food-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .nearby-restaurants {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+        }
+
+        @media (max-width: 768px) {
+
+            .location-section {
+                padding: 55px 5%;
+            }
+
+            .location-header {
+                align-items: flex-start;
+            }
+
+            .location-btn {
+                width: 100%;
+                white-space: normal;
+            }
+
+            .nearby-restaurants {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .nearby-image {
+                height: 230px;
+            }
+
+            .food-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .food-card > img {
+                height: 230px;
+            }
+
+            .food-details {
+                gap: 5px;
+            }
+
+            .restaurant-actions {
+                flex-direction: column;
+            }
+
+            .directions-btn,
+            .map-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .nearby-food-item {
+                padding: 9px;
+            }
+
+            .nearby-food-item img {
+                width: 70px;
+                height: 70px;
+            }
+
+            .nearby-food-details h5 {
+                font-size: 13px;
+            }
+
+        }
+
+    </style>
 
 </head>
 
 <body>
 
-    <!-- =========================
-         NAVIGATION BAR
-    ========================== -->
 
-    <header class="navbar">
+<!-- =====================================================
+     NAVIGATION
+===================================================== -->
 
-        <!-- LOGO -->
+<header class="navbar">
 
-        <div class="logo">
+    <div class="logo">
 
-            <div class="logo-icon">
-                🍕
+        <div class="logo-icon">
+            🍕
+        </div>
+
+        <div>
+
+            <div class="logo-text">
+                FreshBite
             </div>
 
-            <div>
+            <span class="logo-subtitle">
+                FRESH • FAST • DELICIOUS
+            </span>
 
-                <div class="logo-text">
-                    FreshBite
-                </div>
+        </div>
 
-                <span class="logo-subtitle">
-                    FRESH • FAST • DELICIOUS
+    </div>
+
+
+    <nav class="nav-links">
+
+        <a href="index.html">Home</a>
+
+        <a href="menu.html">Menu</a>
+
+        <a href="#restaurants">Restaurants</a>
+
+        <a href="#about">About</a>
+
+        <a href="#contact">Contact</a>
+
+        <a href="my-orders.html">
+            📦 My Orders
+        </a>
+
+        <a href="notification.html">
+            🔔 Notifications
+        </a>
+
+        <a href="login.html">
+            Login
+        </a>
+
+        <a href="cart.html" class="cart-btn">
+
+            🛒 Cart
+
+            <span id="cart-count">
+                0
+            </span>
+
+        </a>
+
+    </nav>
+
+
+    <button
+        class="menu-btn"
+        id="menu-btn"
+        type="button"
+    >
+        ☰
+    </button>
+
+</header>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="hero-badge">
+            🔥 Delicious food delivered fast
+        </div>
+
+        <h1>
+
+            Your Favorite Food
+
+            <span>
+                Delivered Fresh
+            </span>
+
+        </h1>
+
+        <p>
+            Discover delicious meals from restaurants
+            around you and get them delivered straight
+            to your doorstep.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="menu.html" class="btn-primary">
+                Explore Menu →
+            </a>
+
+            <a href="#restaurants" class="btn-secondary">
+                Find Restaurants
+            </a>
+
+        </div>
+
+        <div class="stats">
+
+            <div class="stat">
+
+                <strong>
+                    50+
+                </strong>
+
+                <span>
+                    Restaurants
+                </span>
+
+            </div>
+
+            <div class="stat">
+
+                <strong>
+                    200+
+                </strong>
+
+                <span>
+                    Food Items
+                </span>
+
+            </div>
+
+            <div class="stat">
+
+                <strong>
+                    4.8 ⭐
+                </strong>
+
+                <span>
+                    Average Rating
                 </span>
 
             </div>
 
         </div>
 
+    </div>
 
-        <!-- CUSTOMER NAVIGATION -->
 
-        <nav class="nav-links">
+    <div class="hero-image">
+
+        <img
+            src="https://images.unsplash.com/photo-1504674900247-0877df9cc836"
+            alt="Delicious food"
+        >
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     CATEGORIES
+===================================================== -->
+
+<section class="categories">
+
+    <div class="section-header">
+
+        <div>
+
+            <h2 class="section-title">
+
+                Browse
+
+                <span>
+                    Categories
+                </span>
+
+            </h2>
+
+            <p>
+                Explore your favorite food categories
+            </p>
+
+        </div>
+
+        <a href="menu.html" class="view-all">
+            View All →
+        </a>
+
+    </div>
+
+
+    <div class="category-grid">
+
+        <a href="menu.html?category=pizza" class="category-card">
+            <div class="category-icon">🍕</div>
+            <h3>Pizza</h3>
+            <p>6 items</p>
+        </a>
+
+
+        <a href="menu.html?category=burger" class="category-card">
+            <div class="category-icon">🍔</div>
+            <h3>Burgers</h3>
+            <p>5 items</p>
+        </a>
+
+
+        <a href="menu.html?category=indian" class="category-card">
+            <div class="category-icon">🍛</div>
+            <h3>Indian</h3>
+            <p>7 items</p>
+        </a>
+
+
+        <a href="menu.html?category=chinese" class="category-card">
+            <div class="category-icon">🥡</div>
+            <h3>Chinese</h3>
+            <p>6 items</p>
+        </a>
+
+
+        <a href="menu.html?category=italian" class="category-card">
+            <div class="category-icon">🍝</div>
+            <h3>Italian</h3>
+            <p>3 items</p>
+        </a>
+
+
+        <a href="menu.html?category=snacks" class="category-card">
+            <div class="category-icon">🍟</div>
+            <h3>Snacks</h3>
+            <p>6 items</p>
+        </a>
+
+
+        <a href="menu.html?category=dessert" class="category-card">
+            <div class="category-icon">🍰</div>
+            <h3>Desserts</h3>
+            <p>5 items</p>
+        </a>
+
+
+        <a href="menu.html?category=drinks" class="category-card">
+            <div class="category-icon">🥤</div>
+            <h3>Drinks</h3>
+            <p>4 items</p>
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     POPULAR FOOD
+===================================================== -->
+
+<section class="food-section">
+
+    <div class="section-header">
+
+        <div>
+
+            <h2 class="section-title">
+
+                Popular
+
+                <span>
+                    Food
+                </span>
+
+            </h2>
+
+            <p>
+                Customer favorites you'll love
+            </p>
+
+        </div>
+
+        <a href="menu.html" class="view-all">
+            View All →
+        </a>
+
+    </div>
+
+
+    <div class="food-grid">
+
+
+        <!-- FOOD 1 -->
+
+        <div class="food-card">
+
+            <img
+                src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002"
+                alt="Margherita Pizza"
+                loading="lazy"
+            >
+
+            <div class="food-info">
+
+                <h3>Margherita Pizza</h3>
+
+                <p class="food-description">
+                    Classic Italian pizza with a crispy golden
+                    crust, rich tomato sauce, fresh mozzarella
+                    and fragrant basil leaves.
+                </p>
+
+                <div class="food-details">
+                    <span class="food-detail-tag veg-tag">🟢 Veg</span>
+                    <span class="food-detail-tag">⭐ 4.8</span>
+                    <span class="food-detail-tag">🕒 20 min</span>
+                    <span class="food-detail-tag">👥 Serves 1</span>
+                </div>
+
+                <p class="food-ingredients">
+                    Ingredients: Tomato sauce, mozzarella,
+                    basil, flour, olive oil and Italian herbs.
+                </p>
+
+                <div class="offer-access">
+                    <span>🔥 20% OFF</span>
+                </div>
+
+                <div class="food-bottom">
+
+                    <span class="price">
+                        ₹199
+                        <span class="old-price">₹249</span>
+                    </span>
+
+                    <button
+                        class="add-cart"
+                        type="button"
+                        onclick="addFoodToCart(101,'Margherita Pizza',199,'https://images.unsplash.com/photo-1574071318508-1cdbab80d002','20% OFF',this)"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOD 2 -->
+
+        <div class="food-card">
+
+            <img
+                src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd"
+                alt="Cheese Burger"
+                loading="lazy"
+            >
+
+            <div class="food-info">
+
+                <h3>Cheese Burger</h3>
+
+                <p class="food-description">
+                    Juicy chicken patty layered with melted
+                    cheese, fresh lettuce, tomato, onion and
+                    creamy signature burger sauce.
+                </p>
+
+                <div class="food-details">
+                    <span class="food-detail-tag nonveg-tag">🔴 Non-Veg</span>
+                    <span class="food-detail-tag">⭐ 4.7</span>
+                    <span class="food-detail-tag">🕒 18 min</span>
+                    <span class="food-detail-tag">👥 Serves 1</span>
+                </div>
+
+                <p class="food-ingredients">
+                    Ingredients: Chicken patty, cheese,
+                    lettuce, tomato, onion, bun and sauce.
+                </p>
+
+                <div class="offer-access">
+                    <span>🎁 BUY 1 GET 1 FREE</span>
+                </div>
+
+                <div class="food-bottom">
+
+                    <span class="price">
+                        ₹179
+                        <span class="old-price">₹219</span>
+                    </span>
+
+                    <button
+                        class="add-cart"
+                        type="button"
+                        onclick="addFoodToCart(102,'Cheese Burger',179,'https://images.unsplash.com/photo-1568901346375-23c9450c58cd','BUY 1 GET 1 FREE',this)"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOD 3 -->
+
+        <div class="food-card">
+
+            <img
+                src="https://images.unsplash.com/photo-1547592180-85f173990554"
+                alt="Special Indian Thali"
+                loading="lazy"
+            >
+
+            <div class="food-info">
+
+                <h3>Special Indian Thali</h3>
+
+                <p class="food-description">
+                    A complete Indian meal featuring aromatic
+                    rice, dal, seasonal vegetables, roti, paneer,
+                    curd and flavorful traditional sides.
+                </p>
+
+                <div class="food-details">
+                    <span class="food-detail-tag veg-tag">🟢 Veg</span>
+                    <span class="food-detail-tag">⭐ 4.9</span>
+                    <span class="food-detail-tag">🕒 30 min</span>
+                    <span class="food-detail-tag">👥 Serves 1</span>
+                </div>
+
+                <p class="food-ingredients">
+                    Ingredients: Basmati rice, dal, paneer,
+                    vegetables, roti, curd and spices.
+                </p>
+
+                <div class="offer-access">
+                    <span>💰 FLAT ₹50 OFF</span>
+                </div>
+
+                <div class="food-bottom">
+
+                    <span class="price">
+                        ₹249
+                        <span class="old-price">₹299</span>
+                    </span>
+
+                    <button
+                        class="add-cart"
+                        type="button"
+                        onclick="addFoodToCart(103,'Special Indian Thali',249,'https://images.unsplash.com/photo-1547592180-85f173990554','FLAT ₹50 OFF',this)"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOD 4 -->
+
+        <div class="food-card">
+
+            <img
+                src="https://images.unsplash.com/photo-1578985545062-69928b1d9587"
+                alt="Chocolate Cake"
+                loading="lazy"
+            >
+
+            <div class="food-info">
+
+                <h3>Chocolate Cake</h3>
+
+                <p class="food-description">
+                    Rich and moist chocolate sponge layered with
+                    creamy chocolate frosting and finished with
+                    a smooth, delicious chocolate glaze.
+                </p>
+
+                <div class="food-details">
+                    <span class="food-detail-tag veg-tag">🟢 Veg</span>
+                    <span class="food-detail-tag">⭐ 4.9</span>
+                    <span class="food-detail-tag">🕒 15 min</span>
+                    <span class="food-detail-tag">👥 Serves 2</span>
+                </div>
+
+                <p class="food-ingredients">
+                    Ingredients: Cocoa, flour, sugar,
+                    milk, butter and chocolate frosting.
+                </p>
+
+                <div class="offer-access">
+                    <span>🎁 BUY 2 GET 1 FREE</span>
+                </div>
+
+                <div class="food-bottom">
+
+                    <span class="price">
+                        ₹129
+                        <span class="old-price">₹159</span>
+                    </span>
+
+                    <button
+                        class="add-cart"
+                        type="button"
+                        onclick="addFoodToCart(104,'Chocolate Cake',129,'https://images.unsplash.com/photo-1578985545062-69928b1d9587','BUY 2 GET 1 FREE',this)"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOD 5 -->
+
+        <div class="food-card">
+
+            <img
+                src="https://images.unsplash.com/photo-1601050690597-df0568f70950"
+                alt="Paneer Tikka"
+                loading="lazy"
+            >
+
+            <div class="food-info">
+
+                <h3>Paneer Tikka</h3>
+
+                <p class="food-description">
+                    Soft paneer cubes marinated in creamy yogurt,
+                    aromatic spices and grilled with colorful
+                    peppers and onions.
+                </p>
+
+                <div class="food-details">
+                    <span class="food-detail-tag veg-tag">🟢 Veg</span>
+                    <span class="food-detail-tag">⭐ 4.8</span>
+                    <span class="food-detail-tag">🕒 25 min</span>
+                    <span class="food-detail-tag">👥 Serves 2</span>
+                </div>
+
+                <p class="food-ingredients">
+                    Ingredients: Paneer, yogurt, capsicum,
+                    onion, lemon and tandoori spices.
+                </p>
+
+                <div class="offer-access">
+                    <span>🔥 20% OFF</span>
+                </div>
+
+                <div class="food-bottom">
+
+                    <span class="price">
+                        ₹219
+                        <span class="old-price">₹269</span>
+                    </span>
+
+                    <button
+                        class="add-cart"
+                        type="button"
+                        onclick="addFoodToCart(105,'Paneer Tikka',219,'https://images.unsplash.com/photo-1601050690597-df0568f70950','20% OFF',this)"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOD 6 -->
+
+        <div class="food-card">
+
+            <img
+                src="https://images.unsplash.com/photo-1563379091339-03246963d51a"
+                alt="Chicken Biryani"
+                loading="lazy"
+            >
+
+            <div class="food-info">
+
+                <h3>Chicken Biryani</h3>
+
+                <p class="food-description">
+                    Fragrant basmati rice cooked with tender
+                    chicken, caramelized onions, saffron and
+                    traditional biryani spices.
+                </p>
+
+                <div class="food-details">
+                    <span class="food-detail-tag nonveg-tag">🔴 Non-Veg</span>
+                    <span class="food-detail-tag">⭐ 4.9</span>
+                    <span class="food-detail-tag">🕒 35 min</span>
+                    <span class="food-detail-tag">👥 Serves 1</span>
+                </div>
+
+                <p class="food-ingredients">
+                    Ingredients: Chicken, basmati rice,
+                    onion, saffron, mint and spices.
+                </p>
+
+                <div class="offer-access">
+                    <span>💰 FLAT ₹50 OFF</span>
+                </div>
+
+                <div class="food-bottom">
+
+                    <span class="price">
+                        ₹279
+                        <span class="old-price">₹329</span>
+                    </span>
+
+                    <button
+                        class="add-cart"
+                        type="button"
+                        onclick="addFoodToCart(106,'Chicken Biryani',279,'https://images.unsplash.com/photo-1563379091339-03246963d51a','FLAT ₹50 OFF',this)"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOD 7 -->
+
+        <div class="food-card">
+
+            <img
+                src="https://images.unsplash.com/photo-1557872943-16a5ac26437e"
+                alt="Hakka Noodles"
+                loading="lazy"
+            >
+
+            <div class="food-info">
+
+                <h3>Hakka Noodles</h3>
+
+                <p class="food-description">
+                    Stir-fried noodles tossed with crunchy
+                    vegetables, spring onions, garlic and
+                    flavorful Asian sauces.
+                </p>
+
+                <div class="food-details">
+                    <span class="food-detail-tag veg-tag">🟢 Veg</span>
+                    <span class="food-detail-tag">⭐ 4.6</span>
+                    <span class="food-detail-tag">🕒 20 min</span>
+                    <span class="food-detail-tag">👥 Serves 1</span>
+                </div>
+
+                <p class="food-ingredients">
+                    Ingredients: Noodles, cabbage, carrot,
+                    capsicum, spring onion and soy sauce.
+                </p>
+
+                <div class="offer-access">
+                    <span>🎁 BUY 1 GET 1 FREE</span>
+                </div>
+
+                <div class="food-bottom">
+
+                    <span class="price">
+                        ₹159
+                        <span class="old-price">₹199</span>
+                    </span>
+
+                    <button
+                        class="add-cart"
+                        type="button"
+                        onclick="addFoodToCart(107,'Hakka Noodles',159,'https://images.unsplash.com/photo-1557872943-16a5ac26437e','BUY 1 GET 1 FREE',this)"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOD 8 -->
+
+        <div class="food-card">
+
+            <img
+                src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601"
+                alt="Alfredo Pasta"
+                loading="lazy"
+            >
+
+            <div class="food-info">
+
+                <h3>Alfredo Pasta</h3>
+
+                <p class="food-description">
+                    Creamy Italian pasta prepared with a rich
+                    Alfredo sauce, parmesan cheese, garlic
+                    and freshly ground herbs.
+                </p>
+
+                <div class="food-details">
+                    <span class="food-detail-tag veg-tag">🟢 Veg</span>
+                    <span class="food-detail-tag">⭐ 4.7</span>
+                    <span class="food-detail-tag">🕒 25 min</span>
+                    <span class="food-detail-tag">👥 Serves 1</span>
+                </div>
+
+                <p class="food-ingredients">
+                    Ingredients: Pasta, cream, parmesan,
+                    butter, garlic and Italian herbs.
+                </p>
+
+                <div class="offer-access">
+                    <span>🔥 20% OFF</span>
+                </div>
+
+                <div class="food-bottom">
+
+                    <span class="price">
+                        ₹229
+                        <span class="old-price">₹279</span>
+                    </span>
+
+                    <button
+                        class="add-cart"
+                        type="button"
+                        onclick="addFoodToCart(108,'Alfredo Pasta',229,'https://images.unsplash.com/photo-1473093295043-cdd812d0e601','20% OFF',this)"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOD 9 -->
+
+        <div class="food-card">
+
+            <img
+                src="https://images.unsplash.com/photo-1630383249896-424e482df921"
+                alt="Masala Dosa"
+                loading="lazy"
+            >
+
+            <div class="food-info">
+
+                <h3>Masala Dosa</h3>
+
+                <p class="food-description">
+                    Crispy golden South Indian dosa filled
+                    with spicy potato masala and served with
+                    coconut chutney and sambar.
+                </p>
+
+                <div class="food-details">
+                    <span class="food-detail-tag veg-tag">🟢 Veg</span>
+                    <span class="food-detail-tag">⭐ 4.8</span>
+                    <span class="food-detail-tag">🕒 18 min</span>
+                    <span class="food-detail-tag">👥 Serves 1</span>
+                </div>
+
+                <p class="food-ingredients">
+                    Ingredients: Rice, urad dal, potato,
+                    onion, mustard seeds and spices.
+                </p>
+
+                <div class="offer-access">
+                    <span>💰 FLAT ₹50 OFF</span>
+                </div>
+
+                <div class="food-bottom">
+
+                    <span class="price">
+                        ₹119
+                        <span class="old-price">₹149</span>
+                    </span>
+
+                    <button
+                        class="add-cart"
+                        type="button"
+                        onclick="addFoodToCart(109,'Masala Dosa',119,'https://images.unsplash.com/photo-1630383249896-424e482df921','FLAT ₹50 OFF',this)"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOD 10 -->
+
+        <div class="food-card">
+
+            <img
+                src="https://images.unsplash.com/photo-1547592180-85f173990554"
+                alt="Veg Spring Rolls"
+                loading="lazy"
+            >
+
+            <div class="food-info">
+
+                <h3>Veg Spring Rolls</h3>
+
+                <p class="food-description">
+                    Crispy golden rolls filled with seasoned
+                    cabbage, carrot, capsicum and spring onions,
+                    served with spicy dipping sauce.
+                </p>
+
+                <div class="food-details">
+                    <span class="food-detail-tag veg-tag">🟢 Veg</span>
+                    <span class="food-detail-tag">⭐ 4.6</span>
+                    <span class="food-detail-tag">🕒 15 min</span>
+                    <span class="food-detail-tag">👥 Serves 2</span>
+                </div>
+
+                <p class="food-ingredients">
+                    Ingredients: Cabbage, carrot, capsicum,
+                    spring onion, flour and Asian spices.
+                </p>
+
+                <div class="offer-access">
+                    <span>🎁 BUY 2 GET 1 FREE</span>
+                </div>
+
+                <div class="food-bottom">
+
+                    <span class="price">
+                        ₹139
+                        <span class="old-price">₹169</span>
+                    </span>
+
+                    <button
+                        class="add-cart"
+                        type="button"
+                        onclick="addFoodToCart(110,'Veg Spring Rolls',139,'https://images.unsplash.com/photo-1547592180-85f173990554','BUY 2 GET 1 FREE',this)"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOD 11 -->
+
+        <div class="food-card">
+
+            <img
+                src="https://images.unsplash.com/photo-1586788680434-30d324b2d46f"
+                alt="Red Velvet Cake"
+                loading="lazy"
+            >
+
+            <div class="food-info">
+
+                <h3>Red Velvet Cake</h3>
+
+                <p class="food-description">
+                    Soft red velvet sponge layered with smooth
+                    cream cheese frosting and finished with
+                    delicate cake crumbs.
+                </p>
+
+                <div class="food-details">
+                    <span class="food-detail-tag veg-tag">🟢 Veg</span>
+                    <span class="food-detail-tag">⭐ 4.9</span>
+                    <span class="food-detail-tag">🕒 15 min</span>
+                    <span class="food-detail-tag">👥 Serves 2</span>
+                </div>
+
+                <p class="food-ingredients">
+                    Ingredients: Flour, cocoa, sugar,
+                    milk, butter and cream cheese.
+                </p>
+
+                <div class="offer-access">
+                    <span>🔥 20% OFF</span>
+                </div>
+
+                <div class="food-bottom">
+
+                    <span class="price">
+                        ₹149
+                        <span class="old-price">₹189</span>
+                    </span>
+
+                    <button
+                        class="add-cart"
+                        type="button"
+                        onclick="addFoodToCart(111,'Red Velvet Cake',149,'https://images.unsplash.com/photo-1586788680434-30d324b2d46f','20% OFF',this)"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- FOOD 12 -->
+
+        <div class="food-card">
+
+            <img
+                src="https://images.unsplash.com/photo-1577805947697-89e18249d767"
+                alt="Mango Lassi"
+                loading="lazy"
+            >
+
+            <div class="food-info">
+
+                <h3>Mango Lassi</h3>
+
+                <p class="food-description">
+                    Refreshing creamy mango lassi blended
+                    with sweet ripe mangoes, chilled yogurt
+                    and a touch of cardamom.
+                </p>
+
+                <div class="food-details">
+                    <span class="food-detail-tag veg-tag">🟢 Veg</span>
+                    <span class="food-detail-tag">⭐ 4.8</span>
+                    <span class="food-detail-tag">🕒 8 min</span>
+                    <span class="food-detail-tag">👥 Serves 1</span>
+                </div>
+
+                <p class="food-ingredients">
+                    Ingredients: Mango pulp, yogurt,
+                    milk, sugar and cardamom.
+                </p>
+
+                <div class="offer-access">
+                    <span>🎁 BUY 1 GET 1 FREE</span>
+                </div>
+
+                <div class="food-bottom">
+
+                    <span class="price">
+                        ₹89
+                        <span class="old-price">₹119</span>
+                    </span>
+
+                    <button
+                        class="add-cart"
+                        type="button"
+                        onclick="addFoodToCart(112,'Mango Lassi',89,'https://images.unsplash.com/photo-1577805947697-89e18249d767','BUY 1 GET 1 FREE',this)"
+                    >
+                        +
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     RESTAURANTS NEAR YOU
+===================================================== -->
+
+<section
+    id="restaurants"
+    class="location-section"
+>
+
+    <div class="location-header">
+
+        <div>
+
+            <h2 class="section-title location-title">
+
+                Restaurants
+
+                <span>
+                    Near You
+                </span>
+
+            </h2>
+
+            <p class="location-subtitle">
+
+                Find real named restaurants around
+                your current browser location.
+
+            </p>
+
+            <p class="location-note">
+
+                🌍 Your browser provides your current
+                latitude and longitude. FreshBite searches
+                nearby named restaurants using
+                OpenStreetMap map data.
+
+                <br>
+
+                🔒 FreshBite does not save your GPS
+                coordinates in localStorage.
+
+            </p>
+
+            <p
+                id="location-accuracy"
+                class="location-accuracy"
+            ></p>
+
+        </div>
+
+
+        <button
+            id="find-restaurants-btn"
+            class="location-btn"
+            type="button"
+        >
+            📍 Find Restaurants Near Me
+        </button>
+
+    </div>
+
+
+    <div
+        id="location-status"
+        class="location-status"
+    ></div>
+
+
+    <div
+        id="nearby-restaurants"
+        class="nearby-restaurants"
+    ></div>
+
+</section>
+
+
+<!-- =====================================================
+     SPECIAL OFFERS
+===================================================== -->
+
+<section class="offers">
+
+    <div>
+
+        <h2>
+            🔥 Special Offers
+        </h2>
+
+        <p>
+            Enjoy exciting deals including
+            Buy 1 Get 1,
+            Buy 2 Get 1,
+            20% OFF
+            and Flat ₹50 OFF.
+        </p>
+
+        <div class="offer-list">
+
+            <span class="offer-chip">
+                🎁 BUY 1 GET 1 FREE
+            </span>
+
+            <span class="offer-chip">
+                🎁 BUY 2 GET 1 FREE
+            </span>
+
+            <span class="offer-chip">
+                🔥 20% OFF
+            </span>
+
+            <span class="offer-chip">
+                💰 FLAT ₹50 OFF
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <a
+        href="menu.html"
+        class="offer-btn"
+    >
+        Order Now
+    </a>
+
+</section>
+
+
+<!-- =====================================================
+     ABOUT
+===================================================== -->
+
+<section id="about">
+
+    <div class="section-header">
+
+        <div>
+
+            <h2 class="section-title">
+
+                About
+
+                <span>
+                    FreshBite
+                </span>
+
+            </h2>
+
+            <p>
+                Fresh food. Fast delivery. Happy customers.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <p>
+        FreshBite is a frontend food ordering platform
+        designed to make discovering and ordering food
+        simple, convenient and enjoyable.
+    </p>
+
+
+    <p>
+        Our platform brings a variety of food choices
+        together in one place, including pizzas,
+        burgers, Indian meals, desserts, drinks,
+        Italian and Chinese cuisine.
+    </p>
+
+
+    <p>
+        From exploring the menu to adding your favourite
+        dishes to the cart and completing checkout,
+        FreshBite provides a simple and user-friendly
+        ordering experience.
+    </p>
+
+
+    <p>
+        🌍 With browser-based location restaurant
+        discovery, users can find real named restaurants
+        around their current location wherever they are.
+    </p>
+
+</section>
+
+
+<!-- =====================================================
+     CONTACT
+===================================================== -->
+
+<section id="contact">
+
+    <div class="section-header">
+
+        <div>
+
+            <h2 class="section-title">
+
+                Contact
+
+                <span>
+                    Us
+                </span>
+
+            </h2>
+
+            <p>
+                Have questions? We'd love to hear from you.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <p>
+        📧 Email:
+
+        <a href="mailto:supportakki@freshbite.com">
+            supportakki@freshbite.com
+        </a>
+    </p>
+
+
+    <p>
+        📞 Phone:
+        +91 8106870764
+    </p>
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <div class="footer-grid">
+
+        <div class="footer-brand">
+
+            <h2>
+                🍕 FreshBite
+            </h2>
+
+            <p>
+                Fresh food delivered straight
+                to your doorstep.
+                Delicious, fast and convenient.
+            </p>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h3>
+                Quick Links
+            </h3>
 
             <a href="index.html">
                 Home
@@ -77,10 +1914,6 @@
                 About
             </a>
 
-            <a href="#contact">
-                Contact
-            </a>
-
             <a href="my-orders.html">
                 📦 My Orders
             </a>
@@ -89,1145 +1922,2404 @@
                 🔔 Notifications
             </a>
 
-            <a href="login.html">
-                Login
-            </a>
-
-            <a
-                href="cart.html"
-                class="cart-btn"
-            >
-
-                🛒 Cart
-
-                <span id="cart-count">
-                    0
-                </span>
-
-            </a>
-
-        </nav>
-
-
-        <!-- MOBILE MENU BUTTON -->
-
-        <button
-            class="menu-btn"
-            id="menu-btn"
-        >
-            ☰
-        </button>
-
-    </header>
-
-
-    <!-- =========================
-         HERO SECTION
-    ========================== -->
-
-    <section class="hero">
-
-        <div class="hero-content">
-
-            <div class="hero-badge">
-                🔥 Delicious food delivered fast
-            </div>
-
-
-            <h1>
-
-                Your Favorite Food
-
-                <span>
-                     Delivered Fresh
-                </span>
-
-            </h1>
-
-
-            <p>
-
-                Discover delicious meals from your favorite restaurants
-                and get them delivered straight to your doorstep.
-
-            </p>
-
-
-            <div class="hero-buttons">
-
-                <a
-                    href="menu.html"
-                    class="btn-primary"
-                >
-                    Explore Menu →
-                </a>
-
-
-                <a
-                    href="#restaurants"
-                    class="btn-secondary"
-                >
-                    View Restaurants
-                </a>
-
-            </div>
-
-
-            <!-- STATISTICS -->
-
-            <div class="stats">
-
-                <div class="stat">
-
-                    <strong>
-                        50+
-                    </strong>
-
-                    <span>
-                        Restaurants
-                    </span>
-
-                </div>
-
-
-                <div class="stat">
-
-                    <strong>
-                        200+
-                    </strong>
-
-                    <span>
-                        Food Items
-                    </span>
-
-                </div>
-
-
-                <div class="stat">
-
-                    <strong>
-                        4.8 ⭐
-                    </strong>
-
-                    <span>
-                        Average Rating
-                    </span>
-
-                </div>
-
-            </div>
-
         </div>
 
 
-        <div class="hero-image">
+        <div class="footer-column">
 
-            <img
-                src="https://images.unsplash.com/photo-1504674900247-0877df9cc836"
-                alt="Delicious food"
-            >
+            <h3>
+                Categories
+            </h3>
 
-        </div>
+            <a href="menu.html?category=pizza">
+                Pizza
+            </a>
 
-    </section>
+            <a href="menu.html?category=burger">
+                Burgers
+            </a>
 
+            <a href="menu.html?category=indian">
+                Indian
+            </a>
 
-    <!-- =========================
-         CATEGORIES
-    ========================== -->
+            <a href="menu.html?category=chinese">
+                Chinese
+            </a>
 
-    <section class="categories">
-
-        <div class="section-header">
-
-            <div>
-
-                <h2 class="section-title">
-
-                    Browse
-
-                    <span>
-                        Categories
-                    </span>
-
-                </h2>
-
-                <p>
-                    Explore your favorite food categories
-                </p>
-
-            </div>
-
-
-            <a
-                href="menu.html"
-                class="view-all"
-            >
-                View All →
+            <a href="menu.html?category=dessert">
+                Desserts
             </a>
 
         </div>
 
 
-        <div class="category-grid">
+        <div class="footer-column">
 
+            <h3>
+                Support
+            </h3>
 
-            <!-- PIZZA -->
-
-            <a
-                href="menu.html?category=pizza"
-                class="category-card"
-            >
-
-                <div class="category-icon">
-                    🍕
-                </div>
-
-                <h3>
-                    Pizza
-                </h3>
-
-                <p>
-                    25+ items
-                </p>
-
+            <a href="#contact">
+                Contact Us
             </a>
 
-
-            <!-- BURGERS -->
-
-            <a
-                href="menu.html?category=burger"
-                class="category-card"
-            >
-
-                <div class="category-icon">
-                    🍔
-                </div>
-
-                <h3>
-                    Burgers
-                </h3>
-
-                <p>
-                    20+ items
-                </p>
-
+            <a href="#">
+                Help Center
             </a>
 
-
-            <!-- INDIAN -->
-
-            <a
-                href="menu.html?category=indian"
-                class="category-card"
-            >
-
-                <div class="category-icon">
-                    🍛
-                </div>
-
-                <h3>
-                    Indian
-                </h3>
-
-                <p>
-                    30+ items
-                </p>
-
+            <a href="#">
+                Privacy Policy
             </a>
 
-
-            <!-- DESSERTS -->
-
-            <a
-                href="menu.html?category=dessert"
-                class="category-card"
-            >
-
-                <div class="category-icon">
-                    🍰
-                </div>
-
-                <h3>
-                    Desserts
-                </h3>
-
-                <p>
-                    15+ items
-                </p>
-
+            <a href="#">
+                Terms & Conditions
             </a>
 
         </div>
 
-    </section>
+    </div>
 
 
-    <!-- =========================
-         FEATURED FOOD
-    ========================== -->
-
-    <section class="food-section">
-
-        <div class="section-header">
-
-            <div>
-
-                <h2 class="section-title">
-
-                    Popular
-
-                    <span>
-                        Food
-                    </span>
-
-                </h2>
-
-                <p>
-                    Customer favorites you'll love
-                </p>
-
-            </div>
-
-
-            <a
-                href="menu.html"
-                class="view-all"
-            >
-                View All →
-            </a>
-
-        </div>
-
-
-        <div class="food-grid">
-
-
-            <!-- FOOD 1 -->
-
-            <div class="food-card">
-
-                <img
-                    src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002"
-                    alt="Margherita Pizza"
-                >
-
-                <div class="food-info">
-
-                    <h3>
-                        Margherita Pizza
-                    </h3>
-
-                    <p class="food-description">
-                        Fresh tomatoes, mozzarella and basil
-                    </p>
-
-                    <div class="rating">
-                        ⭐ 4.8
-                    </div>
-
-                    <div class="food-bottom">
-
-                        <span class="price">
-                            ₹199
-                        </span>
-
-                        <button
-                            class="add-cart"
-                            onclick="addFoodToCart(
-                                101,
-                                'Margherita Pizza',
-                                199,
-                                'https://images.unsplash.com/photo-1574071318508-1cdbab80d002'
-                            )"
-                        >
-                            +
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- FOOD 2 -->
-
-            <div class="food-card">
-
-                <img
-                    src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd"
-                    alt="Cheese Burger"
-                >
-
-                <div class="food-info">
-
-                    <h3>
-                        Cheese Burger
-                    </h3>
-
-                    <p class="food-description">
-                        Crispy patty with cheese and fresh vegetables
-                    </p>
-
-                    <div class="rating">
-                        ⭐ 4.7
-                    </div>
-
-                    <div class="food-bottom">
-
-                        <span class="price">
-                            ₹179
-                        </span>
-
-                        <button
-                            class="add-cart"
-                            onclick="addFoodToCart(
-                                102,
-                                'Cheese Burger',
-                                179,
-                                'https://images.unsplash.com/photo-1568901346375-23c9450c58cd'
-                            )"
-                        >
-                            +
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- FOOD 3 -->
-
-            <div class="food-card">
-
-                <img
-                    src="https://images.unsplash.com/photo-1547592180-85f173990554"
-                    alt="Indian Thali"
-                >
-
-                <div class="food-info">
-
-                    <h3>
-                        Special Indian Thali
-                    </h3>
-
-                    <p class="food-description">
-                        Delicious traditional Indian meal
-                    </p>
-
-                    <div class="rating">
-                        ⭐ 4.9
-                    </div>
-
-                    <div class="food-bottom">
-
-                        <span class="price">
-                            ₹249
-                        </span>
-
-                        <button
-                            class="add-cart"
-                            onclick="addFoodToCart(
-                                103,
-                                'Special Indian Thali',
-                                249,
-                                'https://images.unsplash.com/photo-1547592180-85f173990554'
-                            )"
-                        >
-                            +
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- FOOD 4 -->
-
-            <div class="food-card">
-
-                <img
-                    src="https://images.unsplash.com/photo-1578985545062-69928b1d9587"
-                    alt="Chocolate Cake"
-                >
-
-                <div class="food-info">
-
-                    <h3>
-                        Chocolate Cake
-                    </h3>
-
-                    <p class="food-description">
-                        Rich and creamy chocolate cake
-                    </p>
-
-                    <div class="rating">
-                        ⭐ 4.9
-                    </div>
-
-                    <div class="food-bottom">
-
-                        <span class="price">
-                            ₹129
-                        </span>
-
-                        <button
-                            class="add-cart"
-                            onclick="addFoodToCart(
-                                104,
-                                'Chocolate Cake',
-                                129,
-                                'https://images.unsplash.com/photo-1578985545062-69928b1d9587'
-                            )"
-                        >
-                            +
-                        </button>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         RESTAURANTS
-    ========================== -->
-
-    <section id="restaurants">
-
-        <div class="section-header">
-
-            <div>
-
-                <h2 class="section-title">
-
-                    Popular
-
-                    <span>
-                        Restaurants
-                    </span>
-
-                </h2>
-
-                <p>
-                    Order from the best restaurants near you
-                </p>
-
-            </div>
-
-        </div>
-
-
-        <div class="restaurant-grid">
-
-
-            <!-- RESTAURANT 1 -->
-
-            <div class="restaurant-card">
-
-                <img
-                    src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4"
-                    alt="Italian Restaurant"
-                >
-
-                <div class="restaurant-info">
-
-                    <h3>
-                        Bella Italia
-                    </h3>
-
-                    <p>
-                        Italian • Pizza • Pasta
-                    </p>
-
-                    <div class="restaurant-meta">
-
-                        <span class="restaurant-rating">
-                            ⭐ 4.8
-                        </span>
-
-                        <span>
-                            🕒 25 min
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- RESTAURANT 2 -->
-
-            <div class="restaurant-card">
-
-                <img
-                    src="https://images.unsplash.com/photo-1552566626-52f8b828add9"
-                    alt="Indian Restaurant"
-                >
-
-                <div class="restaurant-info">
-
-                    <h3>
-                        Spice Garden
-                    </h3>
-
-                    <p>
-                        Indian • Biryani • Thali
-                    </p>
-
-                    <div class="restaurant-meta">
-
-                        <span class="restaurant-rating">
-                            ⭐ 4.7
-                        </span>
-
-                        <span>
-                            🕒 30 min
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <!-- RESTAURANT 3 -->
-
-            <div class="restaurant-card">
-
-                <img
-                    src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5"
-                    alt="Burger Restaurant"
-                >
-
-                <div class="restaurant-info">
-
-                    <h3>
-                        Burger House
-                    </h3>
-
-                    <p>
-                        Burgers • Fries • Shakes
-                    </p>
-
-                    <div class="restaurant-meta">
-
-                        <span class="restaurant-rating">
-                            ⭐ 4.6
-                        </span>
-
-                        <span>
-                            🕒 20 min
-                        </span>
-
-                    </div>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-
-    <!-- =========================
-         SPECIAL OFFER
-    ========================== -->
-
-    <section class="offers">
-
-        <div>
-
-            <h2>
-                🍕 Get 20% OFF
-            </h2>
-
-            <p>
-                Order your favorite food today and enjoy
-                our special discount.
-            </p>
-
-        </div>
-
-        <a
-            href="menu.html"
-            class="offer-btn"
-        >
-            Order Now
-        </a>
-
-    </section>
-
-
-    <!-- =========================
-         ABOUT
-    ========================== -->
-
-    <section id="about">
-
-        <div class="section-header">
-
-            <div>
-
-                <h2 class="section-title">
-
-                    About
-
-                    <span>
-                        FreshBite
-                    </span>
-
-                </h2>
-
-                <p>
-                    Fresh food. Fast delivery. Happy customers.
-                </p>
-
-            </div>
-
-        </div>
-
+    <div class="footer-bottom">
 
         <p>
-            FreshBite is a food ordering platform designed
-            to make discovering and ordering food simple,
-            convenient, and enjoyable.
+            © 2026 FreshBite. All Rights Reserved.
         </p>
 
-        <p>
-            Our platform brings a variety of food choices
-            together in one place, including pizzas, burgers,
-            Indian meals, desserts, drinks, and Chinese
-            cuisine.
-        </p>
+    </div>
 
-        <p>
-            From exploring the menu to adding your favourite
-            dishes to the cart and completing checkout,
-            FreshBite provides a simple and user-friendly
-            ordering experience.
-        </p>
+</footer>
 
-    </section>
 
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
 
-    <!-- =========================
-         CONTACT
-    ========================== -->
+<script>
 
-    <section id="contact">
+/* =====================================================
+   CART
+===================================================== */
 
-        <div class="section-header">
+const CART_KEY = "cart";
 
-            <div>
 
-                <h2 class="section-title">
+function getOfferStartingQuantity(offer) {
 
-                    Contact
+    if (!offer) {
+        return 1;
+    }
 
-                    <span>
-                        Us
-                    </span>
+    const text = String(offer).toLowerCase();
 
-                </h2>
+    if (text.includes("buy 1 get 1")) {
+        return 2;
+    }
 
-                <p>
-                    Have questions? We'd love to hear from you.
-                </p>
+    if (text.includes("buy 2 get 1")) {
+        return 3;
+    }
 
-            </div>
+    return 1;
+}
 
-        </div>
 
+/* =====================================================
+   ADD TO CART
+===================================================== */
 
-        <p>
-            📧 Email: supportakki@freshbite.com
-        </p>
+function addFoodToCart(
+    id,
+    name,
+    price,
+    image,
+    offer,
+    clickedButton
+) {
 
-        <p>
-            📞 Phone: +91 8106870764
-        </p>
+    let cart = [];
 
-    </section>
+    try {
 
+        cart =
+            JSON.parse(
+                localStorage.getItem(CART_KEY)
+            ) || [];
 
-    <!-- =========================
-         FOOTER
-    ========================== -->
+        if (!Array.isArray(cart)) {
+            cart = [];
+        }
 
-    <footer>
+    } catch (error) {
 
-        <div class="footer-grid">
+        console.warn(
+            "Invalid cart data. Resetting cart."
+        );
 
+        cart = [];
 
-            <!-- BRAND -->
+    }
 
-            <div class="footer-brand">
 
-                <h2>
-                    🍕 FreshBite
-                </h2>
+    const startingQuantity =
+        getOfferStartingQuantity(offer);
 
-                <p>
-                    Fresh food delivered straight to your doorstep.
-                    Delicious, fast and convenient.
-                </p>
 
-            </div>
+    const existingItem =
+        cart.find(function(item) {
 
+            return Number(item.id) === Number(id);
 
-            <!-- QUICK LINKS -->
+        });
 
-            <div class="footer-column">
 
-                <h3>
-                    Quick Links
-                </h3>
+    if (existingItem) {
 
-                <a href="index.html">
-                    Home
-                </a>
+        existingItem.quantity =
+            Number(existingItem.quantity || 0) +
+            startingQuantity;
 
-                <a href="menu.html">
-                    Menu
-                </a>
+        existingItem.price =
+            Number(price);
 
-                <a href="#restaurants">
-                    Restaurants
-                </a>
+        existingItem.image =
+            image;
 
-                <a href="#about">
-                    About
-                </a>
+        existingItem.offer =
+            offer || "";
 
-                <a href="my-orders.html">
-                    📦 My Orders
-                </a>
+    }
 
-                <a href="notification.html">
-                    🔔 Notifications
-                </a>
+    else {
 
-            </div>
+        cart.push({
 
+            id: Number(id),
 
-            <!-- CATEGORIES -->
+            name: name,
 
-            <div class="footer-column">
+            price: Number(price),
 
-                <h3>
-                    Categories
-                </h3>
+            image: image,
 
-                <a href="menu.html?category=pizza">
-                    Pizza
-                </a>
+            quantity: startingQuantity,
 
-                <a href="menu.html?category=burger">
-                    Burgers
-                </a>
+            offer: offer || ""
 
-                <a href="menu.html?category=indian">
-                    Indian
-                </a>
+        });
 
-                <a href="menu.html?category=dessert">
-                    Desserts
-                </a>
+    }
 
-            </div>
 
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
 
-            <!-- SUPPORT -->
 
-            <div class="footer-column">
+    localStorage.setItem(
+        "freshbite_cart",
+        JSON.stringify(cart)
+    );
 
-                <h3>
-                    Support
-                </h3>
 
-                <a href="#contact">
-                    Contact Us
-                </a>
+    updateCartCount();
 
-                <a href="#">
-                    Help Center
-                </a>
 
-                <a href="#">
-                    Privacy Policy
-                </a>
+    /* =================================================
+       BUTTON BLINK / CLICK FEEDBACK
+    ================================================= */
 
-                <a href="#">
-                    Terms & Conditions
-                </a>
+    if (clickedButton) {
 
-            </div>
+        clickedButton.classList.remove(
+            "cart-clicked"
+        );
 
-        </div>
 
+        void clickedButton.offsetWidth;
 
-        <div class="footer-bottom">
 
-            <p>
-                © 2026 FreshBite. All Rights Reserved.
-            </p>
+        clickedButton.classList.add(
+            "cart-clicked"
+        );
 
-        </div>
 
-    </footer>
+        setTimeout(function() {
 
+            clickedButton.classList.remove(
+                "cart-clicked"
+            );
 
-    <!-- =========================
-         JAVASCRIPT
-    ========================== -->
+        }, 1000);
 
-    <script>
+    }
 
-        /* =========================
-           ADD FOOD TO CART
-        ========================== */
 
-        function addFoodToCart(
-            id,
-            name,
-            price,
-            image
-        ) {
+    /* =================================================
+       MESSAGE
+    ================================================= */
 
-            let cart =
-                JSON.parse(
-                    localStorage.getItem("cart")
-                ) || [];
+    const offerText =
+        String(offer || "").toLowerCase();
 
 
-            const existingItem =
-                cart.find(
-                    item =>
-                        item.id === id
+    if (
+        offerText.includes(
+            "buy 1 get 1"
+        )
+    ) {
+
+        showToast(
+            "🎁 " +
+            name +
+            " added to cart! BUY 1 GET 1 FREE"
+        );
+
+    }
+
+    else if (
+        offerText.includes(
+            "buy 2 get 1"
+        )
+    ) {
+
+        showToast(
+            "🎁 " +
+            name +
+            " added to cart! BUY 2 GET 1 FREE"
+        );
+
+    }
+
+    else if (
+        offerText.includes("20%")
+    ) {
+
+        showToast(
+            "🔥 " +
+            name +
+            " added to cart! 20% OFF"
+        );
+
+    }
+
+    else if (
+        offerText.includes("flat")
+    ) {
+
+        showToast(
+            "💰 " +
+            name +
+            " added to cart! FLAT ₹50 OFF"
+        );
+
+    }
+
+    else {
+
+        showToast(
+            "🛒 " +
+            name +
+            " added to cart!"
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   TOAST MESSAGE
+===================================================== */
+
+function showToast(message) {
+
+    const oldToast =
+        document.getElementById(
+            "home-toast"
+        );
+
+
+    if (oldToast) {
+        oldToast.remove();
+    }
+
+
+    const toast =
+        document.createElement("div");
+
+
+    toast.id =
+        "home-toast";
+
+
+    toast.textContent =
+        message;
+
+
+    toast.style.position =
+        "fixed";
+
+    toast.style.bottom =
+        "25px";
+
+    toast.style.left =
+        "50%";
+
+    toast.style.transform =
+        "translateX(-50%)";
+
+    toast.style.background =
+        "#16a34a";
+
+    toast.style.color =
+        "white";
+
+    toast.style.padding =
+        "13px 25px";
+
+    toast.style.borderRadius =
+        "10px";
+
+    toast.style.fontWeight =
+        "bold";
+
+    toast.style.zIndex =
+        "99999";
+
+    toast.style.maxWidth =
+        "90%";
+
+    toast.style.textAlign =
+        "center";
+
+    toast.style.boxShadow =
+        "0 4px 15px rgba(0,0,0,.2)";
+
+
+    document.body.appendChild(
+        toast
+    );
+
+
+    setTimeout(function() {
+
+        if (toast) {
+            toast.remove();
+        }
+
+    }, 2500);
+
+}
+
+
+/* =====================================================
+   CART COUNT
+===================================================== */
+
+function updateCartCount() {
+
+    let cart = [];
+
+    try {
+
+        cart =
+            JSON.parse(
+                localStorage.getItem(
+                    CART_KEY
+                )
+            ) || [];
+
+        if (!Array.isArray(cart)) {
+            cart = [];
+        }
+
+    } catch (error) {
+
+        cart = [];
+
+    }
+
+
+    let totalItems = 0;
+
+
+    cart.forEach(function(item) {
+
+        totalItems +=
+            Number(
+                item.quantity || 1
+            );
+
+    });
+
+
+    const cartCount =
+        document.getElementById(
+            "cart-count"
+        );
+
+
+    if (cartCount) {
+
+        cartCount.textContent =
+            totalItems;
+
+
+        cartCount.classList.remove(
+            "cart-count-pop"
+        );
+
+
+        void cartCount.offsetWidth;
+
+
+        cartCount.classList.add(
+            "cart-count-pop"
+        );
+
+    }
+
+}
+
+
+updateCartCount();
+
+
+/* =====================================================
+   MOBILE MENU
+===================================================== */
+
+const menuButton =
+    document.getElementById(
+        "menu-btn"
+    );
+
+
+const navigation =
+    document.querySelector(
+        ".nav-links"
+    );
+
+
+if (menuButton) {
+
+    menuButton.addEventListener(
+        "click",
+        function() {
+
+            if (navigation) {
+
+                navigation.classList.toggle(
+                    "mobile-active"
                 );
 
+            }
 
-            if (existingItem) {
+        }
+    );
 
-                existingItem.quantity += 1;
+}
 
-            } else {
 
-                cart.push({
+/* =====================================================
+   RESTAURANT VARIABLES
+===================================================== */
 
-                    id: id,
-                    name: name,
-                    price: price,
-                    image: image,
-                    quantity: 1
+const findRestaurantsButton =
+    document.getElementById(
+        "find-restaurants-btn"
+    );
 
-                });
+
+const locationStatus =
+    document.getElementById(
+        "location-status"
+    );
+
+
+const nearbyRestaurants =
+    document.getElementById(
+        "nearby-restaurants"
+    );
+
+
+const locationAccuracy =
+    document.getElementById(
+        "location-accuracy"
+    );
+
+
+/* =====================================================
+   OVERPASS SERVERS
+===================================================== */
+
+const OVERPASS_SERVERS = [
+
+    "https://overpass-api.de/api/interpreter",
+
+    "https://overpass.kumi.systems/api/interpreter",
+
+    "https://overpass.private.coffee/api/interpreter"
+
+];
+
+
+/* =====================================================
+   RESTAURANT SAMPLE ITEMS
+   These are FreshBite items, not claimed restaurant menus.
+===================================================== */
+
+const restaurantSampleItems = [
+
+    {
+        id: 201,
+        name: "Margherita Pizza",
+        price: 199,
+        image: "https://images.unsplash.com/photo-1574071318508-1cdbab80d002",
+        offer: "20% OFF"
+    },
+
+    {
+        id: 202,
+        name: "Cheese Burger",
+        price: 179,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd",
+        offer: "BUY 1 GET 1 FREE"
+    },
+
+    {
+        id: 203,
+        name: "Chicken Biryani",
+        price: 279,
+        image: "https://images.unsplash.com/photo-1563379091339-03246963d51a",
+        offer: "FLAT ₹50 OFF"
+    },
+
+    {
+        id: 204,
+        name: "Paneer Tikka",
+        price: 219,
+        image: "https://images.unsplash.com/photo-1601050690597-df0568f70950",
+        offer: "20% OFF"
+    },
+
+    {
+        id: 205,
+        name: "Hakka Noodles",
+        price: 159,
+        image: "https://images.unsplash.com/photo-1557872943-16a5ac26437e",
+        offer: "BUY 1 GET 1 FREE"
+    },
+
+    {
+        id: 206,
+        name: "Masala Dosa",
+        price: 119,
+        image: "https://images.unsplash.com/photo-1630383249896-424e482df921",
+        offer: "FLAT ₹50 OFF"
+    },
+
+    {
+        id: 207,
+        name: "Alfredo Pasta",
+        price: 229,
+        image: "https://images.unsplash.com/photo-1473093295043-cdd812d0e601",
+        offer: "20% OFF"
+    },
+
+    {
+        id: 208,
+        name: "Chocolate Cake",
+        price: 129,
+        image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587",
+        offer: "BUY 2 GET 1 FREE"
+    },
+
+    {
+        id: 209,
+        name: "Special Indian Thali",
+        price: 249,
+        image: "https://images.unsplash.com/photo-1547592180-85f173990554",
+        offer: "FLAT ₹50 OFF"
+    },
+
+    {
+        id: 210,
+        name: "Veg Spring Rolls",
+        price: 139,
+        image: "https://images.unsplash.com/photo-1547592180-85f173990554",
+        offer: "BUY 2 GET 1 FREE"
+    },
+
+    {
+        id: 211,
+        name: "Red Velvet Cake",
+        price: 149,
+        image: "https://images.unsplash.com/photo-1586788680434-30d324b2d46f",
+        offer: "20% OFF"
+    },
+
+    {
+        id: 212,
+        name: "Mango Lassi",
+        price: 89,
+        image: "https://images.unsplash.com/photo-1577805947697-89e18249d767",
+        offer: "BUY 1 GET 1 FREE"
+    }
+
+];
+
+
+/* =====================================================
+   FIND NEARBY RESTAURANTS
+===================================================== */
+
+async function findNearbyRestaurants() {
+
+    if (!navigator.geolocation) {
+
+        showLocationStatus(
+            "❌ Your browser does not support location services."
+        );
+
+        return;
+
+    }
+
+
+    if (findRestaurantsButton) {
+
+        findRestaurantsButton.disabled =
+            true;
+
+        findRestaurantsButton.textContent =
+            "📍 Finding your location...";
+
+    }
+
+
+    showLocationStatus(
+        "Getting your real browser location. Please allow location access."
+    );
+
+
+    navigator.geolocation.getCurrentPosition(
+
+        async function(position) {
+
+            const latitude =
+                position.coords.latitude;
+
+
+            const longitude =
+                position.coords.longitude;
+
+
+            const accuracy =
+                position.coords.accuracy;
+
+
+            if (locationAccuracy) {
+
+                locationAccuracy.style.display =
+                    "block";
+
+                locationAccuracy.textContent =
+                    "📡 Browser GPS accuracy: approximately " +
+                    Math.round(accuracy) +
+                    " meters.";
 
             }
 
 
-            localStorage.setItem(
-                "cart",
-                JSON.stringify(cart)
+            showLocationStatus(
+                "📍 Your real location was received. Searching named restaurants nearby..."
             );
 
 
-            updateCartCount();
+            if (findRestaurantsButton) {
+
+                findRestaurantsButton.textContent =
+                    "🔎 Searching restaurants...";
+
+            }
 
 
-            /* NO ALERT POPUP */
+            try {
 
-            showToast(
-                name + " added to cart! 🛒"
+                const restaurants =
+                    await searchRestaurants(
+                        latitude,
+                        longitude
+                    );
+
+
+                if (restaurants.length === 0) {
+
+                    showLocationStatus(
+                        "⚠️ No named restaurants were found in the available map data."
+                    );
+
+                    showNoNamedRestaurants();
+
+                }
+
+                else {
+
+                    showLocationStatus(
+                        "📍 Showing " +
+                        restaurants.length +
+                        " real named restaurants near your location."
+                    );
+
+
+                    displayRestaurants(
+                        restaurants,
+                        latitude,
+                        longitude
+                    );
+
+                }
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Restaurant search error:",
+                    error
+                );
+
+
+                showLocationStatus(
+                    "⚠️ Nearby restaurant search is temporarily unavailable."
+                );
+
+
+                showSearchError();
+
+            }
+
+
+            if (findRestaurantsButton) {
+
+                findRestaurantsButton.disabled =
+                    false;
+
+                findRestaurantsButton.textContent =
+                    "📍 Refresh Nearby Restaurants";
+
+            }
+
+        },
+
+
+        function(error) {
+
+            console.error(
+                "Geolocation error:",
+                error
+            );
+
+
+            if (findRestaurantsButton) {
+
+                findRestaurantsButton.disabled =
+                    false;
+
+                findRestaurantsButton.textContent =
+                    "📍 Find Restaurants Near Me";
+
+            }
+
+
+            if (error.code === 1) {
+
+                showLocationStatus(
+                    "❌ Location permission was denied. Please allow location access and try again."
+                );
+
+            }
+
+            else if (error.code === 2) {
+
+                showLocationStatus(
+                    "❌ Your browser could not determine your location."
+                );
+
+            }
+
+            else if (error.code === 3) {
+
+                showLocationStatus(
+                    "❌ Location request timed out. Please try again."
+                );
+
+            }
+
+            else {
+
+                showLocationStatus(
+                    "❌ Unable to access your browser location."
+                );
+
+            }
+
+
+            showLocationPermissionHelp();
+
+        },
+
+
+        {
+            enableHighAccuracy: true,
+            timeout: 20000,
+            maximumAge: 0
+        }
+
+    );
+
+}
+
+
+/* =====================================================
+   SEARCH OPENSTREETMAP
+===================================================== */
+
+async function searchRestaurants(
+    latitude,
+    longitude
+) {
+
+    const radius =
+        25000;
+
+
+    const query = `
+
+        [out:json][timeout:60];
+
+        (
+
+            nwr["amenity"~"^(restaurant|fast_food|cafe|food_court)$"]["name"]
+                (around:${radius},${latitude},${longitude});
+
+            nwr["shop"="bakery"]["name"]
+                (around:${radius},${latitude},${longitude});
+
+            nwr["amenity"="ice_cream"]["name"]
+                (around:${radius},${latitude},${longitude});
+
+        );
+
+        out center tags;
+
+    `;
+
+
+    let lastError = null;
+
+
+    for (
+        const server of OVERPASS_SERVERS
+    ) {
+
+        try {
+
+            const response =
+                await fetch(
+                    server,
+                    {
+
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "application/x-www-form-urlencoded"
+                        },
+
+                        body:
+                            "data=" +
+                            encodeURIComponent(query)
+
+                    }
+                );
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    "Server returned HTTP " +
+                    response.status
+                );
+
+            }
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !data ||
+                !Array.isArray(
+                    data.elements
+                )
+            ) {
+
+                throw new Error(
+                    "Invalid map response"
+                );
+
+            }
+
+
+            return convertMapResults(
+                data.elements
             );
 
         }
 
+        catch (error) {
 
-        /* =========================
-           TOAST MESSAGE
-        ========================== */
+            console.warn(
+                "Overpass server failed:",
+                server,
+                error
+            );
 
-        function showToast(message) {
+            lastError =
+                error;
 
-            const oldToast =
-                document.getElementById(
-                    "home-toast"
+        }
+
+    }
+
+
+    throw (
+        lastError ||
+        new Error(
+            "All restaurant servers failed"
+        )
+    );
+
+}
+
+
+/* =====================================================
+   CONVERT MAP RESULTS
+===================================================== */
+
+function convertMapResults(elements) {
+
+    const restaurants = [];
+
+    const usedNamesAndLocations =
+        new Set();
+
+
+    elements.forEach(function(place) {
+
+        const tags =
+            place.tags || {};
+
+
+        const rawName =
+            tags.name ||
+            tags["name:en"] ||
+            tags.official_name ||
+            tags.alt_name ||
+            "";
+
+
+        const name =
+            String(rawName).trim();
+
+
+        if (!name) {
+            return;
+        }
+
+
+        const lowerName =
+            name.toLowerCase();
+
+
+        const genericNames = [
+
+            "restaurant",
+            "unnamed restaurant",
+            "food",
+            "fast food",
+            "cafe",
+            "bakery",
+            "ice cream"
+
+        ];
+
+
+        if (
+            genericNames.includes(
+                lowerName
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        const latitude =
+            place.lat ??
+            (
+                place.center
+                    ? place.center.lat
+                    : null
+            );
+
+
+        const longitude =
+            place.lon ??
+            (
+                place.center
+                    ? place.center.lon
+                    : null
+            );
+
+
+        if (
+            latitude === null ||
+            longitude === null
+        ) {
+
+            return;
+
+        }
+
+
+        const uniqueKey =
+            name.toLowerCase() +
+            "|" +
+            Number(latitude).toFixed(5) +
+            "|" +
+            Number(longitude).toFixed(5);
+
+
+        if (
+            usedNamesAndLocations.has(
+                uniqueKey
+            )
+        ) {
+
+            return;
+
+        }
+
+
+        usedNamesAndLocations.add(
+            uniqueKey
+        );
+
+
+        restaurants.push({
+
+            id:
+                place.type +
+                "-" +
+                place.id,
+
+            name:
+                name,
+
+            cuisine:
+                formatCuisine(
+                    tags.cuisine,
+                    tags.amenity
+                ),
+
+            address:
+                buildRestaurantAddress(
+                    tags
+                ),
+
+            phone:
+                tags.phone ||
+                tags["contact:phone"] ||
+                "",
+
+            website:
+                tags.website ||
+                tags["contact:website"] ||
+                "",
+
+            latitude:
+                Number(latitude),
+
+            longitude:
+                Number(longitude),
+
+            openingHours:
+                tags.opening_hours ||
+                "",
+
+            image:
+                getRestaurantImage()
+
+        });
+
+    });
+
+
+    return restaurants;
+
+}
+
+
+/* =====================================================
+   BUILD ADDRESS
+===================================================== */
+
+function buildRestaurantAddress(tags) {
+
+    const parts = [];
+
+
+    if (tags["addr:housenumber"]) {
+        parts.push(
+            tags["addr:housenumber"]
+        );
+    }
+
+
+    if (tags["addr:street"]) {
+        parts.push(
+            tags["addr:street"]
+        );
+    }
+
+
+    if (tags["addr:suburb"]) {
+        parts.push(
+            tags["addr:suburb"]
+        );
+    }
+
+
+    if (tags["addr:city"]) {
+        parts.push(
+            tags["addr:city"]
+        );
+    }
+
+
+    if (tags["addr:state"]) {
+        parts.push(
+            tags["addr:state"]
+        );
+    }
+
+
+    if (tags["addr:postcode"]) {
+        parts.push(
+            tags["addr:postcode"]
+        );
+    }
+
+
+    if (parts.length > 0) {
+
+        return parts.join(
+            ", "
+        );
+
+    }
+
+
+    return "Address not available in map data";
+
+}
+
+
+/* =====================================================
+   CUISINE
+===================================================== */
+
+function formatCuisine(
+    cuisine,
+    amenity
+) {
+
+    if (!cuisine) {
+
+        if (
+            amenity ===
+            "fast_food"
+        ) {
+
+            return "Fast Food";
+
+        }
+
+
+        if (
+            amenity ===
+            "cafe"
+        ) {
+
+            return "Cafe";
+
+        }
+
+
+        if (
+            amenity ===
+            "food_court"
+        ) {
+
+            return "Food Court";
+
+        }
+
+
+        return "Restaurant";
+
+    }
+
+
+    return String(cuisine)
+        .split(";")
+        .slice(0,4)
+        .map(function(item) {
+
+            return item
+                .replace(
+                    /_/g,
+                    " "
+                )
+                .replace(
+                    /\b\w/g,
+                    function(letter) {
+
+                        return letter.toUpperCase();
+
+                    }
+                );
+
+        })
+        .join(" • ");
+
+}
+
+
+/* =====================================================
+   RESTAURANT IMAGES
+   Restaurant interiors/exteriors only
+===================================================== */
+
+const restaurantImages = [
+
+    "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=90",
+
+    "https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1400&q=90",
+
+    "https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1400&q=90",
+
+    "https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1400&q=90",
+
+    "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=1400&q=90"
+
+];
+
+
+let restaurantImageIndex = 0;
+
+
+function getRestaurantImage() {
+
+    const image =
+        restaurantImages[
+            restaurantImageIndex %
+            restaurantImages.length
+        ];
+
+
+    restaurantImageIndex++;
+
+
+    return image;
+
+}
+
+
+/* =====================================================
+   DISTANCE
+===================================================== */
+
+function calculateDistance(
+    lat1,
+    lon1,
+    lat2,
+    lon2
+) {
+
+    const earthRadius =
+        6371;
+
+
+    const dLat =
+        toRadians(
+            lat2 - lat1
+        );
+
+
+    const dLon =
+        toRadians(
+            lon2 - lon1
+        );
+
+
+    const a =
+        Math.sin(
+            dLat / 2
+        ) *
+        Math.sin(
+            dLat / 2
+        ) +
+
+        Math.cos(
+            toRadians(lat1)
+        ) *
+
+        Math.cos(
+            toRadians(lat2)
+        ) *
+
+        Math.sin(
+            dLon / 2
+        ) *
+
+        Math.sin(
+            dLon / 2
+        );
+
+
+    const c =
+        2 *
+        Math.atan2(
+            Math.sqrt(a),
+            Math.sqrt(1 - a)
+        );
+
+
+    return (
+        earthRadius *
+        c
+    );
+
+}
+
+
+function toRadians(degrees) {
+
+    return (
+        degrees *
+        Math.PI /
+        180
+    );
+
+}
+
+
+/* =====================================================
+   CREATE RESTAURANT MENU
+===================================================== */
+
+function createRestaurantMenu(
+    restaurantId
+) {
+
+    const selectedItems =
+        restaurantSampleItems
+            .slice(
+                Math.abs(
+                    hashString(
+                        String(
+                            restaurantId
+                        )
+                    )
+                ) %
+                restaurantSampleItems.length,
+                (
+                    Math.abs(
+                        hashString(
+                            String(
+                                restaurantId
+                            )
+                        )
+                    ) %
+                    restaurantSampleItems.length
+                ) + 3
+            );
+
+
+    let items =
+        selectedItems;
+
+
+    if (items.length < 3) {
+
+        items =
+            restaurantSampleItems
+                .slice(0,3);
+
+    }
+
+
+    return `
+
+        <div class="nearby-menu">
+
+            <h4>
+                🍽️ Popular Items
+            </h4>
+
+            ${items.map(function(item) {
+
+                const uniqueId =
+                    5000 +
+                    Math.abs(
+                        hashString(
+                            String(
+                                restaurantId
+                            ) +
+                            "-" +
+                            item.id
+                        )
+                    ) %
+                    100000;
+
+
+                return `
+
+                    <div class="nearby-food-item">
+
+                        <img
+                            src="${item.image}"
+                            alt="${escapeHTML(item.name)}"
+                            loading="lazy"
+                        >
+
+                        <div class="nearby-food-details">
+
+                            <h5>
+                                ${escapeHTML(item.name)}
+                            </h5>
+
+                            <div class="nearby-food-price">
+                                ₹${item.price}
+                            </div>
+
+                            <span class="nearby-food-offer">
+                                ${escapeHTML(item.offer)}
+                            </span>
+
+                            <button
+                                type="button"
+                                class="nearby-add-btn"
+                                onclick="addFoodToCart(${uniqueId},'${escapeJS(item.name)}',${item.price},'${item.image}','${escapeJS(item.offer)}',this)"
+                            >
+                                🛒 Add to Cart
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }).join("")}
+
+            <p class="restaurant-menu-note">
+                ℹ️ These are FreshBite sample popular items.
+                The restaurant name/location is from OpenStreetMap;
+                its actual menu is not being claimed here.
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   HASH HELPER
+===================================================== */
+
+function hashString(value) {
+
+    let hash = 0;
+
+
+    for (
+        let i = 0;
+        i < value.length;
+        i++
+    ) {
+
+        hash =
+            (
+                (
+                    hash << 5
+                ) -
+                hash
+            ) +
+            value.charCodeAt(i);
+
+
+        hash |= 0;
+
+    }
+
+
+    return hash;
+
+}
+
+
+/* =====================================================
+   DISPLAY REAL RESTAURANTS
+===================================================== */
+
+function displayRestaurants(
+    restaurants,
+    userLatitude,
+    userLongitude
+) {
+
+    nearbyRestaurants.innerHTML =
+        "";
+
+
+    restaurants
+        .map(function(restaurant) {
+
+            restaurant.distance =
+                calculateDistance(
+                    userLatitude,
+                    userLongitude,
+                    restaurant.latitude,
+                    restaurant.longitude
                 );
 
 
-            if (oldToast) {
+            return restaurant;
 
-                oldToast.remove();
+        })
+        .sort(function(a,b) {
 
-            }
+            return (
+                a.distance -
+                b.distance
+            );
 
+        })
+        .slice(0,12)
+        .forEach(function(restaurant) {
 
-            const toast =
+            const card =
                 document.createElement(
                     "div"
                 );
 
 
-            toast.id =
-                "home-toast";
+            card.className =
+                "nearby-card";
 
 
-            toast.textContent =
-                message;
+            const distanceText =
+                restaurant.distance < 1
+
+                    ? Math.round(
+                        restaurant.distance *
+                        1000
+                    ) +
+                    " m away"
+
+                    : restaurant.distance.toFixed(1) +
+                      " km away";
 
 
-            toast.style.position =
-                "fixed";
-
-            toast.style.bottom =
-                "25px";
-
-            toast.style.left =
-                "50%";
-
-            toast.style.transform =
-                "translateX(-50%)";
-
-            toast.style.background =
-                "#16a34a";
-
-            toast.style.color =
-                "white";
-
-            toast.style.padding =
-                "12px 24px";
-
-            toast.style.borderRadius =
-                "8px";
-
-            toast.style.fontWeight =
-                "bold";
-
-            toast.style.zIndex =
-                "99999";
-
-            toast.style.boxShadow =
-                "0 4px 15px rgba(0,0,0,0.2)";
-
-
-            document.body.appendChild(
-                toast
-            );
-
-
-            setTimeout(
-                function() {
-
-                    if (toast) {
-
-                        toast.remove();
-
-                    }
-
-                },
-                2000
-            );
-
-        }
-
-
-        /* =========================
-           UPDATE CART COUNT
-        ========================== */
-
-        function updateCartCount() {
-
-            const cart =
-                JSON.parse(
-                    localStorage.getItem("cart")
-                ) || [];
-
-
-            let totalItems = 0;
-
-
-            cart.forEach(
-                item => {
-
-                    totalItems +=
-                        item.quantity || 1;
-
-                }
-            );
-
-
-            const cartCount =
-                document.getElementById(
-                    "cart-count"
+            const directionsURL =
+                "https://www.google.com/maps/dir/?api=1" +
+                "&destination=" +
+                encodeURIComponent(
+                    restaurant.latitude +
+                    "," +
+                    restaurant.longitude
                 );
 
 
-            if (cartCount) {
+            const searchMapsURL =
+                "https://www.google.com/maps/search/?api=1&query=" +
+                encodeURIComponent(
+                    restaurant.name +
+                    " " +
+                    restaurant.latitude +
+                    "," +
+                    restaurant.longitude
+                );
 
-                cartCount.textContent =
-                    totalItems;
 
-            }
+            const safeName =
+                escapeHTML(
+                    restaurant.name
+                );
+
+
+            const safeCuisine =
+                escapeHTML(
+                    restaurant.cuisine
+                );
+
+
+            const safeAddress =
+                escapeHTML(
+                    restaurant.address
+                );
+
+
+            const safeHours =
+                escapeHTML(
+                    restaurant.openingHours
+                );
+
+
+            const safePhone =
+                escapeHTML(
+                    restaurant.phone
+                );
+
+
+            const phoneHTML =
+                restaurant.phone
+
+                    ? `
+
+                        <p class="restaurant-phone">
+                            📞 ${safePhone}
+                        </p>
+
+                      `
+
+                    : "";
+
+
+            const hoursHTML =
+                restaurant.openingHours
+
+                    ? `
+
+                        <p class="restaurant-address">
+                            🕒 ${safeHours}
+                        </p>
+
+                      `
+
+                    : "";
+
+
+            const websiteHTML =
+                createWebsiteHTML(
+                    restaurant.website
+                );
+
+
+            card.innerHTML = `
+
+                <img
+                    class="nearby-image"
+                    src="${restaurant.image}"
+                    alt="${safeName}"
+                    loading="lazy"
+                >
+
+                <div class="nearby-info">
+
+                    <h3>
+                        ${safeName}
+                    </h3>
+
+                    <div class="nearby-cuisine">
+                        🍽️ ${safeCuisine}
+                    </div>
+
+                    <div class="nearby-meta">
+
+                        <span class="nearby-tag">
+                            📍 ${distanceText}
+                        </span>
+
+                        <span class="nearby-tag">
+                            🌍 Near You
+                        </span>
+
+                    </div>
+
+                    <p class="restaurant-address">
+                        📌 ${safeAddress}
+                    </p>
+
+                    ${phoneHTML}
+
+                    ${hoursHTML}
+
+                    ${websiteHTML}
+
+                    <div class="restaurant-actions">
+
+                        <a
+                            class="directions-btn"
+                            href="${directionsURL}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            🧭 Get Directions
+                        </a>
+
+                        <a
+                            class="map-btn"
+                            href="${searchMapsURL}"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            🗺️ View on Maps
+                        </a>
+
+                    </div>
+
+                    ${createRestaurantMenu(
+                        restaurant.id
+                    )}
+
+                    <p class="restaurant-source">
+                        🌐 Restaurant name and location
+                        from OpenStreetMap map data.
+                    </p>
+
+                </div>
+
+            `;
+
+
+            nearbyRestaurants.appendChild(
+                card
+            );
+
+        });
+
+
+    /* =================================================
+       4 DOTS
+    ================================================= */
+
+    const dots =
+        document.createElement(
+            "div"
+        );
+
+
+    dots.className =
+        "restaurant-dots";
+
+
+    for (
+        let i = 0;
+        i < 4;
+        i++
+    ) {
+
+        const dot =
+            document.createElement(
+                "span"
+            );
+
+
+        dot.className =
+            "restaurant-dot" +
+            (
+                i === 0
+                    ? " active"
+                    : ""
+            );
+
+
+        dots.appendChild(
+            dot
+        );
+
+    }
+
+
+    nearbyRestaurants.appendChild(
+        dots
+    );
+
+}
+
+
+/* =====================================================
+   WEBSITE
+===================================================== */
+
+function createWebsiteHTML(
+    website
+) {
+
+    if (!website) {
+        return "";
+    }
+
+
+    let url =
+        String(website).trim();
+
+
+    if (!url) {
+        return "";
+    }
+
+
+    if (
+        !url.startsWith(
+            "http://"
+        ) &&
+        !url.startsWith(
+            "https://"
+        )
+    ) {
+
+        url =
+            "https://" +
+            url;
+
+    }
+
+
+    const safeURL =
+        escapeHTML(url);
+
+
+    return `
+
+        <p class="restaurant-website">
+
+            🌐
+
+            <a
+                href="${safeURL}"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                Restaurant Website
+            </a>
+
+        </p>
+
+    `;
+
+}
+
+
+/* =====================================================
+   NO RESTAURANTS
+===================================================== */
+
+function showNoNamedRestaurants() {
+
+    nearbyRestaurants.innerHTML = `
+
+        <div class="no-location">
+
+            <div class="no-location-icon">
+                🔎
+            </div>
+
+            <h3>
+                No named restaurants found nearby
+            </h3>
+
+            <p>
+                Your browser location was received,
+                but the available map data does not
+                contain enough named restaurants nearby.
+            </p>
+
+            <p style="
+                margin-top:10px;
+                font-size:13px;
+                color:#888;
+            ">
+                Try refreshing your location or
+                checking again from another location.
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   SEARCH ERROR
+===================================================== */
+
+function showSearchError() {
+
+    nearbyRestaurants.innerHTML = `
+
+        <div class="no-location">
+
+            <div class="no-location-icon">
+                ⚠️
+            </div>
+
+            <h3>
+                Restaurant search temporarily unavailable
+            </h3>
+
+            <p>
+                Your browser location was received,
+                but the map search service could not
+                be reached right now.
+            </p>
+
+            <button
+                type="button"
+                class="location-btn"
+                style="margin-top:15px;"
+                onclick="findNearbyRestaurants()"
+            >
+                🔄 Try Again
+            </button>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   LOCATION HELP
+===================================================== */
+
+function showLocationPermissionHelp() {
+
+    nearbyRestaurants.innerHTML = `
+
+        <div class="no-location">
+
+            <div class="no-location-icon">
+                📍
+            </div>
+
+            <h3>
+                Location access is required
+            </h3>
+
+            <p>
+                Please allow location access
+                in your browser and click the
+                button again.
+            </p>
+
+            <p style="
+                margin-top:10px;
+                font-size:13px;
+                color:#888;
+                line-height:1.6;
+            ">
+                Your browser controls the location
+                permission. FreshBite only receives
+                the coordinates after permission.
+            </p>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   STATUS
+===================================================== */
+
+function showLocationStatus(
+    message
+) {
+
+    if (!locationStatus) {
+        return;
+    }
+
+
+    locationStatus.style.display =
+        "block";
+
+
+    locationStatus.textContent =
+        message;
+
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value) {
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+/* =====================================================
+   ESCAPE JAVASCRIPT STRING
+===================================================== */
+
+function escapeJS(value) {
+
+    return String(value)
+        .replace(
+            /\\/g,
+            "\\\\"
+        )
+        .replace(
+            /'/g,
+            "\\'"
+        )
+        .replace(
+            /"/g,
+            '\\"'
+        )
+        .replace(
+            /\n/g,
+            "\\n"
+        )
+        .replace(
+            /\r/g,
+            "\\r"
+        );
+
+}
+
+
+/* =====================================================
+   RESTAURANT BUTTON
+===================================================== */
+
+if (findRestaurantsButton) {
+
+    findRestaurantsButton.addEventListener(
+        "click",
+        function() {
+
+            findNearbyRestaurants();
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   DEFAULT PREVIEW
+===================================================== */
+
+function showDefaultRestaurants() {
+
+    if (!nearbyRestaurants) {
+        return;
+    }
+
+
+    nearbyRestaurants.innerHTML = `
+
+        <div class="nearby-card">
+
+            <img
+                class="nearby-image"
+                src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=90"
+                alt="Restaurant Interior"
+            >
+
+            <div class="nearby-info">
+
+                <h3>
+                    Featured Restaurant
+                </h3>
+
+                <div class="nearby-cuisine">
+                    🍽️ Multi-Cuisine • Fine Dining
+                </div>
+
+                <div class="nearby-meta">
+
+                    <span class="nearby-tag">
+                        ⭐ 4.8
+                    </span>
+
+                    <span class="nearby-tag">
+                        🕒 25 min
+                    </span>
+
+                    <span class="nearby-tag">
+                        💰 ₹₹
+                    </span>
+
+                </div>
+
+                <p class="restaurant-address">
+                    📌 Click "Find Restaurants Near Me"
+                    to load real restaurants around you.
+                </p>
+
+                ${createRestaurantMenu("preview-1")}
+
+            </div>
+
+        </div>
+
+
+        <div class="nearby-card">
+
+            <img
+                class="nearby-image"
+                src="https://images.unsplash.com/photo-1552566626-52f8b828add9?auto=format&fit=crop&w=1400&q=90"
+                alt="Elegant Restaurant Interior"
+            >
+
+            <div class="nearby-info">
+
+                <h3>
+                    Featured Dining
+                </h3>
+
+                <div class="nearby-cuisine">
+                    🍛 Indian • Asian • Multi-Cuisine
+                </div>
+
+                <div class="nearby-meta">
+
+                    <span class="nearby-tag">
+                        ⭐ 4.7
+                    </span>
+
+                    <span class="nearby-tag">
+                        🕒 30 min
+                    </span>
+
+                    <span class="nearby-tag">
+                        💰 ₹₹
+                    </span>
+
+                </div>
+
+                <p class="restaurant-address">
+                    📌 Location-based restaurant
+                    details will appear here.
+                </p>
+
+                ${createRestaurantMenu("preview-2")}
+
+            </div>
+
+        </div>
+
+
+        <div class="nearby-card">
+
+            <img
+                class="nearby-image"
+                src="https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1400&q=90"
+                alt="Restaurant Dining Hall"
+            >
+
+            <div class="nearby-info">
+
+                <h3>
+                    Featured Food Garden
+                </h3>
+
+                <div class="nearby-cuisine">
+                    🍴 Continental • Italian • Cafe
+                </div>
+
+                <div class="nearby-meta">
+
+                    <span class="nearby-tag">
+                        ⭐ 4.9
+                    </span>
+
+                    <span class="nearby-tag">
+                        🕒 20 min
+                    </span>
+
+                    <span class="nearby-tag">
+                        💰 ₹₹
+                    </span>
+
+                </div>
+
+                <p class="restaurant-address">
+                    📌 Click the location button
+                    for real nearby restaurants.
+                </p>
+
+                ${createRestaurantMenu("preview-3")}
+
+            </div>
+
+        </div>
+
+
+        <div class="nearby-card">
+
+            <img
+                class="nearby-image"
+                src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1400&q=90"
+                alt="Luxury Restaurant Interior"
+            >
+
+            <div class="nearby-info">
+
+                <h3>
+                    Featured Royal Dining
+                </h3>
+
+                <div class="nearby-cuisine">
+                    👑 Fine Dining • Indian • Continental
+                </div>
+
+                <div class="nearby-meta">
+
+                    <span class="nearby-tag">
+                        ⭐ 4.8
+                    </span>
+
+                    <span class="nearby-tag">
+                        🕒 35 min
+                    </span>
+
+                    <span class="nearby-tag">
+                        💰 ₹₹₹
+                    </span>
+
+                </div>
+
+                <p class="restaurant-address">
+                    📌 Real restaurant details
+                    appear after location search.
+                </p>
+
+                ${createRestaurantMenu("preview-4")}
+
+            </div>
+
+        </div>
+
+
+        <div class="restaurant-dots">
+
+            <span class="restaurant-dot active"></span>
+            <span class="restaurant-dot"></span>
+            <span class="restaurant-dot"></span>
+            <span class="restaurant-dot"></span>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   START DEFAULT PREVIEW
+===================================================== */
+
+showDefaultRestaurants();
+
+
+/* =====================================================
+   CART STORAGE SYNC
+===================================================== */
+
+window.addEventListener(
+    "storage",
+    function(event) {
+
+        if (
+            event.key === "cart" ||
+            event.key === "freshbite_cart"
+        ) {
+
+            updateCartCount();
 
         }
 
-
-        /* =========================
-           INITIAL CART COUNT
-        ========================== */
-
-        updateCartCount();
+    }
+);
 
 
-        /* =========================
-           MOBILE MENU
-        ========================== */
+/* =====================================================
+   GLOBAL FUNCTIONS
+===================================================== */
 
-        const menuButton =
-            document.getElementById(
-                "menu-btn"
-            );
+window.addFoodToCart =
+    addFoodToCart;
 
+window.updateCartCount =
+    updateCartCount;
 
-        const navigation =
-            document.querySelector(
-                ".nav-links"
-            );
+window.findNearbyRestaurants =
+    findNearbyRestaurants;
 
+window.showDefaultRestaurants =
+    showDefaultRestaurants;
 
-        if (menuButton) {
-
-            menuButton.addEventListener(
-                "click",
-                function() {
-
-                    navigation.classList.toggle(
-                        "mobile-active"
-                    );
-
-                }
-            );
-
-        }
-
-    </script>
+</script>
 
 </body>
-
 </html>

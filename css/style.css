@@ -1874,3 +1874,464 @@ footer {
         height: 350px;
     }
 }
+/* =====================================================
+   FRESHBITE RESTAURANTS
+   ONLY FOR RESTAURANT SECTION
+===================================================== */
+
+.fb-restaurants {
+    width: 100%;
+    padding: 70px 5%;
+}
+
+
+/* RESTAURANT ROW */
+
+.fb-restaurant-row {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 22px;
+    margin-top: 30px;
+}
+
+
+/* RESTAURANT CARD */
+
+.fb-restaurant-card {
+    background: #ffffff;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fb-restaurant-card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 14px 35px rgba(0, 0, 0, 0.14);
+}
+
+
+/* IMAGE */
+
+.fb-restaurant-image {
+    position: relative;
+    width: 100%;
+    height: 190px;
+    overflow: hidden;
+}
+
+.fb-restaurant-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.fb-restaurant-card:hover .fb-restaurant-image img {
+    transform: scale(1.06);
+}
+
+
+/* RATING */
+
+.fb-restaurant-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: white;
+    padding: 7px 10px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+}
+
+
+/* INFO */
+
+.fb-restaurant-info {
+    padding: 18px;
+}
+
+.fb-restaurant-info h3 {
+    margin: 0 0 7px;
+    font-size: 20px;
+}
+
+.fb-restaurant-info p {
+    margin: 0 0 14px;
+    font-size: 14px;
+    opacity: 0.7;
+}
+
+
+/* META */
+
+.fb-restaurant-meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: 13px;
+    opacity: 0.75;
+}
+
+
+/* DOTS */
+
+.fb-restaurant-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 9px;
+    margin-top: 24px;
+}
+
+.fb-dot {
+    width: 9px;
+    height: 9px;
+    padding: 0;
+    border: none;
+    border-radius: 50%;
+    background: #cfcfcf;
+    cursor: pointer;
+    transition: all 0.25s ease;
+}
+
+.fb-dot.active {
+    width: 25px;
+    border-radius: 10px;
+    background: #ff6b35;
+}
+
+
+/* NEARBY BUTTON */
+
+.fb-nearby-wrapper {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.fb-nearby-btn {
+    border: none;
+    background: #ff6b35;
+    color: white;
+    padding: 15px 28px;
+    border-radius: 30px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 20px rgba(255, 107, 53, 0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fb-nearby-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(255, 107, 53, 0.35);
+}
+
+.fb-nearby-btn span {
+    margin-right: 7px;
+}
+
+
+/* LOCATION STATUS */
+
+.fb-location-status {
+    margin: 15px 0 5px;
+    font-weight: 600;
+}
+
+.fb-location-note {
+    margin: 0;
+    font-size: 13px;
+    opacity: 0.65;
+}
+
+
+/* LIVE RESULTS */
+
+.fb-nearby-results {
+    width: 100%;
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+
+/* MOBILE */
+
+@media (max-width: 1000px) {
+
+    .fb-restaurant-row {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .fb-nearby-results {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 600px) {
+
+    .fb-restaurants {
+        padding: 50px 20px;
+    }
+
+    .fb-restaurant-row {
+        grid-template-columns: 1fr;
+    }
+
+    .fb-nearby-results {
+        grid-template-columns: 1fr;
+    }
+
+    .fb-restaurant-image {
+        height: 210px;
+    }
+
+    .fb-nearby-btn {
+        width: 100%;
+    }
+}
+.nearby-image {
+    width: 100%;
+    height: 190px;
+    object-fit: cover;
+
+}
+/* =====================================================
+   NEARBY RESTAURANT MENU
+===================================================== */
+
+.nearby-menu {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #eeeeee;
+}
+
+.nearby-menu h4 {
+    margin: 0 0 13px;
+    font-size: 17px;
+    color: #222;
+}
+
+.nearby-food-item {
+    display: flex;
+    gap: 12px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background: #fff8f3;
+    border-radius: 12px;
+    border: 1px solid #f1e7df;
+}
+
+.nearby-food-item img {
+    width: 75px;
+    height: 75px;
+    flex-shrink: 0;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.nearby-food-details {
+    flex: 1;
+    min-width: 0;
+}
+
+.nearby-food-details h5 {
+    margin: 0 0 5px;
+    font-size: 14px;
+    color: #222;
+}
+
+.nearby-food-price {
+    font-size: 14px;
+    font-weight: 800;
+    color: #ff5a1f;
+    margin-bottom: 5px;
+}
+
+.nearby-food-offer {
+    display: inline-block;
+    background: #fff3cd;
+    color: #9a6700;
+    padding: 4px 7px;
+    border-radius: 5px;
+    font-size: 10px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.nearby-add-btn {
+    display: block;
+    width: 100%;
+    border: none;
+    background: #ff5a1f;
+    color: white;
+    padding: 8px 10px;
+    border-radius: 7px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.nearby-add-btn:hover {
+    background: #e94b12;
+    transform: translateY(-1px);
+}
+
+.restaurant-menu-note {
+    font-size: 10px;
+    color: #999;
+    line-height: 1.5;
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+
+    .nearby-food-item {
+        padding: 9px;
+    }
+
+    .nearby-food-item img {
+        width: 70px;
+        height: 70px;
+    }
+
+    .nearby-food-details h5 {
+        font-size: 13px;
+    }
+
+}
+/* =====================================================
+   FRESHBITE HOME PAGE - IMPROVED RESPONSIVE LAYOUT
+===================================================== */
+
+/* 12 FOOD ITEMS */
+
+.food-section {
+    width: 100%;
+}
+
+.food-section .food-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+    width: 100%;
+}
+
+.food-section .food-card {
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.food-section .food-card > img {
+    width: 100%;
+    height: 230px;
+    object-fit: cover;
+    display: block;
+}
+
+.food-description {
+    line-height: 1.6;
+}
+
+
+/* LARGE RESTAURANT SECTION */
+
+.location-section {
+    width: 100%;
+    padding: 75px 5%;
+}
+
+.nearby-restaurants {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 24px;
+    width: 100%;
+}
+
+.nearby-card {
+    width: 100%;
+    min-width: 0;
+}
+
+.nearby-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    display: block;
+}
+
+
+/* TABLET */
+
+@media (max-width: 1100px) {
+
+    .food-section .food-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .nearby-restaurants {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .nearby-image {
+        height: 240px;
+    }
+
+}
+
+
+/* MOBILE */
+
+@media (max-width: 768px) {
+
+    .food-section .food-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .food-section .food-card > img {
+        height: 240px;
+    }
+
+    .nearby-restaurants {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .nearby-card {
+        width: 100%;
+    }
+
+    .nearby-image {
+        height: 250px;
+    }
+
+    .nearby-info {
+        padding: 18px;
+    }
+
+}
+
+
+/* SMALL MOBILE */
+
+@media (max-width: 480px) {
+
+    .food-section .food-card > img {
+        height: 220px;
+    }
+
+    .nearby-image {
+        height: 220px;
+    }
+
+}
