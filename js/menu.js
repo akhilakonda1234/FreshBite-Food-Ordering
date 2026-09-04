@@ -91,14 +91,17 @@ const foodItems = [
 
 function renderFoodItems(category = "all") {
 
-    const container = document.getElementById("food-container");
+    const container =
+        document.getElementById("food-container");
 
     if (!container) return;
 
     const filteredItems =
         category === "all"
             ? foodItems
-            : foodItems.filter(item => item.category === category);
+            : foodItems.filter(
+                item => item.category === category
+            );
 
     container.innerHTML = "";
 
@@ -128,13 +131,22 @@ function renderFoodItems(category = "all") {
                             ₹${food.price}
                         </span>
 
-            <button
-    class="add-to-cart-btn"
-    onclick="addToCart(${food.id})"
-    style="background: #ff6b35; color: white; font-size: 30px; font-weight: bold; border-radius: 50%; width: 45px; height: 45px; padding: 0;"
->
-                             +
-                           </button>
+                        <button
+                            class="add-to-cart-btn"
+                            onclick="addToCart(${food.id})"
+                            style="
+                                background: #ff6b35;
+                                color: white;
+                                font-size: 30px;
+                                font-weight: bold;
+                                border-radius: 50%;
+                                width: 45px;
+                                height: 45px;
+                                padding: 0;
+                            "
+                        >
+                            +
+                        </button>
 
                     </div>
 
@@ -169,14 +181,20 @@ function saveCart(cart) {
 }
 
 
+// ================================
+// UPDATE CART COUNT
+// ================================
+
 function updateCartCount() {
 
     const cart = getCart();
 
-    const count = cart.reduce(
-        (total, item) => total + (item.quantity || 1),
-        0
-    );
+    const count =
+        cart.reduce(
+            (total, item) =>
+                total + (item.quantity || 1),
+            0
+        );
 
     const cartCount =
         document.getElementById("cart-count");
@@ -194,24 +212,29 @@ function updateCartCount() {
 
 function addToCart(foodId) {
 
-    const food = foodItems.find(
-        item => item.id === foodId
-    );
+    const food =
+        foodItems.find(
+            item => item.id === foodId
+        );
 
     if (!food) return;
 
     const cart = getCart();
 
-    const existingItem = cart.find(
-        item => item.id === foodId
-    );
+    const existingItem =
+        cart.find(
+            item => item.id === foodId
+        );
+
 
     if (existingItem) {
 
         existingItem.quantity =
             (existingItem.quantity || 1) + 1;
 
-    } else {
+    }
+
+    else {
 
         cart.push({
             id: food.id,
@@ -223,28 +246,38 @@ function addToCart(foodId) {
 
     }
 
+
     saveCart(cart);
 
     updateCartCount();
 
-    showToast(`${food.name} added to cart 🛒`);
+    showToast(
+        `${food.name} added to cart 🛒`
+    );
 
 }
 
 
 // ================================
-// CENTER TOAST MESSAGE
+// TOAST MESSAGE
 // ================================
 
 function showToast(message) {
 
-    let toast = document.getElementById("freshbite-toast");
+    let toast =
+        document.getElementById(
+            "freshbite-toast"
+        );
+
 
     if (!toast) {
 
-        toast = document.createElement("div");
+        toast =
+            document.createElement("div");
 
-        toast.id = "freshbite-toast";
+        toast.id =
+            "freshbite-toast";
+
 
         toast.style.cssText = `
             position: fixed;
@@ -262,20 +295,29 @@ function showToast(message) {
             transition: opacity 0.3s ease;
         `;
 
+
         document.body.appendChild(toast);
+
     }
+
 
     toast.textContent = message;
 
     toast.style.opacity = "1";
 
-    clearTimeout(window.toastTimer);
 
-    window.toastTimer = setTimeout(() => {
+    clearTimeout(
+        window.toastTimer
+    );
 
-        toast.style.opacity = "0";
 
-    }, 1800);
+    window.toastTimer =
+        setTimeout(() => {
+
+            toast.style.opacity = "0";
+
+        }, 1800);
+
 }
 
 
@@ -287,16 +329,24 @@ function filterCategory(category) {
 
     renderFoodItems(category);
 
+
     document
         .querySelectorAll(".filter-btn")
         .forEach(button => {
 
-            button.classList.remove("active");
+            button.classList.remove(
+                "active"
+            );
+
 
             if (
                 button.dataset.category === category
             ) {
-                button.classList.add("active");
+
+                button.classList.add(
+                    "active"
+                );
+
             }
 
         });
@@ -305,16 +355,58 @@ function filterCategory(category) {
 
 
 // ================================
-// CATEGORY BUTTONS
+// PAGE LOAD
 // ================================
 
 document.addEventListener(
     "DOMContentLoaded",
     function () {
 
+        // ================================
+        // RENDER FOOD
+        // ================================
+
         renderFoodItems();
 
+
+        // ================================
+        // UPDATE CART COUNT
+        // ================================
+
         updateCartCount();
+
+
+        // ================================
+        // MOBILE MENU
+        // ================================
+
+        const menuButton =
+            document.getElementById("menu-btn");
+
+
+        const navigation =
+            document.querySelector(".nav-links");
+
+
+        if (menuButton && navigation) {
+
+            menuButton.addEventListener(
+                "click",
+                function () {
+
+                    navigation.classList.toggle(
+                        "mobile-active"
+                    );
+
+                }
+            );
+
+        }
+
+
+        // ================================
+        // CATEGORY BUTTONS
+        // ================================
 
         document
             .querySelectorAll(".filter-btn")
@@ -335,29 +427,3 @@ document.addEventListener(
 
     }
 );
-function showToast(message) {
-    const toast = document.createElement("div");
-
-    toast.textContent = message;
-
-    toast.style.cssText = `
-        position: fixed;
-        bottom: 30px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #28a745;
-        color: white;
-        padding: 10px 18px;
-        border-radius: 6px;
-        font-size: 14px;
-        font-weight: 500;
-        z-index: 99999;
-        box-shadow: 0 3px 10px rgba(0,0,0,0.2);
-    `;
-
-    document.body.appendChild(toast);
-
-    setTimeout(() => {
-        toast.remove();
-    }, 1800);
-}
