@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Complete Your Order - FreshBite</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background: #fff8f3;
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            height: 65px;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #ff6b35;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 22px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: #ff6b35;
+        }
+
+        /* PAGE */
+
+        .checkout-page {
+            width: 100%;
+            padding: 25px 20px 40px;
+        }
+
+        .checkout-title {
+            text-align: center;
+            font-size: 30px;
+            margin: 0 0 22px;
+            color: #222;
+        }
+
+        .checkout-title span {
+            color: #ff6b35;
+        }
+
+        /* MAIN BOX */
+
+        .checkout-container {
+            width: 90%;
+            max-width: 1450px;
+            margin: auto;
+            background: white;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.10);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            overflow: hidden;
+        }
+
+        /* LEFT */
+
+        .customer-section {
+            padding: 30px 35px;
+            border-right: 1px solid #eee;
+        }
+
+        /* RIGHT */
+
+        .order-section {
+            padding: 30px 35px;
+            background: #fffdfb;
+        }
+
+        .section-title {
+            font-size: 20px;
+            margin: 0 0 18px;
+            color: #222;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #ff6b35;
+        }
+
+        /* INPUTS */
+
+        .form-group {
+            margin-bottom: 13px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #444;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 11px;
+            border: 1px solid #ddd;
+            border-radius: 7px;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #ff6b35;
+        }
+
+        .form-group textarea {
+            height: 65px;
+            resize: none;
+        }
+
+        .city-pincode {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        /* PAYMENT */
+
+        .payment-title {
+            font-size: 16px;
+            margin: 18px 0 10px;
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid #ddd;
+            padding: 9px 11px;
+            border-radius: 7px;
+            margin-bottom: 7px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .payment-option:hover {
+            border-color: #ff6b35;
+            background: #fff8f3;
+        }
+
+        .payment-option input {
+            accent-color: #ff6b35;
+        }
+
+        /* ORDER ITEMS */
+
+        #order-summary {
+            min-height: 100px;
+        }
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-item-image {
+            width: 90px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .order-item-details {
+            flex: 1;
+        }
+
+        .order-item-name {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 4px;
+            color: #222;
+        }
+
+        .order-item-quantity {
+            font-size: 12px;
+            color: #777;
+        }
+
+        .order-item-price {
+            font-size: 14px;
+            font-weight: bold;
+            color: #ff6b35;
+        }
+
+        /* PRICE */
+
+        .price-summary {
+            margin-top: 18px;
+            border-top: 1px solid #ddd;
+            padding-top: 13px;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            margin-bottom: 9px;
+            color: #555;
+        }
+
+        .total-row {
+            border-top: 2px solid #eee;
+            padding-top: 12px;
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #222;
+        }
+
+        .total-price {
+            color: #ff6b35;
+        }
+
+        /* BUTTON */
+
+        .place-order-btn {
+            width: 100%;
+            border: none;
+            background: #ff6b35;
+            color: white;
+            padding: 12px;
+            border-radius: 7px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        .place-order-btn:hover {
+            background: #e85a27;
+        }
+
+        /* MESSAGE */
+
+        #checkout-message {
+            text-align: center;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 750px) {
+
+            .checkout-container {
+                width: 95%;
+                grid-template-columns: 1fr;
+            }
+
+            .customer-section {
+                border-right: none;
+                border-bottom: 1px solid #eee;
+            }
+
+            .checkout-title {
+                font-size: 25px;
+            }
+        }
+
+        @media (max-width: 450px) {
+
+            .navbar {
+                padding: 0 15px;
+            }
+
+            .nav-links {
+                gap: 10px;
+            }
+
+            .checkout-page {
+                padding: 20px 10px;
+            }
+
+            .checkout-container {
+                width: 100%;
+            }
+
+            .customer-section,
+            .order-section {
+                padding: 20px;
+            }
+
+            .city-pincode {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <nav class="navbar">
+
+        <a href="index.html" class="logo">
+            FreshBite
+        </a>
+
+        <div class="nav-links">
+            <a href="menu.html">Menu</a>
+
+            <a href="cart.html">
+                🛒 Cart
+                <span id="cart-count">0</span>
+            </a>
+        </div>
+
+    </nav>
+
+
+    <!-- CHECKOUT PAGE -->
+
+    <main class="checkout-page">
+
+        <h1 class="checkout-title">
+            COMPLETE <span>YOUR ORDER</span>
+        </h1>
+
+
+        <form id="checkout-form">
+
+            <div class="checkout-container">
+
+
+                <!-- ================================= -->
+                <!-- CUSTOMER DETAILS - LEFT -->
+                <!-- ================================= -->
+
+                <section class="customer-section">
+
+                    <h2 class="section-title">
+                        👤 Customer Details
+                    </h2>
+
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            Full Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Enter your name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="email">
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="phone">
+                            Phone Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            name="phone"
+                            placeholder="Enter your phone number"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="address">
+                            Delivery Address
+                        </label>
+
+                        <textarea
+                            id="address"
+                            name="address"
+                            placeholder="Enter your complete address"
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="city-pincode">
+
+                        <div class="form-group">
+
+                            <label for="city">
+                                City
+                            </label>
+
+                            <input
+                                type="text"
+                                id="city"
+                                name="city"
+                                placeholder="City"
+                                required
+                            >
+
+                        </div>
+
+
+                        <div class="form-group">
+
+                            <label for="pincode">
+                                Pincode
+                            </label>
+
+                            <input
+                                type="text"
+                                id="pincode"
+                                name="pincode"
+                                placeholder="Pincode"
+                                required
+                            >
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- PAYMENT -->
+
+                    <h3 class="payment-title">
+                        💳 Payment Method
+                    </h3>
+
+
+                    <label class="payment-option">
+
+                        <input
+                            type="radio"
+                            name="payment"
+                            value="Cash on Delivery"
+                            required
+                        >
+
+                        💵 Cash on Delivery
+
+                    </label>
+
+
+                    <label class="payment-option">
+
+                        <input
+                            type="radio"
+                            name="payment"
+                            value="UPI"
+                        >
+
+                        📱 UPI
+
+                    </label>
+
+
+                    <label class="payment-option">
+
+                        <input
+                            type="radio"
+                            name="payment"
+                            value="Card"
+                        >
+
+                        💳 Credit / Debit Card
+
+                    </label>
+
+
+                    <div id="checkout-message"></div>
+
+
+                    <button
+                        type="button"
+                        class="place-order-btn"
+                        id="place-order-btn"
+                    >
+                        Proceed to Pay
+                    </button>
+
+                </section>
+
+
+
+                <!-- ================================= -->
+                <!-- YOUR ORDER - RIGHT -->
+                <!-- ================================= -->
+
+                <section class="order-section">
+
+                    <h2 class="section-title">
+                        🛍️ Your Order
+                    </h2>
+
+
+                    <div id="order-summary">
+
+                        <!-- checkout.js will add ordered items here -->
+
+                    </div>
+
+
+                    <div class="price-summary">
+
+                        <div class="price-row">
+
+                            <span>Subtotal</span>
+
+                            <span id="subtotal">
+                                ₹0
+                            </span>
+
+                        </div>
+
+
+                        <div class="price-row">
+
+                            <span>Delivery</span>
+
+                            <span id="delivery">
+                                ₹0
+                            </span>
+
+                        </div>
+
+
+                        <div class="price-row">
+
+                            <span>Discount</span>
+
+                            <span id="discount">
+                                ₹0
+                            </span>
+
+                        </div>
+
+
+                        <div class="price-row total-row">
+
+                            <span>Total</span>
+
+                            <span
+                                id="total"
+                                class="total-price"
+                            >
+                                ₹0
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </form>
+
+    </main>
+
+
+    <!-- CHECKOUT JS -->
+
+    <script src="js/checkout.js"></script>
+
+
+    <!-- CART COUNT -->
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const cart =
+                    JSON.parse(
+                        localStorage.getItem("cart") || "[]"
+                    );
+
+                const cartCount =
+                    document.getElementById("cart-count");
+
+                if (cartCount) {
+
+                    const count =
+                        cart.reduce(
+                            (sum, item) =>
+                                sum + (item.quantity || 0),
+                            0
+                        );
+
+                    cartCount.textContent = count;
+                }
+
+            }
+        );
+
+    </script>
+
+</body>
+</html>

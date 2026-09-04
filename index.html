@@ -1,0 +1,1233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>FreshBite - Online Food Ordering</title>
+
+    <!-- Font Awesome Icons -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+    <!-- Main CSS -->
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVIGATION BAR
+    ========================== -->
+
+    <header class="navbar">
+
+        <!-- LOGO -->
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🍕
+            </div>
+
+            <div>
+
+                <div class="logo-text">
+                    FreshBite
+                </div>
+
+                <span class="logo-subtitle">
+                    FRESH • FAST • DELICIOUS
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- CUSTOMER NAVIGATION -->
+
+        <nav class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="menu.html">
+                Menu
+            </a>
+
+            <a href="#restaurants">
+                Restaurants
+            </a>
+
+            <a href="#about">
+                About
+            </a>
+
+            <a href="#contact">
+                Contact
+            </a>
+
+            <a href="my-orders.html">
+                📦 My Orders
+            </a>
+
+            <a href="notification.html">
+                🔔 Notifications
+            </a>
+
+            <a href="login.html">
+                Login
+            </a>
+
+            <a
+                href="cart.html"
+                class="cart-btn"
+            >
+
+                🛒 Cart
+
+                <span id="cart-count">
+                    0
+                </span>
+
+            </a>
+
+        </nav>
+
+
+        <!-- MOBILE MENU BUTTON -->
+
+        <button
+            class="menu-btn"
+            id="menu-btn"
+        >
+            ☰
+        </button>
+
+    </header>
+
+
+    <!-- =========================
+         HERO SECTION
+    ========================== -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="hero-badge">
+                🔥 Delicious food delivered fast
+            </div>
+
+
+            <h1>
+
+                Your Favorite Food
+
+                <span>
+                     Delivered Fresh
+                </span>
+
+            </h1>
+
+
+            <p>
+
+                Discover delicious meals from your favorite restaurants
+                and get them delivered straight to your doorstep.
+
+            </p>
+
+
+            <div class="hero-buttons">
+
+                <a
+                    href="menu.html"
+                    class="btn-primary"
+                >
+                    Explore Menu →
+                </a>
+
+
+                <a
+                    href="#restaurants"
+                    class="btn-secondary"
+                >
+                    View Restaurants
+                </a>
+
+            </div>
+
+
+            <!-- STATISTICS -->
+
+            <div class="stats">
+
+                <div class="stat">
+
+                    <strong>
+                        50+
+                    </strong>
+
+                    <span>
+                        Restaurants
+                    </span>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <strong>
+                        200+
+                    </strong>
+
+                    <span>
+                        Food Items
+                    </span>
+
+                </div>
+
+
+                <div class="stat">
+
+                    <strong>
+                        4.8 ⭐
+                    </strong>
+
+                    <span>
+                        Average Rating
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="hero-image">
+
+            <img
+                src="https://images.unsplash.com/photo-1504674900247-0877df9cc836"
+                alt="Delicious food"
+            >
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         CATEGORIES
+    ========================== -->
+
+    <section class="categories">
+
+        <div class="section-header">
+
+            <div>
+
+                <h2 class="section-title">
+
+                    Browse
+
+                    <span>
+                        Categories
+                    </span>
+
+                </h2>
+
+                <p>
+                    Explore your favorite food categories
+                </p>
+
+            </div>
+
+
+            <a
+                href="menu.html"
+                class="view-all"
+            >
+                View All →
+            </a>
+
+        </div>
+
+
+        <div class="category-grid">
+
+
+            <!-- PIZZA -->
+
+            <a
+                href="menu.html?category=pizza"
+                class="category-card"
+            >
+
+                <div class="category-icon">
+                    🍕
+                </div>
+
+                <h3>
+                    Pizza
+                </h3>
+
+                <p>
+                    25+ items
+                </p>
+
+            </a>
+
+
+            <!-- BURGERS -->
+
+            <a
+                href="menu.html?category=burger"
+                class="category-card"
+            >
+
+                <div class="category-icon">
+                    🍔
+                </div>
+
+                <h3>
+                    Burgers
+                </h3>
+
+                <p>
+                    20+ items
+                </p>
+
+            </a>
+
+
+            <!-- INDIAN -->
+
+            <a
+                href="menu.html?category=indian"
+                class="category-card"
+            >
+
+                <div class="category-icon">
+                    🍛
+                </div>
+
+                <h3>
+                    Indian
+                </h3>
+
+                <p>
+                    30+ items
+                </p>
+
+            </a>
+
+
+            <!-- DESSERTS -->
+
+            <a
+                href="menu.html?category=dessert"
+                class="category-card"
+            >
+
+                <div class="category-icon">
+                    🍰
+                </div>
+
+                <h3>
+                    Desserts
+                </h3>
+
+                <p>
+                    15+ items
+                </p>
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         FEATURED FOOD
+    ========================== -->
+
+    <section class="food-section">
+
+        <div class="section-header">
+
+            <div>
+
+                <h2 class="section-title">
+
+                    Popular
+
+                    <span>
+                        Food
+                    </span>
+
+                </h2>
+
+                <p>
+                    Customer favorites you'll love
+                </p>
+
+            </div>
+
+
+            <a
+                href="menu.html"
+                class="view-all"
+            >
+                View All →
+            </a>
+
+        </div>
+
+
+        <div class="food-grid">
+
+
+            <!-- FOOD 1 -->
+
+            <div class="food-card">
+
+                <img
+                    src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002"
+                    alt="Margherita Pizza"
+                >
+
+                <div class="food-info">
+
+                    <h3>
+                        Margherita Pizza
+                    </h3>
+
+                    <p class="food-description">
+                        Fresh tomatoes, mozzarella and basil
+                    </p>
+
+                    <div class="rating">
+                        ⭐ 4.8
+                    </div>
+
+                    <div class="food-bottom">
+
+                        <span class="price">
+                            ₹199
+                        </span>
+
+                        <button
+                            class="add-cart"
+                            onclick="addFoodToCart(
+                                101,
+                                'Margherita Pizza',
+                                199,
+                                'https://images.unsplash.com/photo-1574071318508-1cdbab80d002'
+                            )"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FOOD 2 -->
+
+            <div class="food-card">
+
+                <img
+                    src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd"
+                    alt="Cheese Burger"
+                >
+
+                <div class="food-info">
+
+                    <h3>
+                        Cheese Burger
+                    </h3>
+
+                    <p class="food-description">
+                        Crispy patty with cheese and fresh vegetables
+                    </p>
+
+                    <div class="rating">
+                        ⭐ 4.7
+                    </div>
+
+                    <div class="food-bottom">
+
+                        <span class="price">
+                            ₹179
+                        </span>
+
+                        <button
+                            class="add-cart"
+                            onclick="addFoodToCart(
+                                102,
+                                'Cheese Burger',
+                                179,
+                                'https://images.unsplash.com/photo-1568901346375-23c9450c58cd'
+                            )"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FOOD 3 -->
+
+            <div class="food-card">
+
+                <img
+                    src="https://images.unsplash.com/photo-1547592180-85f173990554"
+                    alt="Indian Thali"
+                >
+
+                <div class="food-info">
+
+                    <h3>
+                        Special Indian Thali
+                    </h3>
+
+                    <p class="food-description">
+                        Delicious traditional Indian meal
+                    </p>
+
+                    <div class="rating">
+                        ⭐ 4.9
+                    </div>
+
+                    <div class="food-bottom">
+
+                        <span class="price">
+                            ₹249
+                        </span>
+
+                        <button
+                            class="add-cart"
+                            onclick="addFoodToCart(
+                                103,
+                                'Special Indian Thali',
+                                249,
+                                'https://images.unsplash.com/photo-1547592180-85f173990554'
+                            )"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- FOOD 4 -->
+
+            <div class="food-card">
+
+                <img
+                    src="https://images.unsplash.com/photo-1578985545062-69928b1d9587"
+                    alt="Chocolate Cake"
+                >
+
+                <div class="food-info">
+
+                    <h3>
+                        Chocolate Cake
+                    </h3>
+
+                    <p class="food-description">
+                        Rich and creamy chocolate cake
+                    </p>
+
+                    <div class="rating">
+                        ⭐ 4.9
+                    </div>
+
+                    <div class="food-bottom">
+
+                        <span class="price">
+                            ₹129
+                        </span>
+
+                        <button
+                            class="add-cart"
+                            onclick="addFoodToCart(
+                                104,
+                                'Chocolate Cake',
+                                129,
+                                'https://images.unsplash.com/photo-1578985545062-69928b1d9587'
+                            )"
+                        >
+                            +
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         RESTAURANTS
+    ========================== -->
+
+    <section id="restaurants">
+
+        <div class="section-header">
+
+            <div>
+
+                <h2 class="section-title">
+
+                    Popular
+
+                    <span>
+                        Restaurants
+                    </span>
+
+                </h2>
+
+                <p>
+                    Order from the best restaurants near you
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="restaurant-grid">
+
+
+            <!-- RESTAURANT 1 -->
+
+            <div class="restaurant-card">
+
+                <img
+                    src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4"
+                    alt="Italian Restaurant"
+                >
+
+                <div class="restaurant-info">
+
+                    <h3>
+                        Bella Italia
+                    </h3>
+
+                    <p>
+                        Italian • Pizza • Pasta
+                    </p>
+
+                    <div class="restaurant-meta">
+
+                        <span class="restaurant-rating">
+                            ⭐ 4.8
+                        </span>
+
+                        <span>
+                            🕒 25 min
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RESTAURANT 2 -->
+
+            <div class="restaurant-card">
+
+                <img
+                    src="https://images.unsplash.com/photo-1552566626-52f8b828add9"
+                    alt="Indian Restaurant"
+                >
+
+                <div class="restaurant-info">
+
+                    <h3>
+                        Spice Garden
+                    </h3>
+
+                    <p>
+                        Indian • Biryani • Thali
+                    </p>
+
+                    <div class="restaurant-meta">
+
+                        <span class="restaurant-rating">
+                            ⭐ 4.7
+                        </span>
+
+                        <span>
+                            🕒 30 min
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RESTAURANT 3 -->
+
+            <div class="restaurant-card">
+
+                <img
+                    src="https://images.unsplash.com/photo-1555396273-367ea4eb4db5"
+                    alt="Burger Restaurant"
+                >
+
+                <div class="restaurant-info">
+
+                    <h3>
+                        Burger House
+                    </h3>
+
+                    <p>
+                        Burgers • Fries • Shakes
+                    </p>
+
+                    <div class="restaurant-meta">
+
+                        <span class="restaurant-rating">
+                            ⭐ 4.6
+                        </span>
+
+                        <span>
+                            🕒 20 min
+                        </span>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         SPECIAL OFFER
+    ========================== -->
+
+    <section class="offers">
+
+        <div>
+
+            <h2>
+                🍕 Get 20% OFF
+            </h2>
+
+            <p>
+                Order your favorite food today and enjoy
+                our special discount.
+            </p>
+
+        </div>
+
+        <a
+            href="menu.html"
+            class="offer-btn"
+        >
+            Order Now
+        </a>
+
+    </section>
+
+
+    <!-- =========================
+         ABOUT
+    ========================== -->
+
+    <section id="about">
+
+        <div class="section-header">
+
+            <div>
+
+                <h2 class="section-title">
+
+                    About
+
+                    <span>
+                        FreshBite
+                    </span>
+
+                </h2>
+
+                <p>
+                    Fresh food. Fast delivery. Happy customers.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <p>
+            FreshBite is a food ordering platform designed
+            to make discovering and ordering food simple,
+            convenient, and enjoyable.
+        </p>
+
+        <p>
+            Our platform brings a variety of food choices
+            together in one place, including pizzas, burgers,
+            Indian meals, desserts, drinks, and Chinese
+            cuisine.
+        </p>
+
+        <p>
+            From exploring the menu to adding your favourite
+            dishes to the cart and completing checkout,
+            FreshBite provides a simple and user-friendly
+            ordering experience.
+        </p>
+
+    </section>
+
+
+    <!-- =========================
+         CONTACT
+    ========================== -->
+
+    <section id="contact">
+
+        <div class="section-header">
+
+            <div>
+
+                <h2 class="section-title">
+
+                    Contact
+
+                    <span>
+                        Us
+                    </span>
+
+                </h2>
+
+                <p>
+                    Have questions? We'd love to hear from you.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <p>
+            📧 Email: supportakki@freshbite.com
+        </p>
+
+        <p>
+            📞 Phone: +91 8106870764
+        </p>
+
+    </section>
+
+
+    <!-- =========================
+         FOOTER
+    ========================== -->
+
+    <footer>
+
+        <div class="footer-grid">
+
+
+            <!-- BRAND -->
+
+            <div class="footer-brand">
+
+                <h2>
+                    🍕 FreshBite
+                </h2>
+
+                <p>
+                    Fresh food delivered straight to your doorstep.
+                    Delicious, fast and convenient.
+                </p>
+
+            </div>
+
+
+            <!-- QUICK LINKS -->
+
+            <div class="footer-column">
+
+                <h3>
+                    Quick Links
+                </h3>
+
+                <a href="index.html">
+                    Home
+                </a>
+
+                <a href="menu.html">
+                    Menu
+                </a>
+
+                <a href="#restaurants">
+                    Restaurants
+                </a>
+
+                <a href="#about">
+                    About
+                </a>
+
+                <a href="my-orders.html">
+                    📦 My Orders
+                </a>
+
+                <a href="notification.html">
+                    🔔 Notifications
+                </a>
+
+            </div>
+
+
+            <!-- CATEGORIES -->
+
+            <div class="footer-column">
+
+                <h3>
+                    Categories
+                </h3>
+
+                <a href="menu.html?category=pizza">
+                    Pizza
+                </a>
+
+                <a href="menu.html?category=burger">
+                    Burgers
+                </a>
+
+                <a href="menu.html?category=indian">
+                    Indian
+                </a>
+
+                <a href="menu.html?category=dessert">
+                    Desserts
+                </a>
+
+            </div>
+
+
+            <!-- SUPPORT -->
+
+            <div class="footer-column">
+
+                <h3>
+                    Support
+                </h3>
+
+                <a href="#contact">
+                    Contact Us
+                </a>
+
+                <a href="#">
+                    Help Center
+                </a>
+
+                <a href="#">
+                    Privacy Policy
+                </a>
+
+                <a href="#">
+                    Terms & Conditions
+                </a>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <p>
+                © 2026 FreshBite. All Rights Reserved.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script>
+
+        /* =========================
+           ADD FOOD TO CART
+        ========================== */
+
+        function addFoodToCart(
+            id,
+            name,
+            price,
+            image
+        ) {
+
+            let cart =
+                JSON.parse(
+                    localStorage.getItem("cart")
+                ) || [];
+
+
+            const existingItem =
+                cart.find(
+                    item =>
+                        item.id === id
+                );
+
+
+            if (existingItem) {
+
+                existingItem.quantity += 1;
+
+            } else {
+
+                cart.push({
+
+                    id: id,
+                    name: name,
+                    price: price,
+                    image: image,
+                    quantity: 1
+
+                });
+
+            }
+
+
+            localStorage.setItem(
+                "cart",
+                JSON.stringify(cart)
+            );
+
+
+            updateCartCount();
+
+
+            /* NO ALERT POPUP */
+
+            showToast(
+                name + " added to cart! 🛒"
+            );
+
+        }
+
+
+        /* =========================
+           TOAST MESSAGE
+        ========================== */
+
+        function showToast(message) {
+
+            const oldToast =
+                document.getElementById(
+                    "home-toast"
+                );
+
+
+            if (oldToast) {
+
+                oldToast.remove();
+
+            }
+
+
+            const toast =
+                document.createElement(
+                    "div"
+                );
+
+
+            toast.id =
+                "home-toast";
+
+
+            toast.textContent =
+                message;
+
+
+            toast.style.position =
+                "fixed";
+
+            toast.style.bottom =
+                "25px";
+
+            toast.style.left =
+                "50%";
+
+            toast.style.transform =
+                "translateX(-50%)";
+
+            toast.style.background =
+                "#16a34a";
+
+            toast.style.color =
+                "white";
+
+            toast.style.padding =
+                "12px 24px";
+
+            toast.style.borderRadius =
+                "8px";
+
+            toast.style.fontWeight =
+                "bold";
+
+            toast.style.zIndex =
+                "99999";
+
+            toast.style.boxShadow =
+                "0 4px 15px rgba(0,0,0,0.2)";
+
+
+            document.body.appendChild(
+                toast
+            );
+
+
+            setTimeout(
+                function() {
+
+                    if (toast) {
+
+                        toast.remove();
+
+                    }
+
+                },
+                2000
+            );
+
+        }
+
+
+        /* =========================
+           UPDATE CART COUNT
+        ========================== */
+
+        function updateCartCount() {
+
+            const cart =
+                JSON.parse(
+                    localStorage.getItem("cart")
+                ) || [];
+
+
+            let totalItems = 0;
+
+
+            cart.forEach(
+                item => {
+
+                    totalItems +=
+                        item.quantity || 1;
+
+                }
+            );
+
+
+            const cartCount =
+                document.getElementById(
+                    "cart-count"
+                );
+
+
+            if (cartCount) {
+
+                cartCount.textContent =
+                    totalItems;
+
+            }
+
+        }
+
+
+        /* =========================
+           INITIAL CART COUNT
+        ========================== */
+
+        updateCartCount();
+
+
+        /* =========================
+           MOBILE MENU
+        ========================== */
+
+        const menuButton =
+            document.getElementById(
+                "menu-btn"
+            );
+
+
+        const navigation =
+            document.querySelector(
+                ".nav-links"
+            );
+
+
+        if (menuButton) {
+
+            menuButton.addEventListener(
+                "click",
+                function() {
+
+                    navigation.classList.toggle(
+                        "mobile-active"
+                    );
+
+                }
+            );
+
+        }
+
+    </script>
+
+</body>
+
+</html>

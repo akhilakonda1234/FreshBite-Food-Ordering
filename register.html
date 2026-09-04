@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>FreshBite - Register</title>
+
+    <link
+        rel="stylesheet"
+        href="css/style.css"
+    >
+
+    <style>
+
+        /* ================================
+           PAGE
+        ================================= */
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: linear-gradient(
+                135deg,
+                #fff5e6,
+                #ffe0b2
+            );
+
+            font-family: Arial, sans-serif;
+        }
+
+
+        /* ================================
+           CONTAINER
+        ================================= */
+
+        .auth-container {
+            width: 100%;
+            max-width: 450px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+
+        /* ================================
+           CARD
+        ================================= */
+
+        .auth-card {
+            background: white;
+            padding: 35px;
+
+            border-radius: 20px;
+
+            box-shadow:
+                0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+
+        /* ================================
+           LOGO
+        ================================= */
+
+        .logo {
+            text-align: center;
+
+            font-size: 32px;
+            font-weight: bold;
+
+            color: #ff6b35;
+
+            margin-bottom: 8px;
+        }
+
+
+        .subtitle {
+            text-align: center;
+
+            color: #666;
+
+            margin-bottom: 25px;
+        }
+
+
+        /* ================================
+           FORM
+        ================================= */
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+
+        .form-group label {
+            display: block;
+
+            margin-bottom: 7px;
+
+            font-weight: bold;
+
+            color: #333;
+        }
+
+
+        .form-group input,
+        .form-group textarea {
+
+            width: 100%;
+
+            box-sizing: border-box;
+
+            padding: 13px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 10px;
+
+            font-size: 15px;
+
+            outline: none;
+        }
+
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+
+            border-color: #ff6b35;
+
+            box-shadow:
+                0 0 0 3px rgba(
+                    255,
+                    107,
+                    53,
+                    0.10
+                );
+        }
+
+
+        .form-group textarea {
+
+            resize: vertical;
+
+            min-height: 70px;
+        }
+
+
+        /* ================================
+           REGISTER BUTTON
+        ================================= */
+
+        .register-btn {
+
+            width: 100%;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #ff6b35;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+
+        .register-btn:hover {
+
+            background: #e85a28;
+        }
+
+
+        .register-btn:disabled {
+
+            background: #aaa;
+
+            cursor: not-allowed;
+        }
+
+
+        /* ================================
+           MESSAGE
+        ================================= */
+
+        .message {
+
+            margin-top: 15px;
+
+            text-align: center;
+
+            font-weight: bold;
+
+            min-height: 20px;
+        }
+
+
+        /* ================================
+           LOGIN LINK
+        ================================= */
+
+        .login-link {
+
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #555;
+        }
+
+
+        .login-link a {
+
+            color: #ff6b35;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+
+        .login-link a:hover {
+
+            text-decoration: underline;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="auth-container">
+
+        <div class="auth-card">
+
+            <!-- LOGO -->
+
+            <div class="logo">
+                🍕 FreshBite
+            </div>
+
+
+            <div class="subtitle">
+                Create your account
+            </div>
+
+
+            <!-- REGISTER FORM -->
+
+            <form id="register-form">
+
+                <!-- NAME -->
+
+                <div class="form-group">
+
+                    <label for="name">
+                        Full Name
+                    </label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Enter your full name"
+                        autocomplete="name"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label for="email">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="Enter your email"
+                        autocomplete="email"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PASSWORD -->
+
+                <div class="form-group">
+
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        placeholder="Minimum 6 characters"
+                        autocomplete="new-password"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PHONE -->
+
+                <div class="form-group">
+
+                    <label for="phone">
+                        Phone Number
+                    </label>
+
+                    <input
+                        type="tel"
+                        id="phone"
+                        placeholder="Enter your phone number"
+                        autocomplete="tel"
+                    >
+
+                </div>
+
+
+                <!-- ADDRESS -->
+
+                <div class="form-group">
+
+                    <label for="address">
+                        Delivery Address
+                    </label>
+
+                    <textarea
+                        id="address"
+                        placeholder="Enter your delivery address"
+                        autocomplete="street-address"
+                    ></textarea>
+
+                </div>
+
+
+                <!-- BUTTON -->
+
+                <button
+                    type="submit"
+                    class="register-btn"
+                    id="register-btn"
+                >
+                    Create Account
+                </button>
+
+            </form>
+
+
+            <!-- MESSAGE -->
+
+            <div
+                id="message"
+                class="message"
+            ></div>
+
+
+            <!-- LOGIN -->
+
+            <div class="login-link">
+
+                Already have an account?
+
+                <a href="login.html">
+                    Login
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ========================================================
+         FRONTEND-ONLY JAVASCRIPT
+         NO BACKEND
+         NO API
+         NO MYSQL
+         ======================================================== -->
+
+    <script>
+
+        const registerForm =
+            document.getElementById(
+                "register-form"
+            );
+
+
+        const message =
+            document.getElementById(
+                "message"
+            );
+
+
+        const registerButton =
+            document.getElementById(
+                "register-btn"
+            );
+
+
+        // =====================================================
+        // REGISTER USER
+        // =====================================================
+
+        registerForm.addEventListener(
+            "submit",
+            function(event) {
+
+                event.preventDefault();
+
+
+                // =================================================
+                // GET FORM VALUES
+                // =================================================
+
+                const name =
+                    document
+                        .getElementById("name")
+                        .value
+                        .trim();
+
+
+                const email =
+                    document
+                        .getElementById("email")
+                        .value
+                        .trim()
+                        .toLowerCase();
+
+
+                const password =
+                    document
+                        .getElementById("password")
+                        .value;
+
+
+                const phone =
+                    document
+                        .getElementById("phone")
+                        .value
+                        .trim();
+
+
+                const address =
+                    document
+                        .getElementById("address")
+                        .value
+                        .trim();
+
+
+                // =================================================
+                // VALIDATION
+                // =================================================
+
+                if (name.length < 2) {
+
+                    message.textContent =
+                        "Please enter a valid name.";
+
+                    message.style.color =
+                        "#e53935";
+
+                    return;
+
+                }
+
+
+                if (password.length < 6) {
+
+                    message.textContent =
+                        "Password must be at least 6 characters.";
+
+                    message.style.color =
+                        "#e53935";
+
+                    return;
+
+                }
+
+
+                // =================================================
+                // GET EXISTING USERS
+                // =================================================
+
+                let users = [];
+
+                try {
+
+                    users =
+                        JSON.parse(
+                            localStorage.getItem(
+                                "freshbite_users"
+                            )
+                        ) || [];
+
+                } catch (error) {
+
+                    users = [];
+
+                }
+
+
+                if (!Array.isArray(users)) {
+
+                    users = [];
+
+                }
+
+
+                // =================================================
+                // CHECK IF EMAIL ALREADY EXISTS
+                // =================================================
+
+                const existingUser =
+                    users.find(
+                        user =>
+                            user.email
+                                .toLowerCase() ===
+                            email
+                    );
+
+
+                if (existingUser) {
+
+                    message.textContent =
+                        "An account with this email already exists.";
+
+                    message.style.color =
+                        "#e53935";
+
+                    return;
+
+                }
+
+
+                // =================================================
+                // DISABLE BUTTON
+                // =================================================
+
+                registerButton.disabled =
+                    true;
+
+                registerButton.textContent =
+                    "Creating Account...";
+
+
+                message.textContent =
+                    "Creating your account...";
+
+                message.style.color =
+                    "#555";
+
+
+                // =================================================
+                // CREATE USER
+                // =================================================
+
+                const newUser = {
+
+                    id:
+                        Date.now(),
+
+                    name:
+                        name,
+
+                    email:
+                        email,
+
+                    password:
+                        password,
+
+                    phone:
+                        phone,
+
+                    address:
+                        address,
+
+                    role:
+                        "customer"
+
+                };
+
+
+                // =================================================
+                // SAVE USER
+                // =================================================
+
+                users.push(
+                    newUser
+                );
+
+
+                localStorage.setItem(
+                    "freshbite_users",
+                    JSON.stringify(users)
+                );
+
+
+                // =================================================
+                // SAVE CURRENT USER
+                // =================================================
+
+                const currentUser = {
+
+                    id:
+                        newUser.id,
+
+                    name:
+                        newUser.name,
+
+                    email:
+                        newUser.email,
+
+                    phone:
+                        newUser.phone,
+
+                    address:
+                        newUser.address,
+
+                    role:
+                        "customer"
+
+                };
+
+
+                localStorage.setItem(
+                    "freshbite_user",
+                    JSON.stringify(currentUser)
+                );
+
+
+                localStorage.setItem(
+                    "freshbite_logged_in",
+                    "true"
+                );
+
+
+                // Remove old backend token
+
+                localStorage.removeItem(
+                    "freshbite_token"
+                );
+
+
+                // =================================================
+                // SUCCESS
+                // =================================================
+
+                message.textContent =
+                    "Account created successfully! 🎉";
+
+                message.style.color =
+                    "#28a745";
+
+
+                registerButton.textContent =
+                    "Account Created ✓";
+
+
+                // =================================================
+                // GO TO MENU
+                // =================================================
+
+                setTimeout(
+                    function() {
+
+                        window.location.href =
+                            "menu.html";
+
+                    },
+                    800
+                );
+
+            }
+        );
+
+    </script>
+
+</body>
+
+</html>

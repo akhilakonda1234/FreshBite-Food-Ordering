@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Orders - FreshBite</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #fff8f3;
+            color: #333;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            height: 65px;
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 35px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .logo {
+            color: #ff6b35;
+            text-decoration: none;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .nav-links a:hover {
+            color: #ff6b35;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .container {
+            width: 94%;
+            max-width: 1100px;
+            margin: 35px auto;
+        }
+
+        h1 {
+            margin-bottom: 8px;
+            color: #222;
+        }
+
+        .subtitle {
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        /* =========================
+           ORDER CARD
+        ========================= */
+
+        .order-card {
+            background: white;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            overflow: hidden;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+        }
+
+        .order-header {
+            padding: 18px 22px;
+            background: #f9fafb;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .order-id {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .date {
+            font-size: 13px;
+            color: #777;
+            margin-top: 5px;
+        }
+
+        .status {
+            padding: 8px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .placed {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .preparing {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .delivery {
+            background: #ede9fe;
+            color: #6d28d9;
+        }
+
+        .delivered {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .cancelled {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        /* =========================
+           ORDER BODY
+        ========================= */
+
+        .order-body {
+            padding: 22px;
+        }
+
+        .food-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .food-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .food-item:last-child {
+            border-bottom: none;
+        }
+
+        .food-image {
+            width: 70px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        .food-info {
+            flex: 1;
+        }
+
+        .food-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .quantity {
+            color: #777;
+            font-size: 13px;
+        }
+
+        .price {
+            font-weight: bold;
+            white-space: nowrap;
+        }
+
+        .total {
+            text-align: right;
+            color: #ff6b35;
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        /* =========================
+           CUSTOMER DETAILS
+        ========================= */
+
+        .customer-box {
+            margin-top: 20px;
+            padding: 16px;
+            background: #f9fafb;
+            border-radius: 8px;
+        }
+
+        .customer-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .customer-detail {
+            color: #666;
+            font-size: 14px;
+            margin: 5px 0;
+        }
+
+        /* =========================
+           ADMIN MESSAGE
+        ========================= */
+
+        .admin-message {
+            margin-top: 22px;
+            padding: 17px;
+            background: #fff4ed;
+            border-left: 5px solid #ff6b35;
+            border-radius: 7px;
+        }
+
+        .admin-message-title {
+            color: #ff6b35;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .admin-message-text {
+            color: #444;
+            line-height: 1.5;
+        }
+
+        .updated {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #888;
+        }
+
+        /* =========================
+           EMPTY
+        ========================= */
+
+        .empty {
+            background: white;
+            padding: 60px 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.07);
+        }
+
+        .empty-icon {
+            font-size: 55px;
+            margin-bottom: 15px;
+        }
+
+        .empty a {
+            color: #ff6b35;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        /* =========================
+           REFRESH MESSAGE
+        ========================= */
+
+        .refresh-message {
+            text-align: center;
+            color: #888;
+            font-size: 13px;
+            margin-top: 15px;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 600px) {
+
+            .navbar {
+                padding: 0 15px;
+            }
+
+            .nav-links {
+                gap: 10px;
+            }
+
+            .order-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+
+            .food-item {
+                gap: 10px;
+            }
+
+            .food-image {
+                width: 60px;
+                height: 55px;
+            }
+
+            .price {
+                font-size: 14px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     NAVBAR
+========================= -->
+
+<nav class="navbar">
+
+    <a href="index.html" class="logo">
+        FreshBite
+    </a>
+
+    <div class="nav-links">
+
+        <a href="menu.html">
+            Menu
+        </a>
+
+        <a href="index.html">
+            Home
+        </a>
+
+    </div>
+
+</nav>
+
+
+<!-- =========================
+     CONTENT
+========================= -->
+
+<main class="container">
+
+    <h1>
+        My Orders
+    </h1>
+
+    <p class="subtitle">
+        Track your orders and messages from FreshBite.
+    </p>
+
+    <div id="orders-container"></div>
+
+</main>
+
+
+<script>
+
+/* =====================================================
+   GET CURRENT CUSTOMER
+===================================================== */
+
+function getCurrentUser() {
+
+    const userData =
+        localStorage.getItem("freshbite_user");
+
+    if (!userData) {
+        return null;
+    }
+
+    try {
+
+        return JSON.parse(userData);
+
+    } catch (error) {
+
+        console.error(
+            "Error reading customer:",
+            error
+        );
+
+        return null;
+    }
+}
+
+
+/* =====================================================
+   GET ALL ORDERS
+===================================================== */
+
+function getOrders() {
+
+    try {
+
+        const data =
+            localStorage.getItem(
+                "freshbite_orders"
+            );
+
+        if (!data) {
+            return [];
+        }
+
+        const orders =
+            JSON.parse(data);
+
+        return Array.isArray(orders)
+            ? orders
+            : [];
+
+    } catch (error) {
+
+        console.error(
+            "Error reading orders:",
+            error
+        );
+
+        return [];
+    }
+}
+
+
+/* =====================================================
+   ESCAPE HTML
+===================================================== */
+
+function escapeHTML(value) {
+
+    return String(value ?? "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+}
+
+
+/* =====================================================
+   STATUS CLASS
+===================================================== */
+
+function getStatusClass(status) {
+
+    const value =
+        String(status || "")
+            .toLowerCase();
+
+    if (value.includes("preparing")) {
+        return "preparing";
+    }
+
+    if (
+        value.includes("delivery") ||
+        value.includes("out for")
+    ) {
+        return "delivery";
+    }
+
+    if (value.includes("delivered")) {
+        return "delivered";
+    }
+
+    if (value.includes("cancelled")) {
+        return "cancelled";
+    }
+
+    return "placed";
+}
+
+
+/* =====================================================
+   FORMAT DATE
+===================================================== */
+
+function formatDate(value) {
+
+    if (!value) {
+        return "Date not available";
+    }
+
+    const date =
+        new Date(value);
+
+    if (isNaN(date.getTime())) {
+        return String(value);
+    }
+
+    return date.toLocaleString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric",
+            hour: "2-digit",
+            minute: "2-digit"
+        }
+    );
+}
+
+
+/* =====================================================
+   FOOD IMAGE FALLBACKS
+===================================================== */
+
+const foodImages = {
+
+    "Margherita Pizza":
+        "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=300&q=80",
+
+    "Farmhouse Pizza":
+        "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=300&q=80",
+
+    "Paneer Tikka Pizza":
+        "https://images.unsplash.com/photo-1593560708920-61dd98c8a7c8?auto=format&fit=crop&w=300&q=80",
+
+    "Classic Chicken Burger":
+        "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=300&q=80",
+
+    "Cheese Burger":
+        "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=300&q=80",
+
+    "Paneer Butter Masala":
+        "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=300&q=80",
+
+    "Veg Biryani":
+        "https://images.unsplash.com/photo-1563379091339-03246963d51a?auto=format&fit=crop&w=300&q=80",
+
+    "Chocolate Brownie":
+        "https://images.unsplash.com/photo-1564355808539-22fda35bed7e?auto=format&fit=crop&w=300&q=80",
+
+    "Chocolate Cake":
+        "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=300&q=80",
+
+    "Fresh Lime Soda":
+        "https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=300&q=80",
+
+    "Veg Noodles":
+        "https://images.unsplash.com/photo-1585032226651-759b368d7246?auto=format&fit=crop&w=300&q=80"
+
+};
+
+
+/* =====================================================
+   GET FOOD IMAGE
+===================================================== */
+
+function getFoodImage(item) {
+
+    if (item.image) {
+        return item.image;
+    }
+
+    if (item.img) {
+        return item.img;
+    }
+
+    if (item.imageUrl) {
+        return item.imageUrl;
+    }
+
+    if (item.photo) {
+        return item.photo;
+    }
+
+    const name =
+        item.name ||
+        item.title ||
+        "";
+
+    if (foodImages[name]) {
+        return foodImages[name];
+    }
+
+    return "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=300&q=80";
+}
+
+
+/* =====================================================
+   RENDER FOOD ITEMS
+===================================================== */
+
+function renderFood(items) {
+
+    if (
+        !Array.isArray(items) ||
+        items.length === 0
+    ) {
+
+        return `
+            <p style="color:#777;">
+                No food items found.
+            </p>
+        `;
+    }
+
+
+    return items.map(function(item) {
+
+        const image =
+            getFoodImage(item);
+
+        const name =
+            item.name ||
+            item.title ||
+            "Food Item";
+
+        const quantity =
+            Number(
+                item.quantity ??
+                item.qty ??
+                1
+            );
+
+        const price =
+            Number(
+                item.price ??
+                0
+            );
+
+        return `
+
+            <div class="food-item">
+
+                <img
+                    src="${escapeHTML(image)}"
+                    class="food-image"
+                    alt="${escapeHTML(name)}"
+                >
+
+                <div class="food-info">
+
+                    <div class="food-name">
+                        ${escapeHTML(name)}
+                    </div>
+
+                    <div class="quantity">
+                        Quantity: ${quantity}
+                    </div>
+
+                </div>
+
+                <div class="price">
+                    ₹${(
+                        price * quantity
+                    ).toFixed(2)}
+                </div>
+
+            </div>
+
+        `;
+
+    }).join("");
+}
+
+
+/* =====================================================
+   CHECK WHETHER ORDER BELONGS TO CUSTOMER
+===================================================== */
+
+function belongsToCustomer(order, user) {
+
+    if (!order || !user) {
+        return false;
+    }
+
+
+    /*
+     * USER ID
+     */
+
+    const orderUserId =
+        order.userId ||
+        order.customerId ||
+        order.userID;
+
+
+    const userId =
+        user.id ||
+        user.userId ||
+        user.uid;
+
+
+    if (
+        orderUserId &&
+        userId
+    ) {
+
+        if (
+            String(orderUserId) ===
+            String(userId)
+        ) {
+
+            return true;
+        }
+    }
+
+
+    /*
+     * EMAIL
+     */
+
+    const orderEmail =
+        order.email ||
+        order.customerEmail ||
+        order.userEmail;
+
+
+    const userEmail =
+        user.email ||
+        user.customerEmail;
+
+
+    if (
+        orderEmail &&
+        userEmail
+    ) {
+
+        if (
+            String(orderEmail)
+                .trim()
+                .toLowerCase() ===
+            String(userEmail)
+                .trim()
+                .toLowerCase()
+        ) {
+
+            return true;
+        }
+    }
+
+
+    /*
+     * CUSTOMER OBJECT
+     */
+
+    if (
+        order.customer &&
+        typeof order.customer === "object"
+    ) {
+
+        if (
+            order.customer.id &&
+            userId &&
+            String(order.customer.id) ===
+            String(userId)
+        ) {
+
+            return true;
+        }
+
+
+        if (
+            order.customer.email &&
+            userEmail &&
+            String(order.customer.email)
+                .trim()
+                .toLowerCase() ===
+            String(userEmail)
+                .trim()
+                .toLowerCase()
+        ) {
+
+            return true;
+        }
+    }
+
+
+    /*
+     * CUSTOMER EMAIL INSIDE DETAILS
+     */
+
+    if (
+        order.customerDetails &&
+        typeof order.customerDetails === "object"
+    ) {
+
+        if (
+            order.customerDetails.email &&
+            userEmail &&
+            String(
+                order.customerDetails.email
+            )
+                .trim()
+                .toLowerCase() ===
+            String(userEmail)
+                .trim()
+                .toLowerCase()
+        ) {
+
+            return true;
+        }
+    }
+
+
+    return false;
+}
+
+
+/* =====================================================
+   RENDER CUSTOMER DETAILS
+===================================================== */
+
+function renderCustomerDetails(order) {
+
+    const customer =
+        order.customer &&
+        typeof order.customer === "object"
+            ? order.customer
+            : {};
+
+    const details =
+        order.customerDetails &&
+        typeof order.customerDetails === "object"
+            ? order.customerDetails
+            : {};
+
+
+    const name =
+        order.customerName ||
+        order.name ||
+        customer.name ||
+        details.name ||
+        "";
+
+
+    const email =
+        order.email ||
+        order.customerEmail ||
+        customer.email ||
+        details.email ||
+        "";
+
+
+    const address =
+        order.address ||
+        order.deliveryAddress ||
+        customer.address ||
+        details.address ||
+        "";
+
+
+    if (
+        !name &&
+        !email &&
+        !address
+    ) {
+
+        return "";
+    }
+
+
+    return `
+
+        <div class="customer-box">
+
+            <div class="customer-title">
+                Delivery Details
+            </div>
+
+            ${
+                name
+                    ? `
+                        <div class="customer-detail">
+                            <strong>Name:</strong>
+                            ${escapeHTML(name)}
+                        </div>
+                    `
+                    : ""
+            }
+
+            ${
+                email
+                    ? `
+                        <div class="customer-detail">
+                            <strong>Email:</strong>
+                            ${escapeHTML(email)}
+                        </div>
+                    `
+                    : ""
+            }
+
+            ${
+                address
+                    ? `
+                        <div class="customer-detail">
+                            <strong>Address:</strong>
+                            ${escapeHTML(address)}
+                        </div>
+                    `
+                    : ""
+            }
+
+        </div>
+
+    `;
+}
+
+
+/* =====================================================
+   RENDER ONE ORDER
+===================================================== */
+
+function renderOrder(order) {
+
+    const status =
+        order.status ||
+        "Order Placed";
+
+
+    const orderId =
+        order.orderId ||
+        order.id ||
+        "FB0000";
+
+
+    const total =
+        Number(
+            order.total ??
+            order.grandTotal ??
+            order.amount ??
+            0
+        );
+
+
+    const adminMessage =
+        order.adminMessage ||
+        order.message ||
+        "";
+
+
+    const createdAt =
+        order.createdAt ||
+        order.date ||
+        order.orderDate ||
+        order.timestamp;
+
+
+    return `
+
+        <div class="order-card">
+
+            <div class="order-header">
+
+                <div>
+
+                    <div class="order-id">
+                        Order #${escapeHTML(orderId)}
+                    </div>
+
+                    <div class="date">
+                        ${formatDate(createdAt)}
+                    </div>
+
+                </div>
+
+                <div class="status ${getStatusClass(status)}">
+                    ${escapeHTML(status)}
+                </div>
+
+            </div>
+
+
+            <div class="order-body">
+
+                <div class="food-title">
+                    Ordered Food
+                </div>
+
+                ${renderFood(order.items)}
+
+
+                <div class="total">
+                    Total: ₹${total.toFixed(2)}
+                </div>
+
+
+                ${renderCustomerDetails(order)}
+
+
+                ${
+                    adminMessage
+                        ? `
+
+                            <div class="admin-message">
+
+                                <div class="admin-message-title">
+                                    📢 Message from FreshBite Admin
+                                </div>
+
+                                <div class="admin-message-text">
+                                    ${escapeHTML(adminMessage)}
+                                </div>
+
+                                ${
+                                    order.lastUpdated
+                                        ? `
+                                            <div class="updated">
+                                                Updated:
+                                                ${formatDate(
+                                                    order.lastUpdated
+                                                )}
+                                            </div>
+                                        `
+                                        : ""
+                                }
+
+                            </div>
+
+                        `
+                        : `
+
+                            <div
+                                style="
+                                    margin-top:20px;
+                                    padding:15px;
+                                    background:#f9fafb;
+                                    border-radius:7px;
+                                    color:#777;
+                                "
+                            >
+                                No message from admin yet.
+                            </div>
+
+                        `
+                }
+
+            </div>
+
+        </div>
+
+    `;
+}
+
+
+/* =====================================================
+   LOAD MY ORDERS
+===================================================== */
+
+function loadMyOrders() {
+
+    const container =
+        document.getElementById(
+            "orders-container"
+        );
+
+
+    const user =
+        getCurrentUser();
+
+
+    if (!user) {
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    🔐
+                </div>
+
+                <h2>
+                    Please Login
+                </h2>
+
+                <p>
+                    Login to view your orders.
+                </p>
+
+                <br>
+
+                <a href="login.html">
+                    Login Now
+                </a>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    const orders =
+        getOrders();
+
+
+    console.log(
+        "Current Customer:",
+        user
+    );
+
+    console.log(
+        "All FreshBite Orders:",
+        orders
+    );
+
+
+    /*
+     * Filter only current customer's orders
+     */
+
+    const myOrders =
+        orders.filter(function(order) {
+
+            return belongsToCustomer(
+                order,
+                user
+            );
+
+        });
+
+
+    /*
+     * Newest order first
+     */
+
+    myOrders.sort(function(a, b) {
+
+        const dateA =
+            new Date(
+                a.createdAt ||
+                a.date ||
+                a.orderDate ||
+                a.timestamp ||
+                0
+            ).getTime();
+
+        const dateB =
+            new Date(
+                b.createdAt ||
+                b.date ||
+                b.orderDate ||
+                b.timestamp ||
+                0
+            ).getTime();
+
+        return dateB - dateA;
+
+    });
+
+
+    if (!myOrders.length) {
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    📦
+                </div>
+
+                <h2>
+                    No Orders Yet
+                </h2>
+
+                <p style="margin-top:8px;">
+                    Your orders will appear here after you place an order.
+                </p>
+
+                <br>
+
+                <a href="menu.html">
+                    Order Food
+                </a>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    container.innerHTML =
+        myOrders.map(function(order) {
+
+            return renderOrder(order);
+
+        }).join("");
+
+
+    const refresh =
+        document.createElement("div");
+
+    refresh.className =
+        "refresh-message";
+
+    refresh.textContent =
+        "Order status updates automatically.";
+
+    container.appendChild(refresh);
+}
+
+
+/* =====================================================
+   START
+===================================================== */
+
+loadMyOrders();
+
+
+/*
+ * Automatically refresh every 2 seconds
+ */
+
+setInterval(
+    loadMyOrders,
+    2000
+);
+
+</script>
+
+
+</body>
+
+</html>
