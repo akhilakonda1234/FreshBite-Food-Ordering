@@ -54,6 +54,12 @@ function addToCart(id) {
 
     }
 
+    // Stop if food ID is invalid
+    if (!food) {
+        console.error("Food item not found for ID:", id);
+        return;
+    }
+
 
     // Check whether item already exists
 
@@ -125,34 +131,6 @@ function updateCartCount() {
 
 
 // ===============================
-// MOBILE MENU
-// ===============================
-
-const menuToggle =
-    document.getElementById("menu-btn");
-
-
-const navLinks =
-    document.querySelector(".nav-links");
-
-
-if (menuToggle) {
-
-    menuToggle.addEventListener(
-        "click",
-        () => {
-
-            navLinks.classList.toggle(
-                "mobile-active"
-            );
-
-        }
-    );
-
-}
-
-
-// ===============================
 // PAGE LOAD
 // ===============================
 
@@ -160,7 +138,39 @@ document.addEventListener(
     "DOMContentLoaded",
     () => {
 
+        // ===============================
+        // UPDATE CART COUNT
+        // ===============================
+
         updateCartCount();
+
+
+        // ===============================
+        // MOBILE MENU
+        // ===============================
+
+        const menuToggle =
+            document.getElementById("menu-btn");
+
+
+        const navLinks =
+            document.querySelector(".nav-links");
+
+
+        if (menuToggle && navLinks) {
+
+            menuToggle.addEventListener(
+                "click",
+                () => {
+
+                    navLinks.classList.toggle(
+                        "mobile-active"
+                    );
+
+                }
+            );
+
+        }
 
     }
 );
