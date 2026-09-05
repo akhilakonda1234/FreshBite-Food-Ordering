@@ -250,21 +250,20 @@ const foodItems = [
 
     {
         id: 13,
-        name: "Veg Biryani",
+        name: "Chicken Curry",
         price: 199,
         oldPrice: 239,
         category: "indian",
-        type: "veg",
+        type: "non-veg",
         rating: 4.6,
         time: "30 min",
         serves: "1",
         spice: "Medium",
-        ingredients: "Basmati rice, vegetables, onion, mint, saffron, spices",
+        ingredients: "Chicken, vegetables, onion, mint, saffron, spices",
         description:
-            "Fragrant basmati rice cooked with fresh vegetables, caramelized onions, mint, saffron and traditional biryani spices for a flavorful one-pot meal.",
+            "Chicken curry cooked with fresh Chicken, caramelized onions, mint, saffron and traditional biryani spices for a flavorful one-pot meal.",
         offer: "20% OFF",
-        image:
-            "https://images.unsplash.com/photo-1563379091339-03246963d96c?auto=format&fit=crop&w=600&q=80"
+        image:"https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Veg_manchurian_recipe.jpg/960px-Veg_manchurian_recipe.jpg"
     },
 
     {
@@ -288,7 +287,7 @@ const foodItems = [
 
     {
         id: 15,
-        name: "Masala Dosa",
+        name: "Idly",
         price: 129,
         oldPrice: 159,
         category: "indian",
@@ -297,9 +296,9 @@ const foodItems = [
         time: "20 min",
         serves: "1",
         spice: "Medium",
-        ingredients: "Rice batter, urad dal, potato, onion, mustard seeds",
+        ingredients: "Idly flour, soft Upma mix, Curry leaves, onion, mustard seeds",
         description:
-            "Thin and crispy South Indian dosa filled with flavorful spiced potato masala. Served with coconut chutney and sambar.",
+            "Thin and soft South Indian idly filled with flavorful spiced chutney. Served with coconut chutney and Mirchi.",
         offer: "20% OFF",
         image:
             "https://images.unsplash.com/photo-1589301760014-d929f3979dbc?auto=format&fit=crop&w=600&q=80"
@@ -307,7 +306,7 @@ const foodItems = [
 
     {
         id: 16,
-        name: "Dal Makhani",
+        name: "Roti with dal makhani",
         price: 189,
         oldPrice: 229,
         category: "indian",
@@ -316,9 +315,9 @@ const foodItems = [
         time: "25 min",
         serves: "1-2",
         spice: "Mild",
-        ingredients: "Black lentils, kidney beans, butter, cream, tomato, spices",
+        ingredients: "Black lentils, kidney beans, butter, cream, tomato, spices,pickled vegetables,sambar,",
         description:
-            "Slow-cooked black lentils and kidney beans simmered with butter, cream and aromatic spices to create a rich and comforting North Indian classic.",
+            "Slow-cooked black lentils and kidney beans simmered with butter, cream and aromatic spices to create a rich and comforting south Indian classic.",
         offer: "15% OFF",
         image:
             "https://images.unsplash.com/photo-1546833999-b9f581a1996d?auto=format&fit=crop&w=600&q=80"
@@ -326,7 +325,7 @@ const foodItems = [
 
     {
         id: 17,
-        name: "Chole Bhature",
+        name: "Pav Bhaji",
         price: 169,
         oldPrice: 199,
         category: "indian",
@@ -335,9 +334,9 @@ const foodItems = [
         time: "25 min",
         serves: "1",
         spice: "Medium",
-        ingredients: "Chickpeas, bhature, onion, tomato, spices",
+        ingredients: "Pav bhaji, bread, onion, tomato, spices,lemon",
         description:
-            "Spicy and flavorful chickpea curry served with soft, fluffy and freshly fried bhature. A popular North Indian comfort meal.",
+            "Spicy and flavorful chickpea curry served with soft, fluffy and freshly fried Pav. A popular North Indian comfort meal.",
         offer: "15% OFF",
         image:
             "https://images.unsplash.com/photo-1626132647523-66f5bf380027?auto=format&fit=crop&w=600&q=80"
@@ -426,18 +425,18 @@ const foodItems = [
 
     {
         id: 22,
-        name: "Chicken Fried Rice",
+        name: "Mixed Veg Fried Rice",
         price: 199,
         oldPrice: 239,
         category: "chinese",
-        type: "non-veg",
+        type: "veg",
         rating: 4.7,
         time: "22 min",
         serves: "1",
         spice: "Medium",
-        ingredients: "Rice, chicken, egg, vegetables, spring onion, soy sauce",
+        ingredients: "Rice, mixed vegetables, carrot,spring onion, soy sauce",
         description:
-            "Wok-fried rice combined with juicy chicken pieces, vegetables, egg and aromatic sauces for a hearty and flavorful meal.",
+            "Wok-fried rice combined with juicy Veg pieces, vegetables,and aromatic sauces for a hearty and flavorful meal.",
         offer: "15% OFF",
         image:
             "https://images.unsplash.com/photo-1512058564366-18510be2db19?auto=format&fit=crop&w=600&q=80"
@@ -459,23 +458,23 @@ const foodItems = [
             "Crispy vegetable Manchurian balls tossed in a spicy, tangy and slightly sweet Indo-Chinese sauce with fresh vegetables.",
         offer: "15% OFF",
         image:
-            "https://images.unsplash.com/photo-1625398407796-82650a8c1c8b?auto=format&fit=crop&w=600&q=80"
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Veg_manchurian_recipe.jpg/960px-Veg_manchurian_recipe.jpg"
     },
 
     {
         id: 24,
-        name: "Chicken Chilli",
+        name: "Veg Momos",
         price: 229,
         oldPrice: 269,
         category: "chinese",
-        type: "non-veg",
+        type: "veg",
         rating: 4.8,
         time: "25 min",
         serves: "1",
         spice: "Spicy",
-        ingredients: "Chicken, capsicum, onion, green chilli, soy sauce",
+        ingredients: "Vegitable, capsicum, onion, green chilli, soy sauce",
         description:
-            "Crispy chicken pieces tossed with capsicum, onions, green chillies and spicy Indo-Chinese sauce for a bold and fiery taste.",
+            "Crispy vegetable pieces tossed with capsicum, onions, green chillies and spicy Indo-Chinese sauce for a bold and fiery taste.",
         offer: "15% OFF",
         image:
             "https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80"
@@ -658,8 +657,8 @@ const foodItems = [
         description:
             "Steamed dumplings filled with juicy seasoned chicken and served with a spicy homemade-style chilli dip.",
         offer: "15% OFF",
-        image:
-            "https://images.unsplash.com/photo-1541696490-8744a5cdbf0d?auto=format&fit=crop&w=600&q=80"
+       image:
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Chicken_Momos.jpg/960px-Chicken_Momos.jpg"
     },
 
 
@@ -739,10 +738,9 @@ const foodItems = [
         description:
             "Soft golden gulab jamuns soaked in warm cardamom-flavoured sugar syrup. A traditional Indian dessert loved for its rich sweetness.",
         offer: "20% OFF",
-        image:
-            "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=600&q=80"
+      image:
+    "https://blog.swiggy.com/wp-content/uploads/2024/07/Gulab-Jamun_-1024x536.jpg"
     },
-
     {
         id: 38,
         name: "New York Cheesecake",
@@ -826,7 +824,7 @@ const foodItems = [
 
     {
         id: 42,
-        name: "Strawberry Milkshake",
+        name: "Chocolate Milkshake",
         price: 139,
         oldPrice: 169,
         category: "drinks",
@@ -835,9 +833,9 @@ const foodItems = [
         time: "10 min",
         serves: "1",
         spice: "None",
-        ingredients: "Strawberry, milk, vanilla ice cream, sugar",
+        ingredients: "Chocolate, milk, vanilla ice cream, sugar",
         description:
-            "Creamy strawberry milkshake made with fruity strawberry flavour and chilled milk, finished with smooth vanilla ice cream.",
+            "Creamy chocolate milkshake made with rich chocolate flavour and chilled milk, finished with smooth vanilla ice cream.",
         offer: "15% OFF",
         image:
             "https://images.unsplash.com/photo-1572490122747-3968b75cc699?auto=format&fit=crop&w=600&q=80"
