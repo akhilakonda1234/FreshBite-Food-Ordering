@@ -1,0 +1,1198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FreshBite - User Feedback</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f8f9fb;
+            color: #222;
+        }
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            height: 72px;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            text-decoration: none;
+            color: #111;
+            font-size: 25px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            color: #ff6600;
+        }
+
+        .logo-icon {
+            color: #ff6600;
+            margin-right: 6px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #222;
+            font-size: 14px;
+            font-weight: 600;
+            padding: 25px 0;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #ff6600;
+        }
+
+        .nav-links a.active {
+            color: #ff6600;
+        }
+
+        .nav-links a.active::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 15px;
+            height: 3px;
+            background: #ff6600;
+            border-radius: 5px;
+        }
+
+        .cart-link {
+            position: relative;
+        }
+
+        .cart-count {
+            background: #ff6600;
+            color: white;
+            font-size: 11px;
+            min-width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: 3px;
+        }
+
+        /* =========================
+           PAGE HEADER
+        ========================= */
+
+        .page-header {
+            text-align: center;
+            padding: 45px 20px 25px;
+        }
+
+        .page-header h1 {
+            font-size: 38px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .page-header h1 span {
+            color: #ff6600;
+        }
+
+        .page-header p {
+            color: #777;
+            font-size: 15px;
+        }
+
+        .title-line {
+            width: 52px;
+            height: 3px;
+            background: #ff6600;
+            margin: 18px auto 0;
+            border-radius: 10px;
+        }
+
+        /* =========================
+           FEEDBACK FORM SECTION
+        ========================= */
+
+        .feedback-container {
+            max-width: 1020px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .feedback-box {
+            background: white;
+            border-radius: 14px;
+            padding: 28px 35px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .form-section {
+            padding-right: 25px;
+        }
+
+        .form-section h2 {
+            font-size: 22px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 9px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 12px 13px;
+            font-size: 14px;
+            font-family: inherit;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #ff6600;
+            box-shadow: 0 0 0 2px rgba(255, 102, 0, 0.08);
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        /* =========================
+           STAR RATING
+        ========================= */
+
+        .stars {
+            display: flex;
+            gap: 7px;
+            margin: 4px 0 8px;
+        }
+
+        .star {
+            font-size: 27px;
+            color: #d3d7dc;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .star:hover {
+            transform: scale(1.1);
+        }
+
+        .star.selected {
+            color: #ff6600;
+        }
+
+        .rating-text {
+            font-size: 12px;
+            color: #777;
+        }
+
+        /* =========================
+           RIGHT INFORMATION
+        ========================= */
+
+        .feedback-info {
+            border-left: 1px solid #e5e5e5;
+            min-height: 245px;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px 30px;
+        }
+
+        .feedback-icon {
+            font-size: 65px;
+            margin-bottom: 12px;
+        }
+
+        .feedback-info h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+        }
+
+        .feedback-info p {
+            color: #777;
+            font-size: 14px;
+            line-height: 1.7;
+            max-width: 360px;
+            margin-bottom: 22px;
+        }
+
+        /* =========================
+           SUBMIT BUTTON
+        ========================= */
+
+        .submit-btn {
+            border: none;
+            background: #ff6600;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #e85d00;
+            transform: translateY(-1px);
+        }
+
+        /* =========================
+           USER FEEDBACK SECTION
+        ========================= */
+
+        .reviews-section {
+            max-width: 1020px;
+            margin: 42px auto 60px;
+            padding: 0 20px;
+        }
+
+        .reviews-heading {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .reviews-heading h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .reviews-heading p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .heading-line {
+            width: 52px;
+            height: 3px;
+            background: #ff6600;
+            margin: 14px auto;
+            border-radius: 10px;
+        }
+
+        .feedback-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .feedback-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.07);
+            position: relative;
+            min-height: 165px;
+        }
+
+        .feedback-rating {
+            color: #ff6600;
+            font-size: 18px;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        .feedback-name {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .feedback-message {
+            color: #555;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 18px;
+        }
+
+        .feedback-date {
+            color: #888;
+            font-size: 11px;
+        }
+
+        .delete-btn {
+            position: absolute;
+            right: 15px;
+            bottom: 14px;
+            border: 1px solid #ff6b6b;
+            background: white;
+            color: #ff4d4d;
+            width: 35px;
+            height: 32px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .delete-btn:hover {
+            background: #fff1f1;
+        }
+
+        .empty-message {
+            grid-column: 1 / -1;
+            text-align: center;
+            background: white;
+            padding: 35px;
+            border-radius: 10px;
+            color: #777;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        /* =========================
+           REFRESH BUTTON
+        ========================= */
+
+        .refresh-container {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .refresh-btn {
+            background: white;
+            color: #ff6600;
+            border: 1px solid #ff6600;
+            padding: 10px 20px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .refresh-btn:hover {
+            background: #ff6600;
+            color: white;
+        }
+
+        /* =========================
+           TOAST
+        ========================= */
+.toast {
+    position: fixed;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    background: #222;
+    color: white;
+    padding: 15px 28px;
+    border-radius: 8px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transition: 0.3s ease;
+    z-index: 9999;
+}
+
+.toast.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%);
+}
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 900px) {
+
+            .navbar {
+                padding: 0 3%;
+            }
+
+            .nav-links {
+                gap: 15px;
+            }
+
+            .nav-links a {
+                font-size: 12px;
+            }
+
+            .feedback-list {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                height: auto;
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 12px 18px;
+            }
+
+            .nav-links a {
+                padding: 5px 0;
+            }
+
+            .nav-links a.active::after {
+                bottom: -3px;
+            }
+
+            .page-header {
+                padding-top: 35px;
+            }
+
+            .page-header h1 {
+                font-size: 30px;
+            }
+
+            .feedback-box {
+                grid-template-columns: 1fr;
+                padding: 25px;
+            }
+
+            .form-section {
+                padding-right: 0;
+            }
+
+            .feedback-info {
+                border-left: none;
+                border-top: 1px solid #e5e5e5;
+                padding-top: 30px;
+            }
+
+            .feedback-list {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- =========================
+         NAVBAR
+    ========================= -->
+
+    <header class="navbar">
+
+        <a href="index.html" class="logo">
+            <span class="logo-icon">🍽</span>Fresh<span>Bite</span>
+        </a>
+
+        <nav class="nav-links">
+
+            <a href="index.html">⌂ &nbsp;Home</a>
+
+            <a href="menu.html">🍴 &nbsp;Menu</a>
+
+            <a href="my-orders.html">▣ &nbsp;My Orders</a>
+
+            <a href="notification.html">♧ &nbsp;Notifications</a>
+
+            <a href="feedback.html" class="active">💬 &nbsp;Feedback</a>
+
+            <a href="user-dashboard.html">▦ &nbsp;Dashboard</a>
+
+            <a href="login.html">♙ &nbsp;Login</a>
+
+            <a href="cart.html" class="cart-link">
+                🛒 <span id="cart-count" class="cart-count">0</span>
+            </a>
+
+        </nav>
+
+    </header>
+
+
+    <!-- =========================
+         PAGE HEADER
+    ========================= -->
+
+    <section class="page-header">
+
+        <h1>User <span>Feedback</span></h1>
+
+        <p>
+            Tell us about your FreshBite experience ❤️
+        </p>
+
+        <div class="title-line"></div>
+
+    </section>
+
+
+    <!-- =========================
+         FEEDBACK FORM
+    ========================= -->
+
+    <div class="feedback-container">
+
+        <div class="feedback-box">
+
+            <!-- LEFT SIDE -->
+
+            <div class="form-section">
+
+                <h2>Give Your Feedback</h2>
+
+                <form id="feedbackForm">
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            Your Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="Enter your name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Your Rating
+                        </label>
+
+                        <div class="stars">
+
+                            <span class="star" data-rating="1">★</span>
+                            <span class="star" data-rating="2">★</span>
+                            <span class="star" data-rating="3">★</span>
+                            <span class="star" data-rating="4">★</span>
+                            <span class="star" data-rating="5">★</span>
+
+                        </div>
+
+                        <div class="rating-text" id="ratingText">
+                            Select a rating
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="message">
+                            Your Feedback
+                        </label>
+
+                        <textarea
+                            id="message"
+                            placeholder="Write your experience..."
+                            required
+                        ></textarea>
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="submit-btn"
+                    >
+                        ➤ Submit Feedback
+                    </button>
+
+                </form>
+
+            </div>
+
+
+            <!-- RIGHT SIDE -->
+
+            <div class="feedback-info">
+
+                <div class="feedback-icon">
+                    📝💬❤️
+                </div>
+
+                <h3>
+                    We value your feedback!
+                </h3>
+
+                <p>
+                    Your feedback helps us improve and serve you better.
+                    Thank you for being a part of FreshBite! 😊
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         USER REVIEWS
+    ========================= -->
+
+    <section class="reviews-section">
+
+        <div class="reviews-heading">
+
+            <h2>
+                What Our Users Say
+            </h2>
+
+            <div class="heading-line"></div>
+
+            <p>
+                Feedback from FreshBite customers
+            </p>
+
+        </div>
+
+
+        <div
+            id="feedback-container"
+            class="feedback-list"
+        >
+        </div>
+
+
+        <div class="refresh-container">
+
+            <button
+                type="button"
+                class="refresh-btn"
+                id="refreshFeedbackBtn"
+            >
+                ↻ &nbsp;Refresh Feedback
+            </button>
+
+        </div>
+
+    </section>
+
+
+    <!-- TOAST -->
+
+    <div
+        id="toast"
+        class="toast"
+    ></div>
+
+
+    <script>
+
+        /* =========================
+           CART COUNT
+        ========================= */
+
+        function updateCartCount() {
+
+            const cart =
+                JSON.parse(
+                    localStorage.getItem("freshbite_cart") ||
+                    localStorage.getItem("cart") ||
+                    "[]"
+                );
+
+            const count = cart.reduce(
+                (total, item) =>
+                    total + (Number(item.quantity) || 1),
+                0
+            );
+
+            const cartCount =
+                document.getElementById("cart-count");
+
+            if (cartCount) {
+                cartCount.textContent = count;
+            }
+        }
+
+
+        /* =========================
+           STAR RATING
+        ========================= */
+
+        let selectedRating = 0;
+
+        const stars =
+            document.querySelectorAll(".star");
+
+        const ratingText =
+            document.getElementById("ratingText");
+
+
+        stars.forEach(star => {
+
+            star.addEventListener("click", function () {
+
+                selectedRating =
+                    Number(this.dataset.rating);
+
+                stars.forEach(s => {
+
+                    const rating =
+                        Number(s.dataset.rating);
+
+                    if (rating <= selectedRating) {
+                        s.classList.add("selected");
+                    } else {
+                        s.classList.remove("selected");
+                    }
+
+                });
+
+
+                const ratingMessages = {
+
+                    1: "Very Poor",
+
+                    2: "Poor",
+
+                    3: "Average",
+
+                    4: "Good",
+
+                    5: "Excellent"
+
+                };
+
+                ratingText.textContent =
+                    ratingMessages[selectedRating];
+
+            });
+
+        });
+
+
+        /* =========================
+           TOAST
+        ========================= */
+
+        function showToast(message) {
+
+            const toast =
+                document.getElementById("toast");
+
+            toast.textContent = message;
+
+            toast.classList.add("show");
+
+            setTimeout(() => {
+
+                toast.classList.remove("show");
+
+            }, 2500);
+
+        }
+
+
+        /* =========================
+           GET FEEDBACK
+        ========================= */
+
+        function getFeedback() {
+
+            try {
+
+                return JSON.parse(
+                    localStorage.getItem("freshbite_feedback") ||
+                    "[]"
+                );
+
+            } catch (error) {
+
+                return [];
+
+            }
+
+        }
+
+
+        /* =========================
+           ESCAPE HTML
+        ========================= */
+
+        function escapeHTML(value) {
+
+            const div =
+                document.createElement("div");
+
+            div.textContent =
+                value == null ? "" : String(value);
+
+            return div.innerHTML;
+
+        }
+
+
+        /* =========================
+           RENDER STARS
+        ========================= */
+
+        function renderStars(rating) {
+
+            rating = Number(rating) || 0;
+
+            let result = "";
+
+            for (let i = 1; i <= 5; i++) {
+
+                result +=
+                    i <= rating ? "★" : "☆";
+
+            }
+
+            return result;
+
+        }
+
+
+        /* =========================
+           LOAD FEEDBACK
+        ========================= */
+
+        function loadFeedback() {
+
+            const container =
+                document.getElementById(
+                    "feedback-container"
+                );
+
+            const feedback =
+                getFeedback();
+
+            if (!feedback.length) {
+
+                container.innerHTML = `
+                    <div class="empty-message">
+                        <h3>No feedback yet</h3>
+                        <p>
+                            Be the first person to share
+                            your FreshBite experience! ❤️
+                        </p>
+                    </div>
+                `;
+
+                return;
+
+            }
+
+
+            feedback.sort((a, b) => {
+
+                const dateA =
+                    new Date(
+                        a.createdAt ||
+                        a.date ||
+                        a.timestamp ||
+                        0
+                    );
+
+                const dateB =
+                    new Date(
+                        b.createdAt ||
+                        b.date ||
+                        b.timestamp ||
+                        0
+                    );
+
+                return dateB - dateA;
+
+            });
+
+
+            container.innerHTML =
+                feedback.map((item, index) => {
+
+                    const name =
+                        item.name ||
+                        item.userName ||
+                        item.customerName ||
+                        "Anonymous";
+
+                    const message =
+                        item.message ||
+                        item.feedback ||
+                        item.comment ||
+                        "";
+
+                    const rating =
+                        item.rating ||
+                        item.stars ||
+                        0;
+
+                    const dateValue =
+                        item.createdAt ||
+                        item.date ||
+                        item.timestamp;
+
+                    let formattedDate = "";
+
+                    if (dateValue) {
+
+                        const date =
+                            new Date(dateValue);
+
+                        if (!isNaN(date)) {
+
+                            formattedDate =
+                                date.toLocaleDateString(
+                                    "en-IN",
+                                    {
+                                        day: "2-digit",
+                                        month: "short",
+                                        year: "numeric"
+                                    }
+                                );
+
+                        }
+
+                    }
+
+
+                    return `
+
+                        <div class="feedback-card">
+
+                            <div class="feedback-rating">
+                                ${renderStars(rating)}
+                            </div>
+
+                            <div class="feedback-name">
+                                ${escapeHTML(name)}
+                            </div>
+
+                            <div class="feedback-message">
+                                ${escapeHTML(message)}
+                            </div>
+
+                            <div class="feedback-date">
+                                📅 ${formattedDate || "Recently"}
+                            </div>
+
+                            <button
+                                class="delete-btn"
+                                onclick="deleteFeedback(${index})"
+                                title="Delete feedback"
+                            >
+                                🗑
+                            </button>
+
+                        </div>
+
+                    `;
+
+                }).join("");
+
+        }
+
+
+        /* =========================
+           DELETE FEEDBACK
+        ========================= */
+
+        function deleteFeedback(index) {
+
+            const feedback =
+                getFeedback();
+
+            feedback.splice(index, 1);
+
+            localStorage.setItem(
+                "freshbite_feedback",
+                JSON.stringify(feedback)
+            );
+
+            loadFeedback();
+
+            showToast(
+                "Feedback deleted successfully."
+            );
+
+        }
+
+
+        /* =========================
+           SUBMIT FEEDBACK
+        ========================= */
+
+        document
+            .getElementById("feedbackForm")
+            .addEventListener(
+                "submit",
+                function(event) {
+
+                    event.preventDefault();
+
+
+                    const name =
+                        document
+                            .getElementById("name")
+                            .value
+                            .trim();
+
+
+                    const message =
+                        document
+                            .getElementById("message")
+                            .value
+                            .trim();
+
+
+                    if (!selectedRating) {
+
+                        showToast(
+                            "Please select a rating."
+                        );
+
+                        return;
+
+                    }
+
+
+                    if (!name || !message) {
+
+                        showToast(
+                            "Please fill all fields."
+                        );
+
+                        return;
+
+                    }
+
+
+                    const feedback =
+                        getFeedback();
+
+
+                    const newFeedback = {
+
+                        name: name,
+
+                        rating: selectedRating,
+
+                        message: message,
+
+                        createdAt:
+                            new Date().toISOString()
+
+                    };
+
+
+                    feedback.unshift(
+                        newFeedback
+                    );
+
+
+                    localStorage.setItem(
+                        "freshbite_feedback",
+                        JSON.stringify(feedback)
+                    );
+
+
+                    document
+                        .getElementById("feedbackForm")
+                        .reset();
+
+
+                    selectedRating = 0;
+
+
+                    stars.forEach(star => {
+
+                        star.classList.remove(
+                            "selected"
+                        );
+
+                    });
+
+
+                    ratingText.textContent =
+                        "Select a rating";
+
+
+                    loadFeedback();
+
+
+                    showToast(
+                        "Thank you for your feedback! ❤️"
+                    );
+
+                }
+            );
+
+
+        /* =========================
+           REFRESH FEEDBACK BUTTON
+        ========================= */
+
+        document
+            .getElementById("refreshFeedbackBtn")
+            .addEventListener("click", function () {
+                loadFeedback();
+                showToast("Feedback refreshed successfully! 🔄");
+            });
+
+
+        /* =========================
+           START
+        ========================= */
+
+        updateCartCount();
+
+        loadFeedback();
+
+    </script>
+
+</body>
+</html>

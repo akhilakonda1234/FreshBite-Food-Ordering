@@ -444,6 +444,94 @@
         }
 
         /* =========================
+           CUSTOMER FEEDBACK
+        ========================= */
+
+        .feedback-section {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .feedback-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .feedback-header h2 {
+            font-size: 23px;
+        }
+
+        .feedback-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .feedback-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 18px;
+            background: #f9fafb;
+        }
+
+        .feedback-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 8px;
+        }
+
+        .feedback-name {
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .feedback-rating {
+            color: #f59e0b;
+            font-size: 16px;
+            white-space: nowrap;
+        }
+
+        .feedback-message {
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 8px;
+            word-break: break-word;
+        }
+
+        .feedback-date {
+            color: #888;
+            font-size: 12px;
+        }
+
+        .feedback-empty {
+            text-align: center;
+            padding: 35px 20px;
+            color: #777;
+        }
+
+        .delete-feedback-btn {
+            border: none;
+            background: #ef4444;
+            color: white;
+            padding: 7px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .delete-feedback-btn:hover {
+            background: #dc2626;
+        }
+
+        /* =========================
            RESPONSIVE
         ========================= */
 
@@ -485,10 +573,19 @@
                 padding: 15px;
             }
 
+            .feedback-section {
+                padding: 15px;
+            }
+
             .order-header {
                 flex-direction: column;
                 align-items: flex-start;
                 gap: 10px;
+            }
+
+            .feedback-top {
+                flex-direction: column;
+                align-items: flex-start;
             }
 
         }
@@ -633,6 +730,36 @@
 
         <div id="orders-container"></div>
 
+
+    </section>
+
+
+    <!-- =========================
+         CUSTOMER FEEDBACK
+    ========================= -->
+
+    <section class="feedback-section">
+
+        <div class="feedback-header">
+
+            <h2>
+                Customer Feedback
+            </h2>
+
+            <button
+                type="button"
+                class="refresh-btn"
+                onclick="refreshFeedback()"
+            >
+                🔄 Refresh
+            </button>
+
+        </div>
+
+        <div
+            id="feedback-container"
+            class="feedback-list"
+        ></div>
 
     </section>
 
@@ -1409,64 +1536,31 @@ function updateOrder(index) {
         messageElement.value.trim();
 
 
-    /*
-     * SAVE STATUS
-     */
-
     orders[index].status =
         status;
 
-
-    /*
-     * SAVE ADMIN MESSAGE
-     */
 
     orders[index].adminMessage =
         message;
 
 
-    /*
-     * ALSO KEEP MESSAGE
-     * FOR COMPATIBILITY
-     */
-
     orders[index].message =
         message;
 
-
-    /*
-     * SAVE UPDATE TIME
-     */
 
     orders[index].lastUpdated =
         new Date().toISOString();
 
 
-    /*
-     * SAVE ADMIN NAME
-     */
-
     orders[index].updatedBy =
         "FreshBite Administrator";
 
 
-    /*
-     * SAVE EVERYTHING
-     */
-
     saveOrders(orders);
 
 
-    /*
-     * RELOAD AFTER SUCCESSFUL SAVE
-     */
-
     loadOrders();
 
-
-    /*
-     * SHOW SUCCESS
-     */
 
     showToast(
         "Order status and message sent successfully! ✓"
@@ -1484,10 +1578,6 @@ function loadOrders() {
         getOrders();
 
 
-    /*
-     * TOTAL
-     */
-
     const totalOrders =
         document.getElementById(
             "total-orders"
@@ -1499,10 +1589,6 @@ function loadOrders() {
             orders.length;
     }
 
-
-    /*
-     * PENDING
-     */
 
     const pendingOrders =
         document.getElementById(
@@ -1523,10 +1609,6 @@ function loadOrders() {
     }
 
 
-    /*
-     * PREPARING
-     */
-
     const preparingOrders =
         document.getElementById(
             "preparing-orders"
@@ -1542,10 +1624,6 @@ function loadOrders() {
             ).length;
     }
 
-
-    /*
-     * DELIVERED
-     */
 
     const deliveredOrders =
         document.getElementById(
@@ -1563,10 +1641,6 @@ function loadOrders() {
     }
 
 
-    /*
-     * ORDERS CONTAINER
-     */
-
     const container =
         document.getElementById(
             "orders-container"
@@ -1577,10 +1651,6 @@ function loadOrders() {
         return;
     }
 
-
-    /*
-     * NO ORDERS
-     */
 
     if (!orders.length) {
 
@@ -1608,10 +1678,6 @@ function loadOrders() {
         return;
     }
 
-
-    /*
-     * NEWEST FIRST
-     */
 
     const sorted =
         orders
@@ -1647,10 +1713,6 @@ function loadOrders() {
             );
 
 
-    /*
-     * DISPLAY
-     */
-
     container.innerHTML =
         sorted
             .map(
@@ -1665,7 +1727,7 @@ function loadOrders() {
 
 
 /* =====================================================
-   MANUAL REFRESH
+   MANUAL REFRESH ORDERS
 ===================================================== */
 
 function refreshOrders() {
@@ -1679,6 +1741,291 @@ function refreshOrders() {
 
 
 /* =====================================================
+   CUSTOMER FEEDBACK
+===================================================== */
+
+function getFeedback() {
+
+    try {
+
+        const storedFeedback =
+            localStorage.getItem(
+                "freshbite_feedback"
+            );
+
+        if (!storedFeedback) {
+            return [];
+        }
+
+        const feedback =
+            JSON.parse(storedFeedback);
+
+        return Array.isArray(feedback)
+            ? feedback
+            : [];
+
+    } catch (error) {
+
+        console.error(
+            "Unable to read feedback:",
+            error
+        );
+
+        return [];
+    }
+}
+
+
+/* =====================================================
+   RENDER FEEDBACK STARS
+===================================================== */
+
+function renderStars(rating) {
+
+    const value =
+        Math.max(
+            0,
+            Math.min(
+                5,
+                Number(rating) || 0
+            )
+        );
+
+    return "★".repeat(value) +
+           "☆".repeat(5 - value);
+}
+
+
+/* =====================================================
+   DELETE FEEDBACK
+===================================================== */
+
+function deleteFeedback(index) {
+
+    const feedback =
+        getFeedback();
+
+
+    if (!feedback[index]) {
+
+        showToast(
+            "Feedback not found.",
+            true
+        );
+
+        return;
+    }
+
+
+    const confirmDelete =
+        confirm(
+            "Are you sure you want to delete this feedback?"
+        );
+
+
+    if (!confirmDelete) {
+        return;
+    }
+
+
+    feedback.splice(
+        index,
+        1
+    );
+
+
+    localStorage.setItem(
+        "freshbite_feedback",
+        JSON.stringify(feedback)
+    );
+
+
+    loadFeedback();
+
+
+    showToast(
+        "Feedback deleted successfully! ✓"
+    );
+}
+
+
+/* =====================================================
+   LOAD FEEDBACK
+===================================================== */
+
+function loadFeedback() {
+
+    const container =
+        document.getElementById(
+            "feedback-container"
+        );
+
+
+    if (!container) {
+        return;
+    }
+
+
+    const feedback =
+        getFeedback();
+
+
+    if (!feedback.length) {
+
+        container.innerHTML = `
+
+            <div class="feedback-empty">
+
+                <div class="empty-icon">
+                    💬
+                </div>
+
+                <h3>
+                    No Customer Feedback Yet
+                </h3>
+
+                <p style="margin-top:8px;">
+                    Customer feedback will appear here
+                    after users submit their feedback.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    const sorted =
+        feedback
+            .map(
+                (item, index) => ({
+                    item,
+                    index
+                })
+            )
+            .sort(
+                (a, b) => {
+
+                    const dateA =
+                        new Date(
+                            a.item.createdAt ||
+                            a.item.date ||
+                            a.item.timestamp ||
+                            0
+                        ).getTime();
+
+
+                    const dateB =
+                        new Date(
+                            b.item.createdAt ||
+                            b.item.date ||
+                            b.item.timestamp ||
+                            0
+                        ).getTime();
+
+
+                    return dateB - dateA;
+                }
+            );
+
+
+    container.innerHTML =
+        sorted
+            .map(function(entry) {
+
+                const item =
+                    entry.item;
+
+                const index =
+                    entry.index;
+
+
+                const name =
+                    item.name ||
+                    item.userName ||
+                    item.customerName ||
+                    "Customer";
+
+
+                const message =
+                    item.message ||
+                    item.feedback ||
+                    item.comment ||
+                    "No message provided.";
+
+
+                const rating =
+                    Number(
+                        item.rating ||
+                        item.stars ||
+                        0
+                    );
+
+
+                const date =
+                    item.createdAt ||
+                    item.date ||
+                    item.timestamp;
+
+
+                return `
+
+                    <div class="feedback-card">
+
+                        <div class="feedback-top">
+
+                            <div class="feedback-name">
+                                ${escapeHTML(name)}
+                            </div>
+
+                            <div class="feedback-rating">
+                                ${renderStars(rating)}
+                            </div>
+
+                        </div>
+
+                        <div class="feedback-message">
+                            ${escapeHTML(message)}
+                        </div>
+
+                        <div class="feedback-date">
+                            ${formatDate(date)}
+                        </div>
+
+                        <button
+                            type="button"
+                            class="delete-feedback-btn"
+                            onclick="deleteFeedback(${index})"
+                        >
+                            Delete
+                        </button>
+
+                    </div>
+
+                `;
+
+            })
+            .join("");
+}
+
+
+/* =====================================================
+   MANUAL FEEDBACK REFRESH
+===================================================== */
+
+function refreshFeedback() {
+
+    loadFeedback();
+
+    showToast(
+        "Feedback refreshed successfully! 🔄"
+    );
+}
+
+
+/* =====================================================
    START
 ===================================================== */
 
@@ -1686,7 +2033,10 @@ if (checkAdminAccess()) {
 
     loadOrders();
 
+    loadFeedback();
+
 }
+
 
 </script>
 
