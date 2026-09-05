@@ -947,11 +947,14 @@ function placeOrder() {
 
     const order = {
 
-        orderId,
+    orderId,
 
-        date:
-            new Date().toLocaleString(),
+    createdAt:
+        new Date().toISOString(),
 
+    date:
+        new Date().toLocaleString(),
+        
         customer: {
 
             name,
