@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Restaurant | FreshBite</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;background:#f7f7f7;color:#222}
+
+.navbar{
+    height:72px;
+    background:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 6%;
+    box-shadow:0 2px 12px rgba(0,0,0,.08);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.logo{
+    font-size:27px;
+    font-weight:800;
+    color:#ff5a1f;
+    text-decoration:none;
+}
+.logo span{color:#222}
+
+.nav-actions{display:flex;gap:10px;align-items:center}
+.nav-btn{
+    border:0;
+    background:#111827;
+    color:#fff;
+    padding:10px 16px;
+    border-radius:9px;
+    text-decoration:none;
+    font-weight:600;
+    cursor:pointer;
+}
+.nav-btn.cart{background:#ff5a1f}
+
+/* BACK BUTTON */
+.back-section{
+    width:min(1380px,92%);
+    margin:0 auto;
+    padding:18px 0 12px;
+}
+.back-btn{
+    color:#ff5a1f;
+    text-decoration:none;
+    font-weight:700;
+    font-size:15px;
+}
+.back-btn:hover{text-decoration:underline}
+
+/* RESTAURANT HEADER */
+.restaurant-header{
+    width:min(1380px,92%);
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:310px 1fr;
+    gap:24px;
+    align-items:center;
+    background:#fff;
+    border-radius:18px;
+    padding:18px;
+    box-shadow:0 6px 24px rgba(0,0,0,.07);
+}
+
+.restaurant-photo{
+    width:100%;
+    height:170px;
+    border-radius:14px;
+    overflow:hidden;
+    background:#ddd;
+}
+.restaurant-photo img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+.restaurant-title h1{
+    font-size:38px;
+    margin-bottom:8px;
+}
+.restaurant-title p{
+    color:#555;
+    font-size:17px;
+}
+
+.info-grid{
+    width:min(1380px,92%);
+    margin:18px auto 34px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+}
+
+.info-box{
+    background:#fff;
+    border-radius:14px;
+    padding:17px;
+    box-shadow:0 5px 20px rgba(0,0,0,.06);
+    min-height:82px;
+}
+.info-box small{
+    display:block;
+    color:#ff5a1f;
+    font-weight:700;
+    margin-bottom:7px;
+}
+.info-box strong{
+    font-size:14px;
+    line-height:1.5;
+}
+
+/* MENU */
+.menu-container{
+    width:min(1380px,92%);
+    margin:0 auto;
+    padding-bottom:60px;
+}
+
+.section-head{
+    text-align:center;
+    margin-bottom:24px;
+}
+.section-head h2{
+    font-size:31px;
+    margin-bottom:7px;
+}
+.section-head p{
+    color:#777;
+    font-size:15px;
+}
+
+/* EXACTLY 4 FOOD CARDS IN ONE ROW */
+.food-grid{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:20px;
+}
+
+.food-card{
+    background:#fff;
+    border-radius:16px;
+    overflow:hidden;
+    box-shadow:0 6px 22px rgba(0,0,0,.08);
+    transition:transform .25s ease-in-out,box-shadow .25s ease-in-out;
+    min-width:0;
+}
+.food-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 10px 28px rgba(0,0,0,.12);
+}
+
+.food-img-wrap{
+    height:185px;
+    background:#eee;
+    overflow:hidden;
+}
+.food-img-wrap img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    display:block;
+}
+
+.food-body{padding:14px}
+.food-body h3{
+    font-size:18px;
+    margin-bottom:8px;
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+.food-body p{
+    color:#777;
+    font-size:13px;
+    line-height:1.4;
+    min-height:37px;
+}
+
+.food-bottom{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:8px;
+    margin-top:12px;
+}
+.price{
+    font-size:18px;
+    font-weight:800;
+}
+.offer{
+    font-size:10px;
+    background:#fff0e9;
+    color:#e84d13;
+    padding:5px 7px;
+    border-radius:6px;
+    font-weight:700;
+    text-align:center;
+}
+
+.add-btn{
+    width:100%;
+    margin-top:12px;
+    border:0;
+    background:#ff5a1f;
+    color:#fff;
+    padding:10px;
+    border-radius:9px;
+    font-size:14px;
+    font-weight:700;
+    cursor:pointer;
+    transition:all .3s ease-in-out;
+}
+.add-btn:hover{
+    background:#e94d16;
+    transform:translateY(-2px);
+}
+.add-btn:active{
+    transform:scale(.94);
+}
+.add-btn.cart-clicked{
+    animation:cartClick .35s ease-in-out;
+}
+
+@keyframes cartClick{
+    0%{transform:scale(1)}
+    50%{transform:scale(.90)}
+    100%{transform:scale(1)}
+}
+
+/* TOAST */
+#freshbite-toast{
+    position:fixed;
+    left:50%;
+    bottom:32px;
+    transform:translate(-50%,25px);
+    opacity:0;
+    background:#111827;
+    color:#fff;
+    padding:14px 22px;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,.22);
+    z-index:99999;
+    font-size:15px;
+    font-weight:700;
+    max-width:90vw;
+    text-align:center;
+    pointer-events:none;
+    transition:opacity .35s ease-in-out,transform .35s ease-in-out;
+}
+
+/* TABLET */
+@media(max-width:1100px){
+    .food-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
+    .restaurant-header{grid-template-columns:260px 1fr}
+}
+
+/* MOBILE */
+@media(max-width:800px){
+    .navbar{padding:0 4%}
+    .logo{font-size:23px}
+    .nav-btn:first-child{display:none}
+    .restaurant-header{grid-template-columns:1fr}
+    .restaurant-photo{height:220px}
+    .restaurant-title h1{font-size:30px}
+    .info-grid{grid-template-columns:repeat(2,1fr)}
+    .food-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .food-img-wrap{height:190px}
+}
+
+@media(max-width:520px){
+    .info-grid{grid-template-columns:1fr}
+    .food-grid{grid-template-columns:1fr}
+    .food-img-wrap{height:220px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="navbar">
+    <a class="logo" href="index.html">🍔 Fresh<span>Bite</span></a>
+
+    <div class="nav-actions">
+        <a class="nav-btn" href="index.html">Home</a>
+        <a class="nav-btn cart" href="cart.html">🛒 Cart <span id="cart-count">0</span></a>
+    </div>
+</header>
+
+<!-- =========================
+     BACK BUTTON
+========================= -->
+<div class="back-section">
+    <a href="index.html" class="back-btn">← Back to Restaurants</a>
+</div>
+
+<!-- =========================
+     RESTAURANT HEADER
+========================= -->
+<section class="restaurant-header">
+
+    <div class="restaurant-photo">
+        <img
+            id="restaurant-image"
+            src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=85"
+            alt="FreshBite Restaurant"
+        >
+    </div>
+
+    <div class="restaurant-title">
+        <h1 id="restaurant-name">FreshBite Restaurant</h1>
+        <p id="restaurant-cuisine">Multi Cuisine</p>
+    </div>
+
+</section>
+
+<!-- =========================
+     RESTAURANT INFORMATION
+========================= -->
+<div class="info-grid">
+
+    <div class="info-box">
+        <small>🍽️ Cuisine</small>
+        <strong id="info-cuisine">Multi Cuisine</strong>
+    </div>
+
+    <div class="info-box">
+        <small>📍 Distance</small>
+        <strong id="info-distance">2.5 km</strong>
+    </div>
+
+    <div class="info-box">
+        <small>🏠 Address</small>
+        <strong id="info-address">FreshBite Food Street</strong>
+    </div>
+
+    <div class="info-box">
+        <small>🕒 Opening Hours</small>
+        <strong id="info-hours">10:00 AM - 11:00 PM</strong>
+    </div>
+
+</div>
+
+<!-- =========================
+     FULL MENU
+========================= -->
+<main class="menu-container">
+
+    <div class="section-head">
+        <h2>🍽️ Full Menu</h2>
+        <p>Choose your favourite food and add it to your cart.</p>
+    </div>
+
+    <div class="food-grid" id="food-grid"></div>
+
+</main>
+
+<script>
+
+/* =========================
+   FOOD DATA
+   Every image matches its item name.
+========================= */
+const foods = [
+    {
+        id:201,
+        name:'Margherita Pizza',
+        price:199,
+        image:'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=85',
+        offer:'20% OFF',
+        type:'Veg'
+    },
+    {
+        id:202,
+        name:'Cheese Burger',
+        price:179,
+        image:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=900&q=85',
+        offer:'BUY 1 GET 1 FREE',
+        type:'Non-Veg'
+    },
+    {
+        id:203,
+        name:'Chicken Biryani',
+        price:279,
+        image:'https://glovo.dhmedia.io/image/stores-glovo/stores/c63df408df4587462ca25f46aa3b745d426da79e69b01ccbc0713820623839c5?t=W3siYXV0byI6eyJxIjoibG93In19LHsicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MTI4MCwiaGVpZ2h0IjoxMjB9fV0%3D',
+        offer:'FLAT ₹50 OFF',
+        type:'Non-Veg'
+    },
+    {
+        id:204,
+        name:'Paneer Tikka',
+        price:219,
+        image:'https://miro.medium.com/v2/resize%3Afit%3A1024/1%2AkJpCB1zsTDZELlv7IvhaWg.png',
+        offer:'20% OFF',
+        type:'Veg'
+    },
+    {
+        id:205,
+        name:'Hakka Noodles',
+        price:159,
+        image:'https://image.cdn.shpy.in/360704/hakkanoodles-1717774790537.webp?format=webp&width=600',
+        offer:'BUY 1 GET 1 FREE',
+        type:'Veg'
+    },
+    {
+        id:206,
+        name:'Masala Dosa',
+        price:119,
+        image:'https://images.unsplash.com/photo-1630383249896-424e482df921?auto=format&fit=crop&w=900&q=85',
+        offer:'FLAT ₹50 OFF',
+        type:'Veg'
+    },
+    {
+        id:207,
+        name:'Alfredo Pasta',
+        price:229,
+        image:'https://slice-menu-assets-prod.imgix.net/28166/1637566791_7c641f4eb4?fit=crop&h=480&w=480',
+        offer:'20% OFF',
+        type:'Veg'
+    },
+    {
+        id:208,
+        name:'Chocolate Cake',
+        price:129,
+        image:'https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=85',
+        offer:'BUY 2 GET 1 FREE',
+        type:'Veg'
+    },
+    {
+        id:209,
+        name:'Special Indian Thali',
+        price:249,
+        image:'https://b.zmtcdn.com/data/pictures/chains/5/20305535/968a120ab4222f785d190e018dcf986d.jpg?crop=960%3A500%3B%2A%2C%2A&fit=around%7C960%3A500',
+        offer:'FLAT ₹50 OFF',
+        type:'Veg'
+    },
+    {
+        id:210,
+        name:'Veg Spring Rolls',
+        price:139,
+        image:'https://upload.wikimedia.org/wikipedia/commons/9/95/Spring_rolls_001.jpg',
+        offer:'BUY 2 GET 1 FREE',
+        type:'Veg'
+    },
+    {
+        id:211,
+        name:'Red Velvet Cake',
+        price:149,
+        image:'https://images.unsplash.com/photo-1586788680434-30d324b2d46f?auto=format&fit=crop&w=900&q=85',
+        offer:'20% OFF',
+        type:'Veg'
+    },
+    {
+        id:212,
+        name:'Mango Lassi',
+        price:99,
+        image:'https://upload.wikimedia.org/wikipedia/commons/3/3b/Mango_Lassi.jpg',
+        offer:'BUY 1 GET 1 FREE',
+        type:'Veg'
+    }
+];
+
+/* =========================
+   RESTAURANT DETAILS
+========================= */
+const p = new URLSearchParams(window.location.search);
+
+const restaurantName = p.get('name') || 'FreshBite Restaurant';
+const restaurantCuisine = p.get('cuisine') || 'Multi Cuisine';
+const restaurantAddress = p.get('address') || 'FreshBite Food Street';
+const restaurantDistance = p.get('distance') || '2.5 km';
+const restaurantHours = p.get('hours') || '10:00 AM - 11:00 PM';
+const restaurantImage = p.get('image') || 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1000&q=85';
+
+document.title = restaurantName + ' | FreshBite';
+
+document.getElementById('restaurant-name').textContent = restaurantName;
+document.getElementById('restaurant-cuisine').textContent = restaurantCuisine;
+document.getElementById('restaurant-image').src = restaurantImage;
+document.getElementById('restaurant-image').alt = restaurantName;
+document.getElementById('info-cuisine').textContent = restaurantCuisine;
+document.getElementById('info-distance').textContent = restaurantDistance;
+document.getElementById('info-address').textContent = restaurantAddress;
+document.getElementById('info-hours').textContent = restaurantHours;
+
+/* =========================
+   CART HELPERS
+========================= */
+function getCart(){
+    try{
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        return Array.isArray(cart) ? cart : [];
+    }catch(error){
+        return [];
+    }
+}
+
+function saveCart(cart){
+    localStorage.setItem('cart', JSON.stringify(cart));
+    updateCart();
+}
+
+function updateCart(){
+    const cart = getCart();
+    const count = cart.reduce((total,item)=>{
+        return total + Number(item.quantity || 1);
+    },0);
+
+    document.getElementById('cart-count').textContent = count;
+}
+
+/* =========================
+   ADD TO CART
+========================= */
+function addToCart(food, button){
+
+    const cart = getCart();
+
+    const existing = cart.find(item => {
+        return Number(item.id) === Number(food.id);
+    });
+
+    if(existing){
+        existing.quantity = Number(existing.quantity || 1) + 1;
+        existing.price = food.price;
+        existing.image = food.image;
+        existing.offer = food.offer;
+        existing.type = food.type;
+    }else{
+        cart.push({
+            id:food.id,
+            name:food.name,
+            price:food.price,
+            image:food.image,
+            offer:food.offer,
+            type:food.type,
+            quantity:1
+        });
+    }
+
+    saveCart(cart);
+
+    if(button){
+        button.classList.remove('cart-clicked');
+        void button.offsetWidth;
+        button.classList.add('cart-clicked');
+    }
+
+    showToast('🛒 ' + food.name + ' added to cart!');
+}
+
+/* =========================
+   TOAST MESSAGE
+========================= */
+function showToast(message){
+
+    const oldToast = document.getElementById('freshbite-toast');
+    if(oldToast) oldToast.remove();
+
+    const toast = document.createElement('div');
+    toast.id = 'freshbite-toast';
+    toast.textContent = message;
+
+    document.body.appendChild(toast);
+
+    requestAnimationFrame(()=>{
+        toast.style.opacity = '1';
+        toast.style.transform = 'translate(-50%,0)';
+    });
+
+    setTimeout(()=>{
+        toast.style.opacity = '0';
+        toast.style.transform = 'translate(-50%,25px)';
+    },2200);
+
+    setTimeout(()=>{
+        if(toast.parentNode){
+            toast.remove();
+        }
+    },2600);
+}
+
+/* =========================
+   RENDER FOOD CARDS
+========================= */
+function renderFoods(){
+
+    const grid = document.getElementById('food-grid');
+
+    grid.innerHTML = foods.map(food => `
+        <article class="food-card">
+
+            <div class="food-img-wrap">
+                <img
+                    src="${food.image}"
+                    alt="${food.name}"
+                    loading="lazy"
+                >
+            </div>
+
+            <div class="food-body">
+
+                <h3>${food.name}</h3>
+
+                <p>
+                    Freshly prepared ${food.name.toLowerCase()} from FreshBite.
+                </p>
+
+                <div class="food-bottom">
+                    <span class="price">₹${food.price}</span>
+                    <span class="offer">${food.offer}</span>
+                </div>
+
+                <button
+                    class="add-btn"
+                    type="button"
+                    onclick="addToCart(foods.find(f => f.id === ${food.id}), this)"
+                >
+                    🛒 Add to Cart
+                </button>
+
+            </div>
+
+        </article>
+    `).join('');
+}
+
+renderFoods();
+updateCart();
+
+</script>
+
+</body>
+</html>

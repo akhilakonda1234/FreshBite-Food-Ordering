@@ -546,6 +546,197 @@
         transform: scale(1);
     }
 }
+
+        /* =====================================================
+           CLICKABLE RESTAURANT CARDS + RESTAURANT MODAL
+        ===================================================== */
+
+        .nearby-card {
+            cursor: pointer;
+        }
+
+        .nearby-card .restaurant-actions,
+        .nearby-card .nearby-menu {
+            cursor: default;
+        }
+
+        .restaurant-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,.65);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            z-index: 99999;
+            overflow-y: auto;
+        }
+
+        .restaurant-modal.show {
+            display: flex;
+        }
+
+        .restaurant-modal-box {
+            width: min(1000px, 100%);
+            max-height: 92vh;
+            overflow-y: auto;
+            background: #fff;
+            border-radius: 22px;
+            box-shadow: 0 25px 70px rgba(0,0,0,.3);
+            position: relative;
+            animation: restaurantModalIn .25s ease;
+        }
+
+        @keyframes restaurantModalIn {
+            from { opacity: 0; transform: translateY(20px) scale(.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .restaurant-modal-hero {
+            height: 260px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 22px 22px 0 0;
+        }
+
+        .restaurant-modal-hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .restaurant-modal-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(transparent 35%, rgba(0,0,0,.75));
+            display: flex;
+            align-items: flex-end;
+            padding: 28px;
+        }
+
+        .restaurant-modal-title {
+            color: #fff;
+            margin: 0;
+            font-size: clamp(25px, 4vw, 38px);
+        }
+
+        .restaurant-modal-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 42px;
+            height: 42px;
+            border: none;
+            border-radius: 50%;
+            background: rgba(0,0,0,.65);
+            color: #fff;
+            font-size: 23px;
+            cursor: pointer;
+            z-index: 2;
+        }
+
+        .restaurant-modal-close:hover {
+            background: #ff5a1f;
+        }
+
+        .restaurant-modal-content {
+            padding: 25px;
+        }
+
+        .restaurant-modal-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .restaurant-modal-info span {
+            background: #fff3eb;
+            color: #e84d13;
+            padding: 8px 12px;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .restaurant-modal-content h4 {
+            margin: 0 0 18px;
+            font-size: 24px;
+            color: #222;
+        }
+
+        .restaurant-modal-menu {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .restaurant-modal-food {
+            border: 1px solid #eee;
+            border-radius: 15px;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 5px 18px rgba(0,0,0,.07);
+        }
+
+        .restaurant-modal-food img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .restaurant-modal-food-body {
+            padding: 14px;
+        }
+
+        .restaurant-modal-food-body h5 {
+            margin: 0 0 8px;
+            font-size: 16px;
+        }
+
+        .restaurant-modal-food-price {
+            color: #ff5a1f;
+            font-size: 17px;
+            font-weight: 800;
+            margin-bottom: 9px;
+        }
+
+        .restaurant-modal-food-offer {
+            display: inline-block;
+            background: #fff3cd;
+            color: #9a6700;
+            padding: 5px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .restaurant-modal-add {
+            width: 100%;
+            border: none;
+            background: #ff5a1f;
+            color: #fff;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+        }
+
+        .restaurant-modal-add:hover {
+            background: #e94b12;
+        }
+
+        @media (max-width: 768px) {
+            .restaurant-modal { padding: 10px; }
+            .restaurant-modal-box { max-height: 95vh; border-radius: 17px; }
+            .restaurant-modal-hero { height: 210px; border-radius: 17px 17px 0 0; }
+            .restaurant-modal-menu { grid-template-columns: 1fr; }
+            .restaurant-modal-content { padding: 18px; }
+        }
+
         /* =====================================================
            MOBILE + TABLET
         ===================================================== */
@@ -1053,7 +1244,7 @@
         <div class="food-card">
 
             <img
-                src="https://images.unsplash.com/photo-1547592180-85f173990554"
+                src="https://b.zmtcdn.com/data/pictures/chains/5/20305535/968a120ab4222f785d190e018dcf986d.jpg?crop=960%3A500%3B%2A%2C%2A&fit=around%7C960%3A500"
                 alt="Special Indian Thali"
                 loading="lazy"
             >
@@ -1094,7 +1285,7 @@
                     <button
                         class="add-cart"
                         type="button"
-                        onclick="addFoodToCart(103,'Special Indian Thali',249,'https://images.unsplash.com/photo-1547592180-85f173990554','FLAT ₹50 OFF',this)"
+                        onclick="addFoodToCart(103,'Special Indian Thali',249,'https://b.zmtcdn.com/data/pictures/chains/5/20305535/968a120ab4222f785d190e018dcf986d.jpg?crop=960%3A500%3B%2A%2C%2A&fit=around%7C960%3A500','FLAT ₹50 OFF',this)"
                     >
                         +
                     </button>
@@ -1169,7 +1360,7 @@
         <div class="food-card">
 
             <img
-                src="https://images.unsplash.com/photo-1601050690597-df0568f70950"
+                src="https://miro.medium.com/v2/resize%3Afit%3A1024/1%2AkJpCB1zsTDZELlv7IvhaWg.png"
                 alt="Paneer Tikka"
                 loading="lazy"
             >
@@ -1210,7 +1401,7 @@
                     <button
                         class="add-cart"
                         type="button"
-                        onclick="addFoodToCart(105,'Paneer Tikka',219,'https://images.unsplash.com/photo-1601050690597-df0568f70950','20% OFF',this)"
+                        onclick="addFoodToCart(105,'Paneer Tikka',219,'https://miro.medium.com/v2/resize%3Afit%3A1024/1%2AkJpCB1zsTDZELlv7IvhaWg.png','20% OFF',this)"
                     >
                         +
                     </button>
@@ -1227,7 +1418,7 @@
         <div class="food-card">
 
             <img
-                src="https://images.unsplash.com/photo-1563379091339-03246963d51a"
+                src="https://glovo.dhmedia.io/image/stores-glovo/stores/c63df408df4587462ca25f46aa3b745d426da79e69b01ccbc0713820623839c5?t=W3siYXV0byI6eyJxIjoibG93In19LHsicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MTI4MCwiaGVpZ2h0IjoxMjB9fV0%3D"
                 alt="Chicken Biryani"
                 loading="lazy"
             >
@@ -1268,7 +1459,7 @@
                     <button
                         class="add-cart"
                         type="button"
-                        onclick="addFoodToCart(106,'Chicken Biryani',279,'https://images.unsplash.com/photo-1563379091339-03246963d51a','FLAT ₹50 OFF',this)"
+                        onclick="addFoodToCart(106,'Chicken Biryani',279,'https://glovo.dhmedia.io/image/stores-glovo/stores/c63df408df4587462ca25f46aa3b745d426da79e69b01ccbc0713820623839c5?t=W3siYXV0byI6eyJxIjoibG93In19LHsicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MTI4MCwiaGVpZ2h0IjoxMjB9fV0%3D','FLAT ₹50 OFF',this)"
                     >
                         +
                     </button>
@@ -1285,7 +1476,7 @@
         <div class="food-card">
 
             <img
-                src="https://images.unsplash.com/photo-1557872943-16a5ac26437e"
+                src="https://image.cdn.shpy.in/360704/hakkanoodles-1717774790537.webp?format=webp&width=600"
                 alt="Hakka Noodles"
                 loading="lazy"
             >
@@ -1326,7 +1517,7 @@
                     <button
                         class="add-cart"
                         type="button"
-                        onclick="addFoodToCart(107,'Hakka Noodles',159,'https://images.unsplash.com/photo-1557872943-16a5ac26437e','BUY 1 GET 1 FREE',this)"
+                        onclick="addFoodToCart(107,'Hakka Noodles',159,'https://image.cdn.shpy.in/360704/hakkanoodles-1717774790537.webp?format=webp&width=600','BUY 1 GET 1 FREE',this)"
                     >
                         +
                     </button>
@@ -1343,7 +1534,7 @@
         <div class="food-card">
 
             <img
-                src="https://images.unsplash.com/photo-1473093295043-cdd812d0e601"
+                src="https://slice-menu-assets-prod.imgix.net/28166/1637566791_7c641f4eb4?fit=crop&h=480&w=480"
                 alt="Alfredo Pasta"
                 loading="lazy"
             >
@@ -1384,7 +1575,7 @@
                     <button
                         class="add-cart"
                         type="button"
-                        onclick="addFoodToCart(108,'Alfredo Pasta',229,'https://images.unsplash.com/photo-1473093295043-cdd812d0e601','20% OFF',this)"
+                        onclick="addFoodToCart(108,'Alfredo Pasta',229,'https://slice-menu-assets-prod.imgix.net/28166/1637566791_7c641f4eb4?fit=crop&h=480&w=480','20% OFF',this)"
                     >
                         +
                     </button>
@@ -1400,19 +1591,16 @@
 
         <div class="food-card">
 
-            <img
-                src="https://images.unsplash.com/photo-1630383249896-424e482df921"
-                alt="Masala Dosa"
-                loading="lazy"
+         <img src="https://images.unsplash.com/photo-1630383249896-424e482df921?auto=format&fit=crop&w=900&q=85" alt="idli wada" loading="
+         lazy"
             >
 
             <div class="food-info">
 
-                <h3>Masala Dosa</h3>
+                <h3>Idli Wada</h3>
 
                 <p class="food-description">
-                    Crispy golden South Indian dosa filled
-                    with spicy potato masala and served with
+                    Crispy golden South Indian Idli wada and served with
                     coconut chutney and sambar.
                 </p>
 
@@ -1442,7 +1630,7 @@
                     <button
                         class="add-cart"
                         type="button"
-                        onclick="addFoodToCart(109,'Masala Dosa',119,'https://images.unsplash.com/photo-1630383249896-424e482df921','FLAT ₹50 OFF',this)"
+                        onclick="addFoodToCart(109,'Idli Wada',119,'https://images.unsplash.com/photo-1630383249896-424e482df921','FLAT ₹50 OFF',this)"
                     >
                         +
                     </button>
@@ -1459,7 +1647,7 @@
         <div class="food-card">
 
             <img
-                src="https://images.unsplash.com/photo-1547592180-85f173990554"
+                 src="https://upload.wikimedia.org/wikipedia/commons/9/95/Spring_rolls_001.jpg"
                 alt="Veg Spring Rolls"
                 loading="lazy"
             >
@@ -1500,7 +1688,7 @@
                     <button
                         class="add-cart"
                         type="button"
-                        onclick="addFoodToCart(110,'Veg Spring Rolls',139,'https://images.unsplash.com/photo-1547592180-85f173990554','BUY 2 GET 1 FREE',this)"
+                        onclick="addFoodToCart(110,'Veg Spring Rolls',139,'https://itsonly.recipes/wp-content/uploads/2025/08/vegetable-spring-rolls.jpg','BUY 2 GET 1 FREE',this)"
                     >
                         +
                     </button>
@@ -1575,7 +1763,7 @@
         <div class="food-card">
 
             <img
-                src="https://images.unsplash.com/photo-1577805947697-89e18249d767"
+             src="https://upload.wikimedia.org/wikipedia/commons/3/3b/Mango_Lassi.jpg"
                 alt="Mango Lassi"
                 loading="lazy"
             >
@@ -2494,7 +2682,7 @@ const restaurantSampleItems = [
         id: 203,
         name: "Chicken Biryani",
         price: 279,
-        image: "https://images.unsplash.com/photo-1563379091339-03246963d51a",
+        image: "https://glovo.dhmedia.io/image/stores-glovo/stores/c63df408df4587462ca25f46aa3b745d426da79e69b01ccbc0713820623839c5?t=W3siYXV0byI6eyJxIjoibG93In19LHsicmVzaXplIjp7Im1vZGUiOiJmaXQiLCJ3aWR0aCI6MTI4MCwiaGVpZ2h0IjoxMjB9fV0%3D",
         offer: "FLAT ₹50 OFF"
     },
 
@@ -2502,7 +2690,7 @@ const restaurantSampleItems = [
         id: 204,
         name: "Paneer Tikka",
         price: 219,
-        image: "https://images.unsplash.com/photo-1601050690597-df0568f70950",
+        image: "https://miro.medium.com/v2/resize%3Afit%3A1024/1%2AkJpCB1zsTDZELlv7IvhaWg.png",
         offer: "20% OFF"
     },
 
@@ -2510,7 +2698,7 @@ const restaurantSampleItems = [
         id: 205,
         name: "Hakka Noodles",
         price: 159,
-        image: "https://images.unsplash.com/photo-1557872943-16a5ac26437e",
+        image: "https://image.cdn.shpy.in/360704/hakkanoodles-1717774790537.webp?format=webp&width=600",
         offer: "BUY 1 GET 1 FREE"
     },
 
@@ -2526,7 +2714,7 @@ const restaurantSampleItems = [
         id: 207,
         name: "Alfredo Pasta",
         price: 229,
-        image: "https://images.unsplash.com/photo-1473093295043-cdd812d0e601",
+        image: "https://slice-menu-assets-prod.imgix.net/28166/1637566791_7c641f4eb4?fit=crop&h=480&w=480",
         offer: "20% OFF"
     },
 
@@ -2542,7 +2730,7 @@ const restaurantSampleItems = [
         id: 209,
         name: "Special Indian Thali",
         price: 249,
-        image: "https://images.unsplash.com/photo-1547592180-85f173990554",
+        image: "https://b.zmtcdn.com/data/pictures/chains/5/20305535/968a120ab4222f785d190e018dcf986d.jpg?crop=960%3A500%3B%2A%2C%2A&fit=around%7C960%3A500",
         offer: "FLAT ₹50 OFF"
     },
 
@@ -2550,7 +2738,7 @@ const restaurantSampleItems = [
         id: 210,
         name: "Veg Spring Rolls",
         price: 139,
-        image: "https://images.unsplash.com/photo-1547592180-85f173990554",
+        image: "https://itsonly.recipes/wp-content/uploads/2025/08/vegetable-spring-rolls.jpg",
         offer: "BUY 2 GET 1 FREE"
     },
 
@@ -4275,6 +4463,224 @@ function showDefaultRestaurants() {
 }
 
 
+
+
+/* =====================================================
+   RESTAURANT CLICK MODAL
+===================================================== */
+
+function createRestaurantModal() {
+
+    if (document.getElementById("restaurant-modal")) {
+        return;
+    }
+
+    const modal = document.createElement("div");
+    modal.id = "restaurant-modal";
+    modal.className = "restaurant-modal";
+
+    modal.innerHTML = `
+        <div class="restaurant-modal-box" role="dialog" aria-modal="true" aria-label="Restaurant details">
+            <button
+                type="button"
+                class="restaurant-modal-close"
+                aria-label="Close restaurant details"
+                onclick="closeRestaurantModal()"
+            >
+                ×
+            </button>
+
+            <div class="restaurant-modal-hero">
+                <img id="restaurant-modal-image" src="" alt="Restaurant">
+                <div class="restaurant-modal-overlay">
+                    <h2 id="restaurant-modal-title" class="restaurant-modal-title"></h2>
+                </div>
+            </div>
+
+            <div class="restaurant-modal-content">
+                <div id="restaurant-modal-info" class="restaurant-modal-info"></div>
+
+                <h4>🍽️ More Items From FreshBite</h4>
+
+                <div id="restaurant-modal-menu" class="restaurant-modal-menu"></div>
+            </div>
+        </div>
+    `;
+
+    modal.addEventListener("click", function(event) {
+        if (event.target === modal) {
+            closeRestaurantModal();
+        }
+    });
+
+    document.body.appendChild(modal);
+}
+
+
+function openRestaurantModal(data) {
+
+    createRestaurantModal();
+
+    const modal = document.getElementById("restaurant-modal");
+    const image = document.getElementById("restaurant-modal-image");
+    const title = document.getElementById("restaurant-modal-title");
+    const info = document.getElementById("restaurant-modal-info");
+    const menu = document.getElementById("restaurant-modal-menu");
+
+    const restaurantName = data.name || "Restaurant";
+    const restaurantCuisine = data.cuisine || "Multi-Cuisine";
+    const restaurantAddress = data.address || "Location details available after search.";
+    const restaurantImage = data.image || "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=1400&q=90";
+
+    image.src = restaurantImage;
+    image.alt = restaurantName;
+    title.textContent = restaurantName;
+
+    info.innerHTML = `
+        <span>🍽️ ${escapeHTML(restaurantCuisine)}</span>
+        ${data.distance ? `<span>📍 ${escapeHTML(data.distance)}</span>` : ""}
+        <span>📌 ${escapeHTML(restaurantAddress)}</span>
+        ${data.phone ? `<span>📞 ${escapeHTML(data.phone)}</span>` : ""}
+        ${data.hours ? `<span>🕒 ${escapeHTML(data.hours)}</span>` : ""}
+    `;
+
+    menu.innerHTML = restaurantSampleItems.map(function(item, index) {
+
+        const uniqueId =
+            9000 +
+            Math.abs(
+                hashString(
+                    restaurantName + "-modal-" + item.id + "-" + index
+                )
+            ) % 100000;
+
+        return `
+            <div class="restaurant-modal-food">
+                <img
+                    src="${item.image}"
+                    alt="${escapeHTML(item.name)}"
+                    loading="lazy"
+                >
+
+                <div class="restaurant-modal-food-body">
+                    <h5>${escapeHTML(item.name)}</h5>
+                    <div class="restaurant-modal-food-price">₹${item.price}</div>
+                    <span class="restaurant-modal-food-offer">${escapeHTML(item.offer)}</span>
+
+                    <button
+                        type="button"
+                        class="restaurant-modal-add"
+                        onclick="addFoodToCart(${uniqueId},'${escapeJS(item.name)}',${item.price},'${item.image}','${escapeJS(item.offer)}',this)"
+                    >
+                        🛒 Add to Cart
+                    </button>
+                </div>
+            </div>
+        `;
+
+    }).join("");
+
+    modal.classList.add("show");
+    document.body.style.overflow = "hidden";
+}
+
+
+function closeRestaurantModal() {
+
+    const modal = document.getElementById("restaurant-modal");
+
+    if (modal) {
+        modal.classList.remove("show");
+    }
+
+    document.body.style.overflow = "";
+}
+
+
+function getRestaurantCardData(card) {
+
+    const nameElement = card.querySelector(".nearby-info h3");
+    const cuisineElement = card.querySelector(".nearby-cuisine");
+    const imageElement = card.querySelector(".nearby-image");
+    const addressElement = card.querySelector(".restaurant-address");
+    const phoneElement = card.querySelector(".restaurant-phone");
+
+    const tagElements = card.querySelectorAll(".nearby-meta .nearby-tag");
+    let distance = "";
+
+    if (tagElements.length > 0) {
+        distance = tagElements[0].textContent.trim();
+    }
+
+    const hoursElement = Array.from(
+        card.querySelectorAll(".restaurant-address")
+    ).find(function(element) {
+        return element.textContent.includes("🕒");
+    });
+
+    return {
+        name: nameElement ? nameElement.textContent.trim() : "Restaurant",
+        cuisine: cuisineElement ? cuisineElement.textContent.replace("🍽️", "").trim() : "Multi-Cuisine",
+        image: imageElement ? imageElement.src : "",
+        address: addressElement ? addressElement.textContent.replace("📌", "").trim() : "",
+        phone: phoneElement ? phoneElement.textContent.replace("📞", "").trim() : "",
+        hours: hoursElement ? hoursElement.textContent.replace("🕒", "").trim() : "",
+        distance: distance
+    };
+}
+
+
+function enableRestaurantCardClicks() {
+
+    if (!nearbyRestaurants) {
+        return;
+    }
+
+    nearbyRestaurants.addEventListener("click", function(event) {
+
+        const interactiveElement = event.target.closest(
+            "button, a, .nearby-menu, .nearby-food-item"
+        );
+
+        if (interactiveElement) {
+            return;
+        }
+
+        const card = event.target.closest(".nearby-card");
+
+        if (!card) {
+            return;
+        }
+
+        const data = getRestaurantCardData(card);
+        const query = new URLSearchParams({
+            name: data.name || "Restaurant",
+            cuisine: data.cuisine || "Multi-Cuisine",
+            address: data.address || "",
+            phone: data.phone || "",
+            hours: data.hours || "",
+            distance: data.distance || "",
+            image: data.image || ""
+        });
+
+        window.location.href = "restaurant.html?" + query.toString();
+    });
+}
+
+
+
+document.addEventListener("keydown", function(event) {
+
+    if (event.key === "Escape") {
+        closeRestaurantModal();
+    }
+
+});
+
+
+enableRestaurantCardClicks();
+
+
 /* =====================================================
    START DEFAULT PREVIEW
 ===================================================== */
@@ -4318,6 +4724,12 @@ window.findNearbyRestaurants =
 
 window.showDefaultRestaurants =
     showDefaultRestaurants;
+
+window.openRestaurantModal =
+    openRestaurantModal;
+
+window.closeRestaurantModal =
+    closeRestaurantModal;
 
 </script>
 
